@@ -12,14 +12,16 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedTinyInteger('role_id')->comment('نوع کاربر که در جدول roles وجود دارد.');
-            $table->string('confirmation_token')->nullable()->comment('توکن برای وریفای کردن ایمیل');
-            $table->string('reset_token')->nullable()->comment('توکن برای ریست کردن پسوورد');
+            $table->unsignedInteger('degree_id')->comment('مقطع تحصیلی');
+            $table->unsignedInteger('department_id')->comment('دانشکده');
+            $table->string('student_number')->nullable()->comment('شماره دانشجویی');
+            $table->string('confirmation_token')->nullable();
+            $table->string('reset_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -32,6 +34,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('students');
     }
 };
