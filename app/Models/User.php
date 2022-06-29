@@ -41,4 +41,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class, "user_id");
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, "user_id");
+    }
+
 }

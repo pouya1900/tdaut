@@ -14,6 +14,7 @@ return new class extends Migration {
     {
         Schema::create('ideas', function (Blueprint $table) {
             $table->id();
+            $table->unsignedInteger("inventor_id")->comment("تعیین خالق ایده");
             $table->string('title');
             $table->text('description');
             $table->enum('status', ['accepted', 'rejected', 'pending', 'rfd'])->comment('وضعیت ایده ، rfd : request for document');

@@ -14,7 +14,8 @@ return new class extends Migration {
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('profileable_id')->comment("تعیین رکورد");
+            $table->string('profileable_type')->comment("تعیین مدل");
             $table->string('first_name');
             $table->string('last_name');
             $table->string('username')->unique()->nullable();
