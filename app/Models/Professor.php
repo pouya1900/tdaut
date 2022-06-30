@@ -9,6 +9,11 @@ class Professor extends Model
 {
     use HasFactory;
 
+    public function profile()
+    {
+        return $this->morphOne(Profile::class, 'profileable');
+    }
+
     public function department()
     {
         return $this->belongsTo(Department::class, "department_id");
@@ -28,6 +33,11 @@ class Professor extends Model
     {
         $role_id = $this->pivot->role_id;
         return Office_role::find($role_id);
+    }
+
+    public function rank()
+    {
+        return $this->belongsTo(Rank::class, 'rank_id');
     }
 
 }

@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Rank extends Model
 {
     use HasFactory;
+
+    public function professors()
+    {
+        return $this->hasMany(Professor::class, "rank_id");
+    }
 }

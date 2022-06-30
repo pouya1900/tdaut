@@ -25,23 +25,5 @@ class Administrator extends Model
         return $this->hasMany(Support_message::class, "admin_id");
     }
 
-    public function profileImage()
-    {
-        return $this->morphOne(Media::class, 'mediable');
-    }
 
-
-    public function getAvatarAttribute()
-    {
-        $image = $this->profileImage()
-            ->first();
-
-        if (!empty($image)) {
-            $path = Storage::disk("assetsStorage")->url('') . 'avatar/';
-            return $path . $image->title;
-        }
-        $path = Storage::disk("assetsStorage")->url('') . 'siteContent/';
-
-        return $path . "ic_no_avatar.png";
-    }
 }

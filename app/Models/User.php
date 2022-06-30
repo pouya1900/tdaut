@@ -42,6 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function profile()
+    {
+        return $this->morphOne(Profile::class, 'profileable');
+    }
 
     public function documents()
     {
@@ -53,4 +57,13 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, "user_id");
     }
 
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'role_id');
+    }
+
+    public function supports()
+    {
+        return $this->morphMany(Support::class, 'supportable');
+    }
 }

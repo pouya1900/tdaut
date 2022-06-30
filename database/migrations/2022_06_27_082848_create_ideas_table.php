@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->text('description');
             $table->enum('status', ['accepted', 'rejected', 'pending', 'rfd'])->comment('وضعیت ایده ، rfd : request for document');
             $table->string('status_message')->comment('پیام وضعیت از طرف ادمین در صورت قبول نشدن یا درخواست مدارک بیشتر');
+            $table->timestamp('status_date')->nullable()->comment('تاریخ تغییر وضعیت');
             $table->timestamps();
         });
     }

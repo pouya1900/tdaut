@@ -15,4 +15,8 @@ class Support_message extends Model
         return $this->belongsTo(Administrator::class, "admin_id");
     }
 
+    public function support()
+    {
+        return $this->belongsTo(Support::class, 'support_id');
+    }
 }

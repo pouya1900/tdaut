@@ -10,6 +10,11 @@ class Student extends Model
     use HasFactory;
 
 
+    public function profile()
+    {
+        return $this->morphOne(Profile::class, 'profileable');
+    }
+
     public function degree()
     {
         return $this->belongsTo(Degree::class, "degree_id");

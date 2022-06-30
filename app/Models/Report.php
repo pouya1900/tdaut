@@ -13,4 +13,15 @@ class Report extends Model
     {
         return $this->belongsTo(Administrator::class, "seen_admin_id");
     }
+
+    public function reportable()
+    {
+        return $this->morphTo();
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Report_type::class, "report_type_id");
+    }
+
 }

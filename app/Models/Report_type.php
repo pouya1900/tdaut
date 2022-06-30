@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Report_type extends Model
 {
     use HasFactory;
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, "report_type_id");
+    }
+
 }

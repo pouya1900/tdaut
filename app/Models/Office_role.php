@@ -9,19 +9,16 @@ class Office_role extends Model
 {
     use HasFactory;
 
-    public function students()
-    {
-        return $this->morphedByMany(Student::class, "memberable", "office_members")->withPivot('office_id');
-    }
-
     public function member()
     {
-        $type=$this->pivot->memberable_type;
-        $id=$this->pivot->memberable_id;
-        $a=$this->morphedByMany($type, "memberable", "office_members");
+        $type = $this->pivot->memberable_type;
+        $id = $this->pivot->memberable_id;
+        return $this->morphedByMany($type, "memberable", "office_members", 'role_id')->where('memberable_id', $id)->first();
+    }
 
-        dd($a);
-
+    public function permissions()
+    {
+        return $this->belongsToMany(Office_permission::class, 'office_permission_role');
     }
 
 }
