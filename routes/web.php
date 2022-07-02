@@ -11,4 +11,4 @@
 |
 */
 
-Route::get('/', 'App\Http\Controllers\TestController@index')->name('index');
+Route::get('/', 'App\Http\Controllers\HomeController@index')->name('index');
