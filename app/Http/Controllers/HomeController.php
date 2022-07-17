@@ -12,4 +12,10 @@ class HomeController extends Controller
         return view('front.home.index');
     }
 
+    public function index2()
+    {
+        return view('front.home.index2');
+    }
+
+
 }

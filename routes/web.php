@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('index');
+Route::get('/home2', 'App\Http\Controllers\HomeController@index2')->name('index');

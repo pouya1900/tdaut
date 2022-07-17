@@ -9,9 +9,9 @@
     <title>{{$setting->title}}</title>
     <link rel="icon" href="{{$setting->icon}}" type="image/gif" sizes="16x16">
     <script src="https://kit.fontawesome.com/ae2e33a4ec.js" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="storage/js/jquery-3.6.0.min.js"></script>
 
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="storage/css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.rtl.min.css">
 
     @yield('style')
@@ -21,7 +21,7 @@
 @yield('content')
 
 
-<script type="text/javascript" src="js/custom.js"></script>
+<script type="text/javascript" src="storage/js/custom.js"></script>
 <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
