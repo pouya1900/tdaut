@@ -448,7 +448,8 @@ video {
     background: #000;
     height: 100%;
     text-align: center;
-    padding-top: 20px
+    padding-top: 20px;
+    position: relative;
 }
 
 .side_container .side_container_logo {
@@ -488,3 +489,65 @@ video {
 .side_container .side_content ul li a:hover {
     color: var(--main-color);
 }
+
+
+.side_footer {
+    position: absolute;
+    bottom: 0;
+    right: 14%;
+    width: 70%;
+    background: #f5b81836;
+    border-radius: 50px 50px 0 0;
+    padding: 5px;
+    text-align: center;
+}
+
+.side_footer ul {
+    padding: 0;
+    margin: 0;
+}
+
+.side_footer ul li {
+    display: inline;
+    margin-left: 10px;
+}
+
+.side_footer ul li a {
+    font-size: 13px;
+    color: #fff;
+}
+
+.side_footer ul li a:hover {
+    color: var(--main-color);
+}
+
+.top_menu {
+    position: fixed;
+    top: 0;
+    background: #f5b81885;
+    border-radius: 0 0 50px 50px;
+    padding: 5px 40px;
+    text-align: center;
+    right: 40%;
+}
+
+.top_menu ul {
+padding: 0;
+margin: 0;
+}
+
+.top_menu ul li {
+display: inline;
+margin-left: 10px;
+}
+
+.top_menu ul li a {
+font-size: 13px;
+color: #fff;
+}
+
+.top_menu ul li a:hover {
+color: var(--main-color);
+}
+
+

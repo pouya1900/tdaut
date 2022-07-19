@@ -31,6 +31,15 @@
                             </li>
                         </ul>
                     </div>
+
+                    <div class="side_footer">
+                        <ul>
+                            <li><a href="#">درباره ما</a></li>
+                            <li><a href="#">تماس با ما</a></li>
+                            <li><a href="#">مدیریت واحد</a></li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
             <div class="col-8 full-height padding-right-0">
@@ -90,6 +99,10 @@
       "three": "https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.module.min.js"
     }
   }
+
+
+
+
 
 
 

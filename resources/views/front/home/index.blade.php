@@ -12,7 +12,16 @@
         </div>
     </div>
 
+
+
     <div class="infographic_container display-none">
+        <div class="top_menu">
+            <ul>
+                <li><a href="#">درباره ما</a></li>
+                <li><a href="#">تماس با ما</a></li>
+                <li><a href="#">مدیریت واحد</a></li>
+            </ul>
+        </div>
         <div class="infographic_logo">
             <img src="storage/assets/siteContent/logo.png">
         </div>
