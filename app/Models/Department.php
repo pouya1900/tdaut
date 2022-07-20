@@ -9,19 +9,16 @@ class Department extends Model
 {
     use HasFactory;
 
-    public function professors()
-    {
-        return $this->hasMany(Professor::class, "department_id");
-    }
+
 
     public function offices()
     {
         return $this->hasMany(Office::class, "department_id");
     }
 
-    public function students()
+    public function members()
     {
-        return $this->hasMany(Student::class, "department_id");
+        return $this->hasMany(Member::class, "department_id");
     }
 
 }

@@ -9,15 +9,10 @@ class Degree extends Model
 {
     use HasFactory;
 
-    public function students()
+    public function members()
     {
-        return $this->hasMany(Student::class, "degree_id");
+        return $this->hasMany(Member::class, "degree_id");
     }
 
-
-    public function staff()
-    {
-        return $this->hasMany(Staff::class, "degree_id");
-    }
 
 }

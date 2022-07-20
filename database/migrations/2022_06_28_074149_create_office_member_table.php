@@ -12,15 +12,11 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('office_member', function (Blueprint $table) {
             $table->id();
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->unsignedInteger('degree_id');
-            $table->string('confirmation_token')->nullable();
-            $table->string('reset_token')->nullable();
-            $table->rememberToken();
+            $table->unsignedInteger('office_id')->comment('تعیین دفتر');
+            $table->unsignedInteger('member_id')->comment('تعیین رکورد');
+            $table->unsignedInteger('role_id')->comment('تعیین مسئولیت');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ return new class extends Migration {
      */
     public function down()
     {
-        Schema::dropIfExists('staff');
+        Schema::dropIfExists('office_members');
     }
 };

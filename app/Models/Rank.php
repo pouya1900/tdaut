@@ -9,8 +9,9 @@ class Rank extends Model
 {
     use HasFactory;
 
-    public function professors()
+    public function members()
     {
-        return $this->hasMany(Professor::class, "rank_id");
+        return $this->hasMany(Member::class, "rank_id");
     }
+
 }

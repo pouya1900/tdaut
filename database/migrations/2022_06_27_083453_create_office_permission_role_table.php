@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->id();
             $table->unsignedInteger('permission_id')->comment('ایدی دسترسی');
             $table->unsignedInteger('role_id')->comment('ایدی مسئولیت');
+            $table->unsignedInteger('office_id')->comment('ایدی دفتر');
             $table->timestamps();
         });
     }

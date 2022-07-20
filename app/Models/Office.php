@@ -31,25 +31,22 @@ class Office extends Model
         return $this->hasMany(Message::class, "office_id");
     }
 
-    public function professors()
+    public function getmembersAttribute()
     {
-        return $this->morphedByMany(Professor::class, "memberable", "office_members")->withPivot('role_id');
+        if ($this->pivot && $role_id = $this->pivot->role_id) {
+            return $this->belongsToMany(Member::class, 'office_member')->where('role_id', $role_id)->get();
+        }
+        return $this->belongsToMany(Member::class, 'office_member')->get()->unique('id');
     }
 
-    public function students()
+    public function getRolesAttribute()
     {
-        return $this->morphedByMany(Student::class, "memberable", "office_members")->withPivot('role_id');
+        if ($this->pivot && $member_id = $this->pivot->member_id) {
+            return $this->belongsToMany(Office_role::class, 'office_member', 'office_id', 'role_id')->where('member_id', $member_id)->get();
+        }
+        return $this->belongsToMany(Office_role::class, "office_member", "office_id", 'role_id')->get()->unique('id');
     }
 
-    public function staff()
-    {
-        return $this->morphedByMany(Staff::class, "memberable", "office_members")->withPivot('role_id');
-    }
-
-    public function roles()
-    {
-        return $this->belongsToMany(Office_role::class, "office_members", "office_id", 'role_id')->withPivot('memberable_type', 'memberable_id');
-    }
 
     public function products()
     {
