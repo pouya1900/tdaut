@@ -11,7 +11,7 @@ class Office extends Model
     use HasFactory;
 
 
-    public function Capabilities()
+    public function capabilities()
     {
         return $this->hasMany(Capability::class, "office_id");
     }
@@ -31,20 +31,25 @@ class Office extends Model
         return $this->hasMany(Message::class, "office_id");
     }
 
-    public function getmembersAttribute()
+    public function members()
     {
         if ($this->pivot && $role_id = $this->pivot->role_id) {
-            return $this->belongsToMany(Member::class, 'office_member')->where('role_id', $role_id)->get();
+            return $this->belongsToMany(Member::class, 'office_member')->where('role_id', $role_id);
         }
-        return $this->belongsToMany(Member::class, 'office_member')->get()->unique('id');
+        return $this->belongsToMany(Member::class, 'office_member');
     }
 
-    public function getRolesAttribute()
+    public function roles()
     {
         if ($this->pivot && $member_id = $this->pivot->member_id) {
-            return $this->belongsToMany(Office_role::class, 'office_member', 'office_id', 'role_id')->where('member_id', $member_id)->get();
+            return $this->belongsToMany(Office_role::class, 'office_member', 'office_id', 'role_id')->where('member_id', $member_id);
         }
-        return $this->belongsToMany(Office_role::class, "office_member", "office_id", 'role_id')->get()->unique('id');
+        return $this->belongsToMany(Office_role::class, "office_member", "office_id", 'role_id');
+    }
+
+    public function getOwnerAttribute()
+    {
+        return $this->roles()->where('name', 'owner')->first()->members->first();
     }
 
 
@@ -96,6 +101,17 @@ class Office extends Model
         }
 
         return [];
+    }
+
+    public function getCategoriesListAttribute()
+    {
+        $categories_id = $this->products()->active()->get()->pluck('category_id');
+        return Category::whereIn('id', $categories_id)->get();
+    }
+
+    public function scopeActive($query)
+    {
+        $query->where('status', 'verified');
     }
 
 }

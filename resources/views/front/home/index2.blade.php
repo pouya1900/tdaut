@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('layouts.main')
 @section('content')
 
     <div id="main_container">

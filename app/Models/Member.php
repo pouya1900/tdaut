@@ -29,21 +29,21 @@ class Member extends Model
         return $this->belongsTo(Rank::class, 'rank_id');
     }
 
-    public function getOfficesAttribute()
+    public function offices()
     {
         if ($this->pivot && $role_id = $this->pivot->role_id) {
-            return $this->belongsToMany(Office::class, 'office_member')->where('role_id', $role_id)->get();
+            return $this->belongsToMany(Office::class, 'office_member')->where('role_id', $role_id);
         }
 
-        return $this->belongsToMany(Office::class, 'office_member')->get()->unique('id');
+        return $this->belongsToMany(Office::class, 'office_member');
     }
 
-    public function getRolesAttribute()
+    public function roles()
     {
         if ($this->pivot && $office_id = $this->pivot->office_id) {
-            return $this->belongsToMany(Office_role::class, 'office_member', 'member_id', 'role_id')->where('office_id', $office_id)->get();
+            return $this->belongsToMany(Office_role::class, 'office_member', 'member_id', 'role_id')->where('office_id', $office_id);
         }
-        return $this->belongsToMany(Office_role::class, 'office_member', 'member_id', 'role_id')->get()->unique('id');
+        return $this->belongsToMany(Office_role::class, 'office_member', 'member_id', 'role_id');
     }
 
 }

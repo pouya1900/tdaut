@@ -78,4 +78,10 @@ class Product extends Model
         return [];
     }
 
+    public function scopeActive($query)
+    {
+        $query->where('status', 'accepted');
+    }
+
+
 }

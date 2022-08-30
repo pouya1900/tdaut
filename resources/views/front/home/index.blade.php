@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('layouts.main')
 @section('content')
 
     <div id="main_container">
@@ -28,7 +28,7 @@
         <div class="infographic_section">
             <ul>
                 <li>
-                    <a href="#">
+                    <a href="{{route('offices')}}">
                         <div class="section_container">
                             <div class="row full-width">
                                 <div class="col-2">

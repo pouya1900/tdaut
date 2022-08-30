@@ -48,4 +48,9 @@ class Profile extends Model
         return "";
     }
 
+    public function getFullNameAttribute()
+    {
+        return $this->first_name . " " . $this->last_name;
+    }
+
 }

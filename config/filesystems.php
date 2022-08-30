@@ -46,7 +46,7 @@ return [
 
         'assetsStorage' => [
             'driver'     => 'local',
-            'root'       => env('APP_ENV') == 'development' ? public_path('/storage/assets') : storage_path('app/public') . '/storage/assets',
+            'root'       => public_path('/storage/assets'),
             'url'        => env('APP_URL') . '/storage/assets',
             'visibility' => 'public',
         ],
