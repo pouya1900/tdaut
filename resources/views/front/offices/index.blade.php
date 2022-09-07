@@ -93,7 +93,7 @@
             <div class="row">
                 @foreach($offices as $office)
                     <div class="col-12 col-md-6 col-lg-3 mb-4">
-                        <a href="{{route('offices_show',$office->id)}}">
+                        <a href="{{route('office_show',$office->id)}}">
                             <div class="office_container">
                                 <div class="office_thumbnail">
                                     <img src="{{$office->logo}}">
@@ -125,7 +125,7 @@
                                     </div>
                                     <div class="">
                                         <span class="office_key">رئیس : </span>
-                                        <span class="office_value">{{$office->owner->profile->fullName}}</span>
+                                        <span class="office_value">{{$office->head->profile->fullName}}</span>
                                     </div>
 
                                 </div>

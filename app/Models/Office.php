@@ -47,9 +47,9 @@ class Office extends Model
         return $this->belongsToMany(Office_role::class, "office_member", "office_id", 'role_id');
     }
 
-    public function getOwnerAttribute()
+    public function getHeadAttribute()
     {
-        return $this->roles()->where('name', 'owner')->first()->members->first();
+        return $this->roles()->where('name', 'head')->first()->members->first();
     }
 
 

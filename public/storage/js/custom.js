@@ -32,7 +32,17 @@ jQuery(document).ready(function ($) {
     });
 
     $('.infographic_section li').on('click', function (e) {
-        $('.infographic_section li').not(this).css('opacity',0);
+        $('.infographic_section li').not(this).css('opacity', 0);
+    });
+
+    $('#profile_side_menu').on('click', function () {
+        var element = $('#profile_side');
+        if (element.hasClass('profile_side_mobile')) {
+            element.removeClass('profile_side_mobile');
+        } else {
+            element.addClass('profile_side_mobile');
+        }
+
     });
 
 });

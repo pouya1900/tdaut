@@ -64,8 +64,8 @@ body {
     font-size: 13px;
     font-weight: normal;
     line-height: 23px;
-    height: 100%;
     direction: rtl;
+    position: relative;
 }
 
 img {
@@ -186,6 +186,13 @@ video {
 .background-dark {
     background: #000;
 }
+
+
+.page_wrapper {
+    background: #ecf0f5;
+    height: 100%;
+}
+
 
 /*style code*/
 
@@ -921,6 +928,10 @@ img {
     margin-top: 20px;
 }
 
+.office_top_bar .office_title a {
+    color: #000;
+}
+
 .office_top_bar .office_logo {
     text-align: left;
 }
@@ -959,7 +970,7 @@ img {
 .profile_side_container {
     height: 100%;
     background: #1db8c1;
-    padding: 50px 0 150px 0;
+    padding: 60px 0 150px 0;
 }
 
 .profile_side_container .profile_info {
@@ -992,22 +1003,27 @@ img {
 }
 
 .profile_side-item--container ul li {
-    color: #fff;
     margin-top: 20px;
     padding: 6px 10px;
-    cursor: pointer;
 }
 
-.profile_side-item--container ul li i{
+.profile_side-item--container ul li a {
+    color: #fff;
+}
+
+.profile_side-item--container ul li i {
     margin-left: 15px;
 }
 
 .profile_side-item--container ul li.active {
     background: #ecf0f5;
     width: 100%;
-    color: #000;
     border-radius: 0 30px 30px 0;
     cursor: auto;
+}
+
+.profile_side-item--container ul li.active a {
+    color: #000;
 }
 
 .profile_main_wrapper {
@@ -1016,6 +1032,25 @@ img {
     padding: 20px;
 }
 
+.profile_side-mobile-button {
+    padding: 5px;
+    background: var(--main-color);
+    z-index: 99;
+}
+
+.profile_side-mobile-button button {
+    border: none;
+    background: transparent;
+}
+
+.profile_side-mobile-button button img {
+    width: 40px;
+    border-radius: 40px;
+}
+
+.profile_side-mobile-button button i {
+    margin-right: 10px;
+}
 
 .profile_main {
     padding: 20px;
@@ -1048,6 +1083,7 @@ img {
 .profile_main--link ul li a {
     color: #333;
 }
+
 .profile_main--link ul li a:hover {
     color: var(--main-color);
 }
@@ -1101,5 +1137,261 @@ img {
     font-size: 14px;
     opacity: 0.9;
 }
+
+
+.profile_offices {
+    padding: 20px 10px;
+    background: #fff;
+    margin-bottom: 10px;
+    color: #000;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.profile_offices:hover {
+    box-shadow: 0 0 10px 2px #ccc;
+}
+
+.profile_offices .profile_offices--container {
+}
+
+.profile_offices .profile_offices--container div {
+    display: inline;
+    margin-left: 20px;
+}
+
+.profile_offices .profile_office--logo img {
+    width: 80px;
+    border-radius: 50px;
+}
+
+
+/*loader*/
+
+#load-screen, .looding-in {
+
+    z-index: 999999;
+}
+
+.looding-in {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background: #FAFAFA;
+}
+
+.office_members {
+}
+
+.office_members--container {
+    padding: 20px;
+    text-align: right;
+    background: #fff;
+    border-radius: 15px;
+    margin-bottom: 15px;
+}
+
+.office_members--avatar {
+    margin-bottom: 15px;
+}
+
+.office_members--avatar img {
+    width: 100%;
+    border-radius: 15px
+}
+
+.office_members--name {
+    margin-bottom: 10px;
+}
+
+.office_members--name a {
+    color: var(--main-color);
+    font-weight: 500;
+}
+
+.office_members--name a:hover {
+    color: var(--secondary-color);
+}
+
+.office_members--rank {
+    font-weight: 500;
+}
+
+.office_members--role {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+.office_members--social {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.office_members--social ul {
+    list-style: none;
+    padding: 0;
+}
+
+.office_members--social ul li {
+    display: inline;
+    margin: 0 7px;
+}
+
+.office_members--social ul li a {
+    color: #1db8c1;
+    font-size: 22px;
+}
+
+
+
+/*products*/
+
+.widget .widget-sub-title {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    text-align: right;
+}
+
+.widget .widget_item {
+
+    margin-bottom: 5px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(200, 200, 200, 0.4);
+    user-select: none;
+    -webkit-transition: 0.1s all;
+    -moz-transition: 0.1s all;
+    -ms-transition: 0.1s all;
+    -o-transition: 0.1s all;
+    transition: 0.1s all;
+    font-size: 14px;
+    text-align: right;
+}
+
+.widget .widget_item:last-child {
+    border-bottom: none;
+}
+
+.widget .custom-control:hover {
+    background-color: #edf8ff;
+}
+
+
+.widget {
+    margin-bottom: 10px;
+    border: 1px solid #eeeded;
+    padding: 10px;
+    background-color: #f0f0f0;
+    margin-right: 1px;
+}
+
+.widget h4.widget-title {
+    text-transform: uppercase;
+    font-size: 16px;
+    color: #1db8c1;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    position: relative;
+    display: none;
+}
+
+.widget h4.widget-title span {
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 10px;
+    background-color: #f0f0f0;
+}
+
+.widget h4.widget-title:before {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 10px;
+    height: 1px;
+    width: 100%;
+    background-color: #c8c8c8;
+}
+
+.widget ul.last-posts {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.widget ul.last-posts li {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: solid 1px #eeeded;
+}
+
+.mobile_filter_container {
+    position: fixed;
+    bottom: 2%;
+    z-index: 999;
+    right: 10px;
+}
+
+
+.mobile_filter_content {
+}
+
+.mobile_filter_content span {
+    padding: 7px 15px;
+    background: #1db8c1;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.mobile_filter_content span:hover {
+    background: #fdbe19;
+}
+
+.filter_modal_close_container {
+    position: fixed;
+    bottom: 4%;
+    z-index: 999;
+}
+
+.filter_modal_close {
+    padding: 7px 15px;
+    background: #1db8c1;
+    border-radius: 20px 0 0 20px;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.filter_modal_close:hover {
+    background: #fdbe19;
+}
+
+.sticky-sidebar {
+    flex: 0 0 20%;
+    max-width: 20%
+}
+
+#modal-div {
+    overflow-y: auto;
+}
+
+
+
 
 

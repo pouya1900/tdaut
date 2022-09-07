@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\Setting;
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 
@@ -25,9 +26,16 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        View::composer('*', function ($view) {
+        $request = Request::capture();
+
+        $lang = $request->has('lang') ? $request->lang : 'fa';
+
+        app()->setLocale($lang);
+
+        View::composer('*', function ($view) use ($lang) {
             $setting = Setting::first();
             $view->with('setting', $setting);
+            $view->with('lang', $lang);
         });
     }
 }

@@ -11,13 +11,17 @@
         </div>
         <div class="col-6">
             <div class="office_title">
-                <h5>{{$office->name}}</h5>
+                <a href="{{route('office_show',$office->id)}}">
+                    <h5>{{$office->name}}</h5>
+                </a>
             </div>
 
         </div>
         <div class="col-3">
             <div class="office_logo">
-                <img src="{{$office->logo}}">
+                <a href="{{route('office_show',$office->id)}}">
+                    <img src="{{$office->logo}}" title="{{$office->name}}" alt="{{$office->name}}">
+                </a>
             </div>
         </div>
     </div>

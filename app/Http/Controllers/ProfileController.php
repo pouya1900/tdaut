@@ -26,4 +26,10 @@ class ProfileController extends Controller
         return view('front.profile.show', compact('member'));
     }
 
+    public function offices(Member $member)
+    {
+        return view('front.profile.offices', compact('member'));
+    }
+
+
 }

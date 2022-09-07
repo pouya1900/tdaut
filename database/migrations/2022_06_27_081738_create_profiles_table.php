@@ -23,6 +23,7 @@ return new class extends Migration {
             $table->timestamp('birthday')->nullable();
             $table->string('about')->nullable();
             $table->string('linkedin')->nullable();
+            $table->string('github')->nullable();
             $table->timestamps();
         });
     }

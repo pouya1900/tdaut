@@ -20,10 +20,13 @@
                         <!-- Left links -->
                         <ul class="navbar-nav me-auto ps-lg-0" style="padding-left: 0.15rem">
                             <li class="nav-item">
-                                <a class="nav-link" href="#">ریاست</a>
+                                <a class="nav-link"
+                                   href="{{route('office_members',['office'=>$office->id,'type'=>'head'])}}">ریاست</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">اعضای هیئت مدیره</a>
+                                <a class="nav-link"
+                                   href="{{route('office_members',['office'=>$office->id,'type'=>'board'])}}">اعضای
+                                    هیئت مدیره</a>
                             </li>
                             <!-- Navbar dropdown -->
                             <li class="nav-item dropdown dropdown-hover position-static">
@@ -40,7 +43,7 @@
 
                                         <div class="list-group list-group-flush">
                                             @foreach($office->categoriesList as $category)
-                                                <a href=""
+                                                <a href="{{route('office_products',['office'=>$office->id,'category'=>$category->id])}}"
                                                    class="list-group-item list-group-item-action">{{$category->title}}</a>
                                             @endforeach
                                         </div>
