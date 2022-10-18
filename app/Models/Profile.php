@@ -10,6 +10,22 @@ class Profile extends Model
 {
     use HasFactory;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'username',
+        'gender',
+        'birthday',
+        'about',
+        'linkedin',
+        'github',
+    ];
+
     public function profileable()
     {
         return $this->morphTo();

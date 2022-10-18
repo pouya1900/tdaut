@@ -46,38 +46,24 @@
                                                 <a href="{{route('office_products',['office'=>$office->id,'category'=>$category->id])}}"
                                                    class="list-group-item list-group-item-action">{{$category->title}}</a>
                                             @endforeach
+                                            <a href="{{route('office_products',['office'=>$office->id])}}"
+                                               class="list-group-item list-group-item-action">@lang('trs.all')</a>
                                         </div>
                                     </div>
                                 </div>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="#">توانمندی ها</a>
+                                <a data-bs-toggle="modal" data-bs-target="#capabilityModal" class="nav-link"
+                                   href="#">@lang('trs.capabilities')</a>
                             </li>
 
-                            <li class="nav-item dropdown dropdown-hover position-static">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                                   data-mdb-toggle="dropdown" aria-expanded="false">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{route('office_rfp',$office->id)}}">
                                     ثبت rfp
                                 </a>
-                                <!-- Dropdown menu -->
-                                <div class="dropdown-menu  mt-0" aria-labelledby="navbarDropdown" style="border-top-left-radius: 0;
-                            border-top-right-radius: 0;
-                          ">
-
-                                    <div class="container">
-
-                                        <div class="list-group list-group-flush">
-                                            <a href=""
-                                               class="list-group-item list-group-item-action">صنعت</a>
-                                            <a href=""
-                                               class="list-group-item list-group-item-action">حقیقی</a>
-                                            <a href=""
-                                               class="list-group-item list-group-item-action">حقوقی</a>
-                                        </div>
-                                    </div>
-                                </div>
                             </li>
+
 
                             <li class="nav-item dropdown dropdown-hover position-static">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -92,11 +78,9 @@
                                     <div class="container">
 
                                         <div class="list-group list-group-flush">
-                                            <a href=""
-                                               class="list-group-item list-group-item-action">تلفن</a>
-                                            <a href=""
-                                               class="list-group-item list-group-item-action">ایمیل</a>
-                                            <a href=""
+                                            <a href="{{route('office_contact',$office->id)}}"
+                                               class="list-group-item list-group-item-action">اطلاعات تماس</a>
+                                            <a href="{{route('office_chat',$office->id)}}"
                                                class="list-group-item list-group-item-action">چت</a>
                                         </div>
                                     </div>
@@ -116,7 +100,7 @@
 
             @php($i=1)
             @foreach($office->slideshow as $slide_show)
-                <div class="mySlides fade">
+                <div class="mySlides fade_slide">
                     {{--                    <div class="numbertext">{{$i}} / 3</div>--}}
                     <img src="{{$slide_show}}" style="width:100%">
                     {{--                    <div class="text">Caption Text</div>--}}
@@ -134,6 +118,29 @@
 
     </div>
 
+    <div class="offices_container">
+        <div class="office_content">
+            {!! $office->content !!}
+        </div>
+    </div>
+    <div class="modal fade" id="capabilityModal" tabindex="-1" aria-labelledby="capabilityModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="capabilityModalLabel">@lang('trs.capabilities')</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    @foreach($office->capabilities as $capability)
+                        <p class="capabilities"><i class="fa-solid fa-circle-check"></i> {{$capability->text}}</p>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @include('front.offices.footer')
 
 @endsection
 

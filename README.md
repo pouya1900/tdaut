@@ -1,64 +1,455 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Prerequisites
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+- web server
+    - PHP >= 8.0
+    - BCMath PHP Extension
+    - Ctype PHP Extension
+    - cURL PHP Extension
+    - DOM PHP Extension
+    - Fileinfo PHP Extension
+    - JSON PHP Extension
+    - Mbstring PHP Extension
+    - OpenSSL PHP Extension
+    - PCRE PHP Extension
+    - PDO PHP Extension
+    - Tokenizer PHP Extension
+    - XML PHP Extension
 
-## About Laravel
+# Installation & Configuration
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Backend
+    - pull files form github
+    - open .env file and set the DB_DATABASE , DB_USERNAME , DB_PASSWORD
+    - DB_DATABASE : database name
+    - DB_USERNAME : database username
+    - DB_PASSWORD : database password
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- database
+    - open terminal and run `php artisan migrate`
 
-## Learning Laravel
+# database
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- Entity
+    - Administrator
+    - capability
+    - category
+    - degree
+    - department
+    - document
+    - idea
+    - inventor
+    - media
+    - member
+    - message
+    - office
+    - office_permission
+    - office_role
+    - permission
+    - product
+    - profile
+    - rank
+    - report
+    - report_type
+    - role
+    - setting
+    - support
+    - support_message
+    - user
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+- Relation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+# Code
 
-### Premium Partners
+## backend
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+### classes
 
-## Contributing
+- HomeController
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? route
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - index
+            - What a function does : show home page
+            - What are the function's parameters or arguments are : no parameters
+            - What a function returns : view
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- OfficeController
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? route
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - index
+            - What a function does : show all offices page
+            - What are the function's parameters or arguments are : no parameters
+            - What a function returns : view
+        - show
+            - What a function does : show office
+            - What are the function's parameters or arguments are : id : the ID of office
+            - What a function returns : view
+        - members
+            - What a function does : show members of office
+            - What are the function's parameters or arguments are : id : the ID of office , string type : type of
+              members like board,head,... can be null for all members
+            - What a function returns : view
+        - products
+            - What a function does : show products of office
+            - What are the function's parameters or arguments are : id : the ID of office , int category : category id
+              of products can be null for all categories
+            - What a function returns : view
 
-## Code of Conduct
+- ProfileController
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? route
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - show
+            - What a function does : show user public profile
+            - What are the function's parameters or arguments are : id : the ID of member
+            - What a function returns : view
+        - offices
+            - What a function does : show user's offices
+            - What are the function's parameters or arguments are : id : the ID of member
+            - What a function returns : view
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### models
 
-## Security Vulnerabilities
+- Administrator
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - profile
+            - What a function does : return relation for profile
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : morphOne
+        - reports
+            - What a function does : return relation for reports
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
+        - messages
+            - What a function does : return relation for messages
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Capability
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - office
+            - What a function does : return relation for office
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
 
-## License
+- Category
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - products
+            - What a function does : return relation for products
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Degree
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - members
+            - What a function does : return relation for members
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
+
+- Department
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - members
+            - What a function does : return relation for members
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
+        - offices
+            - What a function does : return relation for offices
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
+
+- Document
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - office
+            - What a function does : return relation for office
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+        - user
+            - What a function does : return relation for user
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+
+- Idea
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - inventor
+            - What a function does : return relation for inventor
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+
+
+- Inventor
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - profile
+            - What a function does : return relation for profile
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : morphOne
+        - ideas
+            - What a function does : return relation for ideas
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
+
+- Media
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - mediable
+            - What a function does : return relation for mediable
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : morphTo
+
+- Member
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - profile
+            - What a function does : return relation for profile
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : morphOne
+        - degree
+            - What a function does : return relation for degree
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+        - department
+            - What a function does : return relation for department
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+        - rank
+            - What a function does : return relation for rank
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+        - offices
+            - What a function does : return relation for offices
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsToMany
+        - roles
+            - What a function does : return relation for roles
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsToMany
+
+- Message
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - office
+            - What a function does : return relation for office
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+        - user
+            - What a function does : return relation for user
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+
+- Office
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - capabilities
+            - What a function does : return relation for capabilities
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
+        - department
+            - What a function does : return relation for department
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+        - documents
+            - What a function does : return relation for documents
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
+        - messages
+            - What a function does : return relation for messages
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : hasMany
+        - members
+            - What a function does : return relation for members
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsToMany
+        - roles
+            - What a function does : return relation for roles
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsToMany
+        - products - What a function does : return relation for products - What are the function's parameters or
+          arguments are : no parameter - What a function returns : hasMany
+        - reports
+            - What a function does : return relation for reports
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : morphMany
+        - supports
+            - What a function does : return relation for supports
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : morphMany
+        - media
+            - What a function does : return relation for media
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : morphMany
+        - getLogoAttribute
+            - What a function does : return office logo url
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : string url
+        - getSlideshowAttribute
+            - What a function does : return office slideshow images url
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : array of string url
+        - getCategoriesListAttribute
+            - What a function does : return list of office products categories
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : collection
+        - scopeActive
+            - What a function does : return verified offices
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : eloquent
+        - getHeadAttribute
+            - What a function does : return head of office
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : member instance
+
+- Office_permission
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - roles
+            - What a function does : return relation for roles
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsToMany
+
+- Office_role
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - members
+            - What a function does : return relation for members
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsToMany
+        - offices
+            - What a function does : return relation for offices
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsToMany
+        - permissions
+            - What a function does : return relation for permissions
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsToMany
+
+- Permission
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - roles
+            - What a function does : return relation for roles
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsToMany
+
+- Product
+    - Where to obtain instances? <span style="color:yellow">null</span>
+    - What are the main methods? <span style="color:yellow">null</span>
+    - Is the class abstract? no
+    - Who are the main clients of this class? controllers
+    - How to use the class? <span style="color:yellow">null</span>
+    - function
+        - category
+            - What a function does : return relation for category
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+        - office
+            - What a function does : return relation for office
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : belongsTo
+        - reports
+            - What a function does : return relation for reports
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : morphMany
+        - media
+            - What a function does : return relation for media
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : morphMany
+        - getLogoAttribute
+            - What a function does : return product logo url
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : string url
+        - getImagesAttribute
+            - What a function does : return product images url
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : array of string url
+        - getVideosAttribute
+            - What a function does : return product videos url
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : array of string url
+        - scopeActive
+            - What a function does : return accepted products
+            - What are the function's parameters or arguments are : no parameter
+            - What a function returns : eloquent
+
+
+
+
+

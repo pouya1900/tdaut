@@ -100,26 +100,6 @@
     }
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
     <script type="module" src="storage/js/threejscode.js"></script>
 

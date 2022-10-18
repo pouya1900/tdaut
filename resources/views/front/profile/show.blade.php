@@ -29,7 +29,7 @@
 
                                 <li>
                                     <a target="_blank" href="{{$member->profile->cv}}"><i
-                                            class="fa-solid fa-file-pdf"></i><span>resume</span></a>
+                                            class="fa-solid fa-file-pdf"></i><span>@lang('trs.resume')</span></a>
                                 </li>
                             @endif
 
@@ -50,7 +50,7 @@
                                             <p>{{$member->profile->fullName}}</p>
                                         </div>
                                         <div class="profile_main--about">
-                                            <p class="about_title">درباره</p>
+                                            <p class="about_title">@lang('trs.about')</p>
                                             <p class="about_text">{{$member->profile->about}}</p>
                                         </div>
                                     </div>
@@ -91,6 +91,16 @@
                                 </div>
                             </div>
                         </div>
+                        @if ($current_member && $current_member->id==$member->id)
+                            <div class="row justify-content-around">
+                                <div class="col-4 text-center">
+                                    <a href="{{route('profile_edit')}}" class="edit_profile_button">
+                                        ویرایش پروفایل
+                                    </a>
+                                </div>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
 

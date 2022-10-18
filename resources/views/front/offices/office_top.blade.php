@@ -3,10 +3,24 @@
         <div class="col-3">
             <div class="uni_logo">
                 <img src="storage/assets/test/logo.jpg">
-                <div class="office_top_bar_profile">
-                    <span><i class="fa-solid fa-user"></i></span>
-                    <span>پویا راهواره</span>
-                </div>
+
+                @if ($current_user || $current_member)
+
+                    @php
+                        if ($current_user) {
+                          $user_instance=$current_user;
+                        }
+                          else {
+                              $user_instance=$current_member;
+                         }
+                    @endphp
+
+
+                    <div class="office_top_bar_profile">
+                        <span><i class="fa-solid fa-user"></i></span>
+                        <span>{{$user_instance->profile->fullName}}</span>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="col-6">

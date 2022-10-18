@@ -9,6 +9,10 @@ class Capability extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'text',
+    ];
+
     public function office()
     {
         return $this->belongsTo(Office::class, "office_id");

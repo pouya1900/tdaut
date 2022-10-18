@@ -28,7 +28,7 @@ class Office_role extends Model
 
     public function permissions()
     {
-        return $this->belongsToMany(Office_permission::class, 'office_permission_role');
+        return $this->belongsToMany(Office_permission::class, 'office_permission_role','role_id','permission_id');
     }
 
 }

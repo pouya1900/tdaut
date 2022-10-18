@@ -10,6 +10,20 @@ class Office extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        "name",
+        "about",
+        "phone",
+        "email",
+        "address",
+        "admin_contact",
+        "department_id",
+        "content",
+        "projects_count",
+        "status",
+        "status_message",
+        "status_date",
+    ];
 
     public function capabilities()
     {
@@ -84,7 +98,7 @@ class Office extends Model
         }
         $path = Storage::disk("assetsStorage")->url('') . 'siteContent/';
 
-        return $path . "ic_no_office_logo.png";
+        return $path . "ic_no_office_logo.jpg";
     }
 
     public function getSlideshowAttribute()

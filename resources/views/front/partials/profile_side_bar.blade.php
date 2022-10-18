@@ -8,12 +8,22 @@
 
         <div class="profile_side-item--container">
             <ul>
-                <li class="{{url()->current()==route('profile_show',$member->id) ? "active" : ""}}">
-                    <a href="{{route('profile_show',$member->id)}}"> <i class="fa-solid fa-user"></i>profile</a>
+                <li class="{{url()->current()==route('profile_show',$member->id) || url()->current()==route('profile_edit') ? "active" : ""}}">
+                    <a href="{{route('profile_show',$member->id)}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.profile')</a>
                 </li>
                 <li class="{{url()->current()==route('profile_offices',$member->id) ? "active" : ""}}">
-                    <a href="{{route('profile_offices',$member->id)}}"> <i class="fa-solid fa-building"></i>office</a>
+                    <a href="{{route('profile_offices',$member->id)}}"> <i
+                            class="fa-solid fa-building"></i>@lang('trs.offices')</a>
                 </li>
+                @if ($current_member && $current_member->id==$member->id)
+                    <li class="{{url()->current()==route('profile_password') ? "active" : ""}}">
+                        <a href="{{route('profile_password')}}"> <i class="fa-solid fa-key"></i>@lang('trs.password')
+                        </a>
+                    </li>
+                @endif
+
+
             </ul>
         </div>
 
@@ -21,6 +31,7 @@
 </div>
 
 <div class="d-lg-none profile_side-mobile-button">
-{{--    <button><i class="fa-solid fa-bars"></i></button>--}}
-    <button id="profile_side_menu"><img src="{{$member->profile->avatar}}" title="" alt=""><i class="fa-solid fa-bars"></i> </button>
+    {{--    <button><i class="fa-solid fa-bars"></i></button>--}}
+    <button id="profile_side_menu"><img src="{{$member->profile->avatar}}" title="" alt=""><i
+            class="fa-solid fa-bars"></i></button>
 </div>
