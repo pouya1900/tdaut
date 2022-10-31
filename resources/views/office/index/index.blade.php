@@ -10,16 +10,7 @@
             <div class="mg-office-dashboard">
                 <form action="{{route('mg.office_update',$office->id)}}" method="post">
                     {{csrf_field()}}
-                    @if (count($errors))
-                        <div class="alert alert-danger alert-dismissible login_form--alert" role="alert">
-                            <strong>{{ $errors->first() }}</strong>
-                        </div>
-                    @endif
-                    @if(session('message'))
-                        <div class="alert alert-success alert-dismissible register_form--alert" role="alert">
-                            <strong>{{ session('message') }}</strong>
-                        </div>
-                    @endif
+                    @include('office.includes.error_message')
                     <input type="hidden" name="id" value="{{$office->id}}">
                     <div class="row m-0">
                         <div class="col-12 col-lg-6">

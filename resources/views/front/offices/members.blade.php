@@ -58,7 +58,7 @@
 
                                             <li>
                                                 <a target="_blank" href="{{$member->profile->cv}}"><i
-                                                        class="fa-solid fa-file-pdf"></i><span>resume</span></a>
+                                                        class="fa-solid fa-file-pdf"></i><span> @lang('trs.resume')</span></a>
                                             </li>
                                         @endif
 

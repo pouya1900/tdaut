@@ -10,16 +10,7 @@
             <div class="mg-office-dashboard">
                 <form action="{{route('mg.office_capabilities_update',$office->id)}}" method="post">
                     {{csrf_field()}}
-                    @if (count($errors))
-                        <div class="alert alert-danger alert-dismissible login_form--alert" role="alert">
-                            <strong>{{ $errors->first() }}</strong>
-                        </div>
-                    @endif
-                    @if(session('message'))
-                        <div class="alert alert-success alert-dismissible register_form--alert" role="alert">
-                            <strong>{{ session('message') }}</strong>
-                        </div>
-                    @endif
+                    @include('office.includes.error_message')
                     <div class="row justify-content-center m-0">
                         @if ($office->capabilities)
                             @foreach($office->capabilities as $capability)

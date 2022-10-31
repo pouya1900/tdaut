@@ -9,6 +9,11 @@ class Support_message extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'sender',
+        'admin_id',
+        'text',
+    ];
 
     public function administrator()
     {

@@ -15,9 +15,24 @@
                     <a href="{{route('mg.office_capabilities',$office->id)}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.capabilities')</a>
                 </li>
-                <li class="{{url()->current()==route('mg.office_members',$office->id) ? "active" : ""}}">
+                <li class="{{url()->current()==route('mg.office_members',$office->id) || (isset($member) && url()->current()==route('mg.office_members_edit',['office'=>$office->id,'member'=>$member->id])) || url()->current()==route('mg.office_member_create',$office->id) ? "active" : ""}}">
                     <a href="{{route('mg.office_members',$office->id)}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.members')</a>
+                </li>
+
+                <li class="{{url()->current()==route('mg.office_roles',$office->id) || (isset($role) && url()->current()==route('mg.office_roles_edit',['office'=>$office->id,'role'=>$role->id])) ? "active" : ""}}">
+                    <a href="{{route('mg.office_roles',$office->id)}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.roles')</a>
+                </li>
+
+                <li class="{{url()->current()==route('mg.content_edit',$office->id) ? "active" : ""}}">
+                    <a href="{{route('mg.content_edit',$office->id)}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.content')</a>
+                </li>
+
+                <li class="{{url()->current()==route('mg.supports',$office->id) || (isset($support) && url()->current()==route('mg.support_show',['office'=>$office->id,'support'=>$support->id])) ? "active" : ""}}">
+                    <a href="{{route('mg.supports',$office->id)}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.supports')</a>
                 </li>
 
             </ul>

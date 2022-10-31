@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '1d6111b4429191f55ad3429e9d2e6bb9dae4a616',
+        'reference' => 'e3731a8f8c0a7f14aeb6e8466e0722bad9685733',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -379,7 +379,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '1d6111b4429191f55ad3429e9d2e6bb9dae4a616',
+            'reference' => 'e3731a8f8c0a7f14aeb6e8466e0722bad9685733',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -416,6 +416,15 @@
             'install_path' => __DIR__ . '/../laravel/tinker',
             'aliases' => array(),
             'reference' => 'dff39b661e827dae6e092412f976658df82dbac5',
+            'dev_requirement' => false,
+        ),
+        'laravel/ui' => array(
+            'pretty_version' => 'v4.0.2',
+            'version' => '4.0.2.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../laravel/ui',
+            'aliases' => array(),
+            'reference' => '9aa6930c8ae98b2465594d7f14f4ac131bfd6a99',
             'dev_requirement' => false,
         ),
         'league/commonmark' => array(
@@ -709,8 +718,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0|2.0|3.0',
-                1 => '1.0.0 || 2.0.0 || 3.0.0',
+                0 => '1.0.0 || 2.0.0 || 3.0.0',
+                1 => '1.0|2.0|3.0',
             ),
         ),
         'psr/simple-cache' => array(

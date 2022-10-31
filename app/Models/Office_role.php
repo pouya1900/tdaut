@@ -10,8 +10,12 @@ class Office_role extends Model
     use HasFactory;
 
 
-    public function members()
+    public function members($office_id = null)
     {
+        if ($office_id) {
+            return $this->belongsToMany(Member::class, "office_member", 'role_id', 'member_id')->where('office_id', $office_id);
+        }
+
         if ($this->pivot && $office_id = $this->pivot->office_id) {
             return $this->belongsToMany(Member::class, "office_member", 'role_id', 'member_id')->where('office_id', $office_id);
         }
@@ -21,14 +25,22 @@ class Office_role extends Model
     public function offices()
     {
         if ($this->pivot && $member_id = $this->pivot->member_id) {
-            return $this->belongsToMany(Office::class, "office_member", 'role_id', 'office_id');
+            return $this->belongsToMany(Office::class, "office_member", 'role_id', 'office_id')->where('member_id', $member_id);
         }
         return $this->belongsToMany(Office::class, 'office_member', 'role_id', 'office_id');
     }
 
-    public function permissions()
+    public function permissions($office_id = null)
     {
-        return $this->belongsToMany(Office_permission::class, 'office_permission_role','role_id','permission_id');
+        if ($office_id) {
+            return $this->belongsToMany(Office_permission::class, 'office_permission_role', 'role_id', 'permission_id')->where('office_id', $office_id);
+        }
+
+        if ($this->pivot && $office_id = $this->pivot->office_id) {
+            return $this->belongsToMany(Office_permission::class, 'office_permission_role', 'role_id', 'permission_id')->where('office_id', $office_id);
+        }
+
+        return $this->belongsToMany(Office_permission::class, 'office_permission_role', 'role_id', 'permission_id');
     }
 
 }

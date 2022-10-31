@@ -37,13 +37,28 @@ Route::post('/profile/password', 'App\Http\Controllers\ProfileController@update_
 Route::get('/products/show/{product}', 'App\Http\Controllers\ProductController@show')->name('product_show');
 
 Route::group(['middleware' => ['member.auth']], function () {
-    Route::get('/office/panel/{office}', 'App\Http\Controllers\Office\OfficeController@index')->name('mg.office');
+    Route::get('/office/panel/{office}', 'App\Http\Controllers\Office\OfficeController@index')->name('mg.office')->middleware('member.permission:no_permission_needed');
     Route::get('/office/create', 'App\Http\Controllers\Office\OfficeController@create')->name('mg.office_create');
     Route::post('/office/create', 'App\Http\Controllers\Office\OfficeController@store')->name('mg.office_store');
-    Route::post('/office/updaate/{office}', 'App\Http\Controllers\Office\OfficeController@update')->name('mg.office_update');
+    Route::post('/office/updaate/{office}', 'App\Http\Controllers\Office\OfficeController@update')->name('mg.office_update')->middleware('member.permission:update.*');
     Route::get('/office/capabilities/{office}', 'App\Http\Controllers\Office\OfficeController@capabilities')->name('mg.office_capabilities');
-    Route::post('/office/capabilities/{office}', 'App\Http\Controllers\Office\OfficeController@capabilities_update')->name('mg.office_capabilities_update');
-    Route::get('/office/members/{office}', 'App\Http\Controllers\Office\OfficeController@members')->name('mg.office_members');
+    Route::post('/office/capabilities/{office}', 'App\Http\Controllers\Office\OfficeController@capabilities_update')->name('mg.office_capabilities_update')->middleware('member.permission:capability.*');
+    Route::get('/office/members/{office}', 'App\Http\Controllers\Office\OfficeController@members')->name('mg.office_members')->middleware('member.permission:member.*');
+    Route::get('/office/members/{office}/update/{member}', 'App\Http\Controllers\Office\OfficeController@edit_members')->name('mg.office_members_edit')->middleware('member.permission:member.*');
+    Route::post('/office/members/{office}/update/{member}', 'App\Http\Controllers\Office\OfficeController@update_members')->name('mg.office_members_update')->middleware('member.permission:member.*');
+    Route::get('/office/members/{office}/remove/{member}', 'App\Http\Controllers\Office\OfficeController@remove_members')->name('mg.office_members_remove')->middleware('member.permission:member.*');
+    Route::get('/office/members/{office}/create', 'App\Http\Controllers\Office\OfficeController@create_member')->name('mg.office_member_create')->middleware('member.permission:member.*');
+    Route::post('/office/members/{office}/create', 'App\Http\Controllers\Office\OfficeController@store_member')->name('mg.office_member_store')->middleware('member.permission:member.*');
+    Route::get('/office/roles/{office}', 'App\Http\Controllers\Office\OfficeController@roles')->name('mg.office_roles')->middleware('member.permission:role.*');
+    Route::get('/office/roles/{office}/update/{role}', 'App\Http\Controllers\Office\OfficeController@edit_roles')->name('mg.office_roles_edit')->middleware('member.permission:role.*');
+    Route::post('/office/roles/{office}/update/{role}', 'App\Http\Controllers\Office\OfficeController@update_roles')->name('mg.office_roles_update')->middleware('member.permission:role.*');
+    Route::get('/office/content/{office}', 'App\Http\Controllers\Office\OfficeController@content_edit')->name('mg.content_edit')->middleware('member.permission:content.*');
+    Route::post('/office/content/{office}', 'App\Http\Controllers\Office\OfficeController@content_update')->name('mg.content_update')->middleware('member.permission:content.*');
+    Route::get('/office/supports/{office}', 'App\Http\Controllers\Office\OfficeController@supports')->name('mg.supports')->middleware('member.permission:support.*');
+    Route::get('/office/supports/{office}/show/{support}', 'App\Http\Controllers\Office\OfficeController@support_show')->name('mg.support_show')->middleware('member.permission:support.*');
+    Route::post('/office/supports/{office}/show/{support}', 'App\Http\Controllers\Office\OfficeController@support_new_message')->name('mg.support_new_message')->middleware('member.permission:support.*');
+    Route::get('/office/supports/{office}/create', 'App\Http\Controllers\Office\OfficeController@support_new_ticket')->name('mg.support_new_ticket')->middleware('member.permission:support.*');
+    Route::post('/office/supports/{office}/create', 'App\Http\Controllers\Office\OfficeController@support_new_ticket_store')->name('mg.support_new_ticket_store')->middleware('member.permission:support.*');
 
 });
 

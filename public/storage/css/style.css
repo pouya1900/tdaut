@@ -202,6 +202,19 @@ video {
     clear: both;
 }
 
+
+.status_pending {
+    color: #0a53be;
+}
+
+.status_answered {
+    color: #0c4128;
+}
+
+.status_closed {
+    color: #aa0000;
+}
+
 /*style code*/
 
 
@@ -1336,7 +1349,11 @@ img {
 
 .office_members--social ul li a {
     color: var(--main-color);
-    font-size: 22px;
+    font-size: 20px;
+}
+
+.office_members--social ul li a span {
+    font-size: 16px;
 }
 
 
@@ -1897,6 +1914,9 @@ img {
     padding: 20px 0;
     z-index: 999;
     position: relative;
+    max-height: 550px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 #office_side {
@@ -1934,3 +1954,218 @@ img {
     padding: 0;
     font-weight: 700;
 }
+
+
+/*table vue good table*/
+
+.vgt-wrap.rtl .vgt-table thead th, .vgt-wrap.rtl .vgt-table.condensed thead th {
+    padding-right: 1.3em !important;
+}
+
+.my-table {
+    padding: 20px;
+}
+
+
+/*members of office*/
+
+.new_member_button {
+    text-align: center;
+    margin-bottom: 25px;
+    background: #1db8c1;
+    padding: 7px 20px;
+    border-radius: 20px;
+    max-width: fit-content;
+}
+
+.new_member_button a {
+    color: #fff;
+}
+
+.new_member_button a:hover {
+    color: #fff;
+}
+
+
+.action_container {
+}
+
+.action_container .action_item {
+    display: inline;
+    margin-left: 7px;
+}
+
+.action_container .action_item a i {
+    color: #777;
+}
+
+.action_container .action_item a i:hover {
+    color: var(--main-color);
+}
+
+.action_container .action_item .show_action {
+    padding: 5px;
+    border: 1px solid var(--main-color);
+    text-align: center;
+    border-radius: 5px;
+    width: 70%;
+    margin-right: 15%;
+    color: var(--main-color);
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.action_container .action_item .show_action:hover {
+    background: var(--main-color);
+    color: #ffffff;
+}
+
+.member_edit_name {
+}
+
+.member_edit_form {
+    text-align: right;
+    padding: 40px;
+}
+
+.member_edit_form--title {
+}
+
+
+.member_edit_form--new {
+    margin-bottom: 40px;
+}
+
+.member_edit_form--new input {
+    color: rgb(38, 50, 56);
+    font-weight: 700;
+    font-size: 14px;
+    background: rgba(136, 126, 126, 0.1);
+    padding: 10px 20px;
+    border-radius: 20px;
+    outline: none;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.02);
+    text-align: center;
+}
+
+.member_edit_form--new label {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+/*content*/
+.content_edit--submit {
+    width: 50%;
+    margin-right: 25%;
+}
+
+/*support*/
+
+.support_title {
+    font-weight: 600;
+    text-align: right;
+    padding: 10px 20px;
+}
+
+.support_messages--container {
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 1px #ccc;
+}
+
+.support_message--body {
+    padding: 10px 20px;
+}
+
+.support_message--item {
+    padding: 5px;
+    background: #f0f4f8;
+    margin-bottom: 15px;
+    width: 60%;
+    text-align: right;
+    border-radius: 10px;
+    line-height: 1.7rem;
+}
+
+.support_message--body .reverse {
+    background: #1db8c1;
+    color: #fff;
+    margin-right: 40%;
+}
+
+.support_message-send--container {
+}
+
+
+.support_message-send--message {
+    text-align: right;
+    margin-top: 30px;
+}
+
+.support_message-send--message textarea {
+    width: 90%;
+    border-radius: 10px;
+    border: none;
+    background: #f0f4f8;
+    min-height: 100px;
+    padding: 10px 20px;
+}
+
+.support_message-send--message textarea:focus-visible {
+    outline: none;
+}
+
+.support_message-send--button {
+    margin-top: 10px;
+}
+
+.support_message-send--button button {
+    padding: 7px 20px;
+    border: none;
+    background: #1db8c1;
+    color: #fff;
+    border-radius: 20px;
+}
+
+.new_ticket_button {
+    text-align: center;
+    margin-bottom: 25px;
+    background: #1db8c1;
+    padding: 7px 20px;
+    border-radius: 20px;
+    max-width: fit-content;
+}
+
+.new_ticket_button a {
+    color: #fff;
+}
+
+.new_ticket_button a:hover {
+    color: #fff;
+}
+
+.support_new_ticket--title input{
+    text-align: right;
+}
+
+.support_new_ticket--message textarea {
+    min-height: 100px;
+    text-align: right;
+}
+
+.support_new_ticket--button button {
+    border-radius: 5em;
+    color: #fff;
+    background: var(--gradient-main);
+    border: 0;
+    padding: 6px 50px 10px;
+    box-shadow: 0 0 20px 1px rgb(0 0 0 / 4%);
+}
+
+

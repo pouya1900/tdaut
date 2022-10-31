@@ -1,8 +1,7 @@
 @extends('layouts.office_panel')
 
 @section('style')
-    {{--    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">--}}
-    <link rel="stylesheet" type="text/css" href="storage/css/jquery.dataTables.css">
+
 @endsection
 
 @section('content')
@@ -13,8 +12,16 @@
 
         <div class="col-12 col-lg-10 p-0">
             <div class="mg-office-dashboard">
+                <div class="my-table">
+                    <div class="new_member_button">
+                        <a href="{{route('mg.office_member_create',$office->id)}}">@lang('trs.add_new_member')</a>
+                    </div>
 
-                @include('office.members.table')
+                    @include('office.includes.error_message')
+
+
+                    @include('office.members.table')
+                </div>
 
             </div>
         </div>
@@ -22,15 +29,5 @@
 @endsection
 
 @section('script')
-    <script type="text/javascript" charset="utf8"
-            {{--            src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>--}}
-            src="storage/js/jquery.dataTables.js"></script>
 
-    <script>
-        $('#datatable').DataTable({
-            language: {
-                url: 'storage/json/fa.json'
-            },
-        });
-    </script>
 @endsection

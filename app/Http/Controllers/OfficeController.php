@@ -9,6 +9,7 @@ use App\Models\Department;
 use App\Models\Document;
 use App\Models\Message;
 use App\Models\Office;
+use App\Models\Office_role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -58,9 +59,9 @@ class OfficeController extends Controller
 
         $members = $office->members()->
         when($type, function ($query) use ($type) {
-            return $query->whereHas('roles', function ($query) use ($type) {
-                return $query->where('name', $type);
-            });
+            $roles_id = Office_role::where('name', $type)->pluck('id')->toArray();
+            return $query->wherein('role_id', $roles_id);
+
         })->distinct()->get();
 
         return view('front.offices.members', compact('office', 'members'));

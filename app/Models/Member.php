@@ -78,8 +78,12 @@ class Member extends Authenticatable
         return $this->belongsToMany(Office::class, 'office_member');
     }
 
-    public function roles()
+    public function roles($office_id = null)
     {
+        if ($office_id) {
+            return $this->belongsToMany(Office_role::class, 'office_member', 'member_id', 'role_id')->where('office_id', $office_id);
+        }
+
         if ($this->pivot && $office_id = $this->pivot->office_id) {
             return $this->belongsToMany(Office_role::class, 'office_member', 'member_id', 'role_id')->where('office_id', $office_id);
         }
@@ -93,14 +97,14 @@ class Member extends Authenticatable
 
     public function hasPermission($permission, $office_id)
     {
-        foreach ($this->roles as $role) {
+        foreach ($this->roles($office_id)->get() as $role) {
 
             if (is_array($permission)) {
-                if ($permission = $role->permissions()->whereIn('name', $permission)->where('office_id', $office_id)->first()) {
+                if ($permission = $role->permissions($office_id)->whereIn('name', $permission)->first()) {
                     return $permission;
                 }
             } else {
-                if ($permission = $role->permissions()->where('name', $permission)->where('office_id', $office_id)->first()) {
+                if ($permission = $role->permissions($office_id)->where('name', $permission)->first()) {
                     return $permission;
                 }
             }
@@ -112,13 +116,20 @@ class Member extends Authenticatable
 
     public function isSuperAdmin($office_id)
     {
-        foreach ($this->roles as $role) {
-            if ($role->permissions()->where('name', '*')->where('office_id', $office_id)->first()) {
+        foreach ($this->roles($office_id)->get() as $role) {
+            if ($role->permissions($office_id)->where('name', '*')->first()) {
                 return true;
             }
         }
         return false;
     }
 
+    public function isOfficeMember($office_id)
+    {
+        if ($this->offices()->where('office_id', $office_id)->first()) {
+            return true;
+        }
+        return false;
+    }
 
 }

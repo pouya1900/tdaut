@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('support_messages', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('support_id')->comment('تعیین تیکت پشتیبانی');
-            $table->unsignedInteger('admin_id')->comment('ادمین مشاهده کننده یا ارسال کننده پیام');
+            $table->unsignedInteger('admin_id')->nullable()->comment('ادمین مشاهده کننده یا ارسال کننده پیام');
             $table->enum('sender', ['user', 'admin'])->comment('تعیین ارسال کننده پیام');
             $table->text('text')->comment('متن پیام');
             $table->timestamps();

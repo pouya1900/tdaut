@@ -9,6 +9,11 @@ class Support extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'status',
+    ];
+
     public function supportable()
     {
         return $this->morphTo();

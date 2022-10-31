@@ -10,9 +10,27 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@popperjs/core": "^2.10.2",
+        "@vitejs/plugin-vue": "^3.0.1",
         "axios": "^0.25",
+        "bootstrap": "^5.2.1",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "sass": "^1.32.11",
+        "vue": "^3.2.37",
+        "vue-loader": "^16.2.0"
+    },
+    "dependencies": {
+        "@ckeditor/ckeditor5-basic-styles": "^35.2.1",
+        "@ckeditor/ckeditor5-build-classic": "^35.2.1",
+        "@ckeditor/ckeditor5-editor-classic": "^35.2.1",
+        "@ckeditor/ckeditor5-essentials": "^35.2.1",
+        "@ckeditor/ckeditor5-image": "^35.2.1",
+        "@ckeditor/ckeditor5-link": "^35.2.1",
+        "@ckeditor/ckeditor5-paragraph": "^35.2.1",
+        "@ckeditor/ckeditor5-vue": "^4.0.1",
+        "vue-good-table": "^2.21.11",
+        "vue-good-table-next": "^0.2.1"
     }
 }

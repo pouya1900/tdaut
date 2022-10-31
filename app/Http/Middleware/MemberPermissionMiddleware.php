@@ -17,8 +17,7 @@ class MemberPermissionMiddleware
      */
     public function handle(Request $request, Closure $next, ...$permission)
     {
-        $office_id = $request->route()->parameter('office');
-
+        $office = $request->route()->parameter('office');
         if (!$permission) {
             abort(403, 'عدم دسترسی');
         }
@@ -30,12 +29,19 @@ class MemberPermissionMiddleware
         }
 
         if (
-            empty($member->hasPermission($permission, $office_id)) &&
-            empty($member->isSuperAdmin($office_id))
+            !$member->hasPermission($permission, $office->id) &&
+            !$member->isSuperAdmin($office->id) &&
+            !in_array("no_permission_needed", $permission)
         ) {
             abort(403, 'عدم دسترسی');
         }
 
+        if (in_array("no_permission_needed", $permission)) {
+            if (!$member->isOfficeMember($office->id)) {
+                abort(403, 'عدم دسترسی');
+            }
+
+        }
         return $next($request);
     }
 }
