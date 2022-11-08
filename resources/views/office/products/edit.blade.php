@@ -65,7 +65,7 @@
                         <div class="col-12">
                             <div class="mg-office--item">
                                 <label>@lang('trs.product_images')</label>
-                                
+
                             </div>
                         </div>
 
