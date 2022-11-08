@@ -45,6 +45,11 @@ class Office extends Model
         return $this->hasMany(Message::class, "office_id");
     }
 
+    public function connect_users()
+    {
+        return $this->belongsToMany(User::class, 'messages');
+    }
+
     public function members()
     {
         if ($this->pivot && $role_id = $this->pivot->role_id) {

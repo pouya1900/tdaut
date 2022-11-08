@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->text('description');
             $table->unsignedInteger('office_id')->comment('تعیین دفتر');
             $table->unsignedInteger('user_id')->comment('تعیین کاربر');
+            $table->unsignedInteger('parent_id')->nullable()->comment('تعیین rfp برای پروپوزال');
             $table->enum('type', ['rfp', 'proposal'])->comment('تعیین نوع سند');
             $table->timestamps();
         });

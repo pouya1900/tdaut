@@ -38,7 +38,7 @@
 @section('script')
 
     <script
-        src="https://cloud.tinymce.com/dev/tinymce.min.js?apiKey=lspn926evhqnjbunloefdwuyjkll6j9q085tshnm9uhpaexi"></script>
+        src="storage/js/tinymce.min.js?apiKey=lspn926evhqnjbunloefdwuyjkll6j9q085tshnm9uhpaexi"></script>
     <script>
         tinymce.init({
             selector: 'textarea',

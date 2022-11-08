@@ -28,5 +28,35 @@
         </div>
     @endif
 
+    @if (isset($send_proposal))
+        <div class="action_item">
+            <a href="{{$send_proposal}}">
+                <div class="show_action">
+                    <span>@lang('trs.send_proposal')</span>
+                </div>
+            </a>
+        </div>
+    @endif
+
+    @if (isset($modal))
+        <div class="action_item">
+            <a data-bs-toggle="modal" data-bs-target="#{{$modal}}"
+               href="#">
+                <div class="show_action">
+                    <span>{{$modal_title}}</span>
+                </div>
+            </a>
+        </div>
+    @endif
+
+        @if (isset($file))
+            <div class="action_item">
+                <a href="{{$file}}">
+                    <div class="download_action">
+                        <span>@lang('trs.download')</span>
+                    </div>
+                </a>
+            </div>
+        @endif
 
 </div>

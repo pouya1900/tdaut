@@ -16,6 +16,7 @@ class Helper
             case "staff" :
                 return trans('trs.staff');
         }
+        return trans('trs.unknown');
     }
 
     public static function genderToTranslated($gender)
@@ -26,6 +27,7 @@ class Helper
             case "female" :
                 return trans('trs.female');
         }
+        return trans('trs.unknown');
     }
 
     public static function supportStatusToTranslated($status)
@@ -38,5 +40,21 @@ class Helper
             case "closed" :
                 return trans('trs.closed');
         }
+        return trans('trs.unknown');
+
     }
+
+    public static function productStatusTotranslated($status)
+    {
+        switch ($status) {
+            case "pending" :
+                return trans('trs.pending');
+            case "accepted" :
+                return trans('trs.accepted');
+            case "rejected" :
+                return trans('trs.rejected');
+        }
+        return trans('trs.unknown');
+    }
+
 }

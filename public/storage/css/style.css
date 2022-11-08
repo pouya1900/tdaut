@@ -601,6 +601,10 @@ video {
     margin-top: 8px;
 }
 
+.top_bar .top_bar_profile a {
+    color: #000;
+}
+
 .top_bar .top_bar_logo {
     margin-left: 5%;
 }
@@ -1906,15 +1910,16 @@ img {
 
 .mg-office-dashboard {
     background-color: #FFFFFF;
-    width: 800px;
+    width: 850px;
     margin: 3em auto;
     border-radius: 1.5em;
     box-shadow: 0 11px 35px 2px rgb(0 0 0 / 14%);
     text-align: center;
     padding: 20px 0;
     z-index: 999;
-    position: relative;
-    max-height: 550px;
+    position: fixed;
+    right: 17%;
+    left: 0;    max-height: 550px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -2150,7 +2155,7 @@ img {
     color: #fff;
 }
 
-.support_new_ticket--title input{
+.support_new_ticket--title input {
     text-align: right;
 }
 
@@ -2167,5 +2172,37 @@ img {
     padding: 6px 50px 10px;
     box-shadow: 0 0 20px 1px rgb(0 0 0 / 4%);
 }
+
+.mg-office-dashboard-fix {
+    padding: 0;
+    overflow-y: hidden;
+}
+
+.messages_users_list--container {
+    padding: 10px;
+}
+
+.message_users_list--item {
+    padding: 10px 20px;
+    color: #000;
+}
+
+.message_users_list--active-item {
+    color: #fff;
+    background: var(--main-color);
+    border-radius: 10px;
+}
+
+.message_users_list--avatar {
+}
+
+.message_users_list--avatar img {
+    border-radius: 50px;
+}
+
+.message_users_list--name {
+}
+
+
 
 

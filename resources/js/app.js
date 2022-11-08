@@ -21,11 +21,15 @@ import 'vue-good-table-next/dist/vue-good-table-next.css'
 import membersTable from './components/membersTable.vue';
 import rolesTable from './components/rolesTable.vue';
 import supportsTable from './components/supportsTable.vue';
+import rfpsTable from './components/rfpsTable.vue';
+import productsTable from './components/productsTable.vue';
 
 app.use(VueGoodTablePlugin);
 app.component('members-table', membersTable);
 app.component('roles-table', rolesTable);
 app.component('supports-table', supportsTable);
+app.component('rfps-table', rfpsTable);
+app.component('products-table', productsTable);
 
 /**
  * The following block of code may be used to automatically register your

@@ -21,7 +21,7 @@ return new class extends Migration {
             $table->enum('status', ['accepted', 'rejected', 'pending', 'rfd'])->default('pending')->comment('وضعیت تایید محضول توسط ادمین');
             $table->string('status_message')->nullable();
             $table->timestamp('status_date')->nullable()->comment('تاریخ تغییر وضعیت');
-            $table->string('link')->comment('لینک دموی انلاین');
+            $table->string('link')->nullable()->comment('لینک دموی انلاین');
             $table->timestamps();
         });
     }

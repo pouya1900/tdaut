@@ -34,6 +34,18 @@
                     <a href="{{route('mg.supports',$office->id)}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.supports')</a>
                 </li>
+                <li class="{{url()->current()==route('mg.messages',$office->id) || (isset($default_user) && url()->current()==route('mg.messages',['office'=>$office->id,'user'=>$default_user->id])) ? "active" : ""}}">
+                    <a href="{{route('mg.messages',$office->id)}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.messages')</a>
+                </li>
+                <li class="{{url()->current()==route('mg.rfps',$office->id) ? "active" : ""}}">
+                    <a href="{{route('mg.rfps',$office->id)}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.rfps')</a>
+                </li>
+                <li class="{{url()->current()==route('mg.products',$office->id) ? "active" : ""}}">
+                    <a href="{{route('mg.products',$office->id)}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.products')</a>
+                </li>
 
             </ul>
         </div>

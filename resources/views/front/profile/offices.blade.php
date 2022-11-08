@@ -55,7 +55,7 @@
                         @if ($current_member && $current_member->id==$member->id)
 
                             <div class="profile_office--button">
-                                <a href="#">@lang('trs.enter_office_panel')</a>
+                                <a href="{{route('mg.office',$office->id)}}">@lang('trs.enter_office_panel')</a>
                             </div>
                         @endif
                     </div>

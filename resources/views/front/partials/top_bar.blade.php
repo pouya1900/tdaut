@@ -13,15 +13,17 @@
 
         <div class="top_bar_profile">
             <span><i class="fa-solid fa-user"></i></span>
-            <span>{{$user_instance->profile->fullName}}</span>
+            <span><a
+                    href="{{route('profile_show',$user_instance->id)}}">{{$user_instance->profile->fullName}}</a></span>
         </div>
         <div class="top_bar_logo">
-{{--            <img src="" alt="">--}}
+            {{--            <img src="" alt="">--}}
         </div>
 
     @else
         <div class="top_bar_profile">
-            <span>ثبت نام / ورود</span>
+            <span><a href="{{route('register_member')}}">ثبت نام</a></span>
+            <span><a href="{{route('login','member')}}">ورود</a></span>
         </div>
 
     @endif

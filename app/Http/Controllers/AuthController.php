@@ -40,7 +40,7 @@ class AuthController extends Controller
         }
 
         if ($this->auth::guard('member')->check()) {
-            return redirect(route(''));
+            return redirect(route('profile_show', $this->auth::guard('member')->user()->id));
         }
 
         if ($this->auth::guard('user')->check()) {
@@ -77,7 +77,7 @@ class AuthController extends Controller
                     ->withErrors(['error' => trans('trs.account_not_confirmed_text')]);
             }
 
-            return redirect(route(''));
+            return redirect(route('profile_show', $this->auth::guard('member')->user()->id));
         }
 
 

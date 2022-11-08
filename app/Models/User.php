@@ -63,6 +63,12 @@ class User extends Authenticatable
         return $this->hasMany(Message::class, "user_id");
     }
 
+    public function connect_offices()
+    {
+        return $this->belongsToMany(Office::class, 'messages');
+    }
+
+
     public function role()
     {
         return $this->belongsTo(Role::class, 'role_id');

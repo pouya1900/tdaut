@@ -140,8 +140,6 @@
         </div>
     </div>
 
-    @include('front.offices.footer')
-
 @endsection
 
 @section('script')
