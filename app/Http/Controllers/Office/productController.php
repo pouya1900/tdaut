@@ -5,13 +5,20 @@ namespace App\Http\Controllers\Office;
 use App\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Category;
+use App\Models\Media;
 use App\Models\Office;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+use App\Traits\UploadUtilsTrait;
 
 class productController extends Controller
 {
+    use UploadUtilsTrait;
+
     public function __construct(Request $request, Office $office)
     {
         $this->request = $request;
@@ -66,13 +73,74 @@ class productController extends Controller
         return view('office.products.edit', compact('office', 'product', 'categories'));
     }
 
-    public function update(Office $office, Product $product)
+    public function update(UpdateProductRequest $request, Office $office, Product $product)
     {
+        $added_media = $request->input('added_media');
+        $deleted_media = $request->input('deleted_media');
+
+        if ($added_media) {
+            foreach ($added_media as $media_name) {
+                $file = Storage::disk('privateStorage')->readStream('tmp/' . $media_name);
+                Storage::disk('assetsStorage')->writeStream('productImage/' . $media_name, $file);
+                Storage::disk('privateStorage')->delete('tmp/' . $media_name);
+
+                $media = Media::where('title', $media_name)->first();
+
+                $product->media()->save($media);
+                $media->update(['model_type' => 'productImage']);
+            }
+        }
+
+        if ($deleted_media) {
+            foreach ($deleted_media as $deleted_name) {
+                Storage::disk('assetsStorage')->delete('productImage/' . $deleted_name);
+
+                $media = Media::where('title', $deleted_name)->first();
+
+                $media->delete();
+            }
+        }
+
+        if ($request->input('deleted_logo')) {
+            $logo = $product->logoModel;
+            if ($logo) {
+                $this->mediaRemove($logo, 'assetsStorage');
+            }
+        }
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
+            $this->imageUpload($logo, 'productLogo', 'assetsStorage', $product);
+        }
+
+
+        if ($request->input('deleted_video')) {
+            $video = $product->videoModel;
+            if ($video) {
+                $this->mediaRemove($video, 'assetsStorage');
+            }
+        }
+
+        if ($request->hasFile('video')) {
+            $video = $request->file('video');
+            $this->videoUpload($video, $product, 'productVideo', 'assetsStorage');
+        }
+
+        return redirect(route('mg.products', $office->id));
+
     }
 
     public function remove(Office $office, Product $product)
     {
-
+        $product->delete();
+        return redirect(route('mg.products', $office->id))->with('message', trans('trs.remove_product_success'));
     }
+
+    public function images(Office $office, Product $product)
+    {
+        $media = $product->imagesName;
+
+        return ['media' => $media];
+    }
+
 
 }

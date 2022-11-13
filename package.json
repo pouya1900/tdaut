@@ -31,6 +31,7 @@
         "@ckeditor/ckeditor5-paragraph": "^35.2.1",
         "@ckeditor/ckeditor5-vue": "^4.0.1",
         "vue-good-table": "^2.21.11",
-        "vue-good-table-next": "^0.2.1"
+        "vue-good-table-next": "^0.2.1",
+        "vue-media-upload": "^1.1.4"
     }
 }

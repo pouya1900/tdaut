@@ -118,6 +118,10 @@ a:active {
     height: 100%;
 }
 
+.text-right {
+    text-align: right;
+}
+
 .h1,
 h1 {
     font-size: 52px;
@@ -565,6 +569,8 @@ video {
     right: 40%;
 }
 
+
+
 .top_menu ul {
     padding: 0;
     margin: 0;
@@ -601,8 +607,23 @@ video {
     margin-top: 8px;
 }
 
+.login_register {
+    display: inline;
+    margin-left: 30px;
+    font-size: 14px;
+    color: #7a7a7a;
+}
+
 .top_bar .top_bar_profile a {
-    color: #000;
+    color: #7a7a7a;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+.top_bar .top_bar_profile a:hover{
+    color: var(--main-color);
 }
 
 .top_bar .top_bar_logo {
@@ -1919,7 +1940,8 @@ img {
     z-index: 999;
     position: fixed;
     right: 17%;
-    left: 0;    max-height: 550px;
+    left: 0;
+    max-height: 550px;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -2201,6 +2223,45 @@ img {
 }
 
 .message_users_list--name {
+}
+
+
+.close-btn[data-v-3904557e] {
+    left: 34px !important;
+    right: unset !important;
+}
+
+#video-preview {
+    width: 100%;
+    display: inline;
+}
+
+.video-preview-container, .image-preview-container {
+    border: 1px solid #aaa;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.video_preview--body, .image_preview--body {
+    position: relative;
+    text-align: left;
+}
+
+.video_preview--body img, .image_preview--body img {
+    max-width: 150px;
+}
+
+#delete_video, #delete_image {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    background: none;
+    color: #f00;
+    cursor: pointer;
+}
+
+#delete_video:hover, #delete_image:hover {
+    color: #be2727
 }
 
 

@@ -19,6 +19,17 @@ class Helper
         return trans('trs.unknown');
     }
 
+    public static function userType($type)
+    {
+        switch ($type) {
+            case "real" :
+                return trans('trs.real_person');
+            case "legal" :
+                return trans('trs.legal_person');
+        }
+        return trans('trs.unknown');
+    }
+
     public static function genderToTranslated($gender)
     {
         switch ($gender) {

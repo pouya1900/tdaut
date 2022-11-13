@@ -10,6 +10,10 @@ class StorageController extends Controller
 
     public function index($path, $file)
     {
+        if ($path == "tmp") {
+            return abort(404);
+        }
+
         return Storage::disk("privateStorage")->download($path . '/' . $file);
     }
 

@@ -106,6 +106,22 @@ class Office extends Model
         return $path . "ic_no_office_logo.jpg";
     }
 
+    public function getHasLogoAttribute()
+    {
+        $image = $this->media()->where("model_type", 'officeLogo')
+            ->first();
+        if (!empty($image)) {
+            return 1;
+        }
+        return 0;
+    }
+
+    public function getLogoModelAttribute()
+    {
+        return $this->media()->where("model_type", 'officeLogo')
+            ->first();
+    }
+
     public function getSlideshowAttribute()
     {
         $image = $this->media()->where("model_type", 'officeSlideshow')

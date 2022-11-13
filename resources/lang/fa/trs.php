@@ -102,6 +102,11 @@ return
         "accepted"                       => "تایید شده",
         "rejected"                       => "رد شده",
         "unknown"                        => "ناشناس",
-        "products"                        => "محصولات",
-        "demo_link"                        => "لینک دموی انلاین(اختیاری)",
+        "products"                       => "محصولات",
+        "demo_link"                      => "لینک دموی انلاین(اختیاری)",
+        "product_images"                 => "تصاویر محصول",
+        "product_video"                  => "ویدیو محصول",
+        "product_logo"                   => "لوگو محصول",
+        "remove_product_success"         => "محصول با موفقیت حذف شد.",
+        "logout"                         => "خروج",
     ];

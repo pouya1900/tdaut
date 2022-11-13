@@ -19,11 +19,13 @@ use App\Models\Office_permission;
 use App\Models\Office_role;
 use App\Models\Support;
 use App\Models\User;
+use App\Traits\UploadUtilsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class OfficeController extends Controller
 {
+    use UploadUtilsTrait;
 
     public function __construct(Request $request, Office $office)
     {
@@ -110,6 +112,17 @@ class OfficeController extends Controller
             "department_id"  => $request->input('department'),
             "projects_count" => $request->input('projects_count'),
         ]);
+
+        if ($request->input('deleted_logo')) {
+            $logo = $office->logoModel;
+            if ($logo) {
+                $this->mediaRemove($logo, 'assetsStorage');
+            }
+        }
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
+            $this->imageUpload($logo, 'officeLogo', 'assetsStorage', $office);
+        }
 
         return redirect(route('mg.office', $office->id))->with('message', trans('trs.changed_successfully'));
     }

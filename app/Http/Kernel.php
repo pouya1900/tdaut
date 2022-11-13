@@ -5,6 +5,7 @@ namespace App\Http;
 use App\Http\Middleware\MemberAuthMiddleware;
 use App\Http\Middleware\MemberPermissionMiddleware;
 use App\Http\Middleware\OptionalMemberAuthMiddleware;
+use App\Http\Middleware\OptionalUserAuthMiddleware;
 use App\Http\Middleware\UserAuthMiddleware;
 use App\Http\Middleware\UserPermissionMiddleware;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
@@ -73,5 +74,6 @@ class Kernel extends HttpKernel
         'member.permission'    => MemberPermissionMiddleware::class,
         'user.auth'            => UserAuthMiddleware::class,
         'user.permission'      => UserPermissionMiddleware::class,
+        'user.auth.optional'   => OptionalUserAuthMiddleware::class,
     ];
 }

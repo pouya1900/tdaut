@@ -44,7 +44,7 @@ class AuthController extends Controller
         }
 
         if ($this->auth::guard('user')->check()) {
-            return redirect(route(''));
+            return redirect(route('user.show', $this->auth::guard('user')->user()->id));
         }
 
         return view('front.auth.login', compact('type'));
@@ -109,7 +109,7 @@ class AuthController extends Controller
 
 
         if ($this->auth::guard('user')->attempt($credentials, $request->has('remember'))) {
-            return redirect(route(''));
+            return redirect(route('user_show', $this->auth::guard('user')->user()->id));
         }
 
 

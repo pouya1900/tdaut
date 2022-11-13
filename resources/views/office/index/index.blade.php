@@ -8,7 +8,7 @@
 
         <div class="col-12 col-lg-10 p-0">
             <div class="mg-office-dashboard">
-                <form action="{{route('mg.office_update',$office->id)}}" method="post">
+                <form action="{{route('mg.office_update',$office->id)}}" method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
                     @include('office.includes.error_message')
                     <input type="hidden" name="id" value="{{$office->id}}">
@@ -80,6 +80,20 @@
                                 <label>@lang('trs.about')</label>
                                 <textarea type="text" name="about"
                                           placeholder="@lang('trs.about')">{{$office->about}}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="mg-office--item">
+                                <label>@lang('trs.product_logo')</label>
+
+
+                                <div id="app-image-preview">
+                                    <image-input-preview src="{{$office->hasLogo ? $office->logo : ""}}">
+                                    </image-input-preview>
+                                </div>
+
+
                             </div>
                         </div>
                     </div>

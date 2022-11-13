@@ -1,7 +1,16 @@
 @extends('layouts.office_panel')
 
 @section('content')
+    <style>
+        .close-btn[data-v-3904557e] {
+            left: 34px !important;
+            right: unset !important;
+        }
 
+        .custum-icon[data-v-3904557e] {
+            margin-left: unset !important;
+        }
+    </style>
     <div class="row m-0 full-height">
 
         @include('office.includes.side_bar')
@@ -9,7 +18,7 @@
         <div class="col-12 col-lg-10 p-0">
             <div class="mg-office-dashboard">
                 <form action="{{route('mg.product_update',['office'=>$office->id,'product'=>$product->id])}}"
-                      method="post">
+                      method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
                     @include('office.includes.error_message')
                     <div class="row m-0">
@@ -61,14 +70,51 @@
                             </div>
                         </div>
 
+                        <div class="col-12">
+                            <div class="mg-office--item">
+                                <label>@lang('trs.product_logo')</label>
+
+
+                                <div id="app-image-preview">
+                                    <image-input-preview src="{{$product->hasLogo ? $product->logo : ""}}">
+                                    </image-input-preview>
+                                </div>
+
+
+                            </div>
+                        </div>
 
                         <div class="col-12">
                             <div class="mg-office--item">
                                 <label>@lang('trs.product_images')</label>
 
+
+                                <div id="app">
+                                    <update-media
+                                        server="{{route('tmp_upload',['type'=>''])}}"
+                                        media_file_path="{{$product->imagesPath}}"
+                                        media_server="{{route('mg.product_images',['office'=>$office->id,'product'=>$product->id])}}"
+                                        error="@error('media'){{$message}}@enderror">
+                                    </update-media>
+                                </div>
+
+
                             </div>
                         </div>
 
+                        <div class="col-12">
+                            <div class="mg-office--item">
+                                <label>@lang('trs.product_video')</label>
+
+
+                                <div id="app-video-preview">
+                                    <video-input-preview src="{{$product->video}}">
+                                    </video-input-preview>
+                                </div>
+
+
+                            </div>
+                        </div>
 
 
                     </div>

@@ -14,6 +14,8 @@ import {createApp} from 'vue';
  */
 
 const app = createApp({});
+const appVideoPreview = createApp({});
+const appImagePreview = createApp({});
 
 
 import VueGoodTablePlugin from 'vue-good-table-next';
@@ -23,6 +25,9 @@ import rolesTable from './components/rolesTable.vue';
 import supportsTable from './components/supportsTable.vue';
 import rfpsTable from './components/rfpsTable.vue';
 import productsTable from './components/productsTable.vue';
+import {UploadMedia, UpdateMedia} from 'vue-media-upload';
+import videoPreview from './components/videoPreview.vue';
+import imagePreview from './components/imagePreview.vue';
 
 app.use(VueGoodTablePlugin);
 app.component('members-table', membersTable);
@@ -30,7 +35,10 @@ app.component('roles-table', rolesTable);
 app.component('supports-table', supportsTable);
 app.component('rfps-table', rfpsTable);
 app.component('products-table', productsTable);
-
+app.component('upload-media', UploadMedia);
+app.component('update-media', UpdateMedia);
+appVideoPreview.component('video-input-preview', videoPreview);
+appImagePreview.component('image-input-preview', imagePreview);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -50,3 +58,5 @@ app.component('products-table', productsTable);
  */
 
 app.mount('#app');
+appVideoPreview.mount('#app-video-preview');
+appImagePreview.mount('#app-image-preview');

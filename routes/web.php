@@ -13,6 +13,7 @@
 
 Route::get('/storage/{path}/{file}', 'App\Http\Controllers\StorageController@index')->middleware(['member.auth.optional'])->name('storage');
 
+Route::post('/temp/upload', 'App\Http\Controllers\MediaController@tmp')->name('tmp_upload');
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('index');
 Route::get('/home2', 'App\Http\Controllers\HomeController@index2')->name('index2');
@@ -80,6 +81,7 @@ Route::group(['middleware' => ['member.auth']], function () {
     Route::get('/office/products/{office}/create', 'App\Http\Controllers\Office\productController@create')->name('mg.product_create')->middleware('member.permission:product.*');
     Route::post('/office/products/{office}/create', 'App\Http\Controllers\Office\productController@store')->name('mg.product_store')->middleware('member.permission:product.*');
     Route::get('/office/products/{office}/remove/{product}', 'App\Http\Controllers\Office\productController@remove')->name('mg.product_remove')->middleware('member.permission:product.*');
+    Route::get('/office/products/{office}/images/{product}', 'App\Http\Controllers\Office\productController@images')->name('mg.product_images')->middleware('member.permission:product.*');
 
 
 });
@@ -100,4 +102,8 @@ Route::get('/confirmation-email-user/{token}', 'App\Http\Controllers\AuthControl
 Route::get('/logout', 'App\Http\Controllers\AuthController@logout')->name('logout');
 
 
-Route::get('/storage/{model_type}/{file_name}', 'App\Http\Controllers\StorageController@index')->name('storage_index');
+Route::get('/user/{user}', 'App\Http\Controllers\UserController@show')->middleware('user.auth.optional')->name('user_show');
+Route::group(['middleware' => ['user.auth']], function () {
+    Route::get('/user/password', 'App\Http\Controllers\UserController@password')->name('user_password');
+    Route::get('/user/edit', 'App\Http\Controllers\UserController@edit')->name('user_edit');
+});

@@ -2,30 +2,36 @@
 
     @if ($current_user || $current_member)
 
-        @php
-            if ($current_user) {
-              $user_instance=$current_user;
-            }
-              else {
-                  $user_instance=$current_member;
-             }
-        @endphp
-
         <div class="top_bar_profile">
             <span><i class="fa-solid fa-user"></i></span>
-            <span><a
-                    href="{{route('profile_show',$user_instance->id)}}">{{$user_instance->profile->fullName}}</a></span>
+            <span>
+                @if ($current_member)
+                    <a href="{{route('profile_show',$current_member->id)}}">{{$current_member->profile->fullName}}</a>
+                @else
+                    <a href="{{route('user_show',$current_user->id)}}">{{$current_user->profile->fullName}}</a>
+                @endif
+            </span>
         </div>
         <div class="top_bar_logo">
+            <span><a href="{{route('logout')}}">@lang('trs.logout')</a></span>
             {{--            <img src="" alt="">--}}
         </div>
 
     @else
         <div class="top_bar_profile">
-            <span><a href="{{route('register_member')}}">ثبت نام</a></span>
-            <span><a href="{{route('login','member')}}">ورود</a></span>
+            <div class="login_register">
+                <span><a href="{{route('register_member')}}">ثبت نام</a></span>
+                <span>/</span>
+                <span><a href="{{route('login','member')}}">ورود</a></span>
+                <span>اعضا</span>
+            </div>
+            <div class="login_register">
+                <span><a href="{{route('register_user')}}">ثبت نام</a></span>
+                <span>/</span>
+                <span><a href="{{route('login','user')}}">ورود</a></span>
+                <span>کارفرمایان</span>
+            </div>
         </div>
-
     @endif
 
 
