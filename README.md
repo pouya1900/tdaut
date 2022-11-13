@@ -17,16 +17,29 @@
 
 # Installation & Configuration
 
-- Backend
-    - pull files form github
-    - open .env file and set the DB_DATABASE , DB_USERNAME , DB_PASSWORD
-    - DB_DATABASE : database name
-    - DB_USERNAME : database username
-    - DB_PASSWORD : database password
-
-
-- database
-    - open terminal and run `php artisan migrate`
+- open your terminal
+- go to your domain root directory
+- clone repository to your server with :
+    - `git clone -b feature-office git@github.com:pouya1900/tdaut.git`
+- create a file with name .env
+    - open file .env.example and copy it to .env
+    - find DB_DATABASE , DB_USERNAME and DB_PASSWORD in .env
+    - fill it with your database info
+        - DB_DATABASE : database name
+        - DB_USERNAME : database username
+        - DB_PASSWORD : database password
+    - find APP_URL and set it with your domain
+- install dependency
+    - now you can install your dependency with :
+        - `composer install`
+- create database tables:
+    - run this command to create your tables :
+        - `php artisan migrate`mo
+- demo data
+    - now if you want to import demo data you can use demo.sql file to import manually
+    - or use this command :
+        - `mysql -u username -p database_name < demo.sql`
+            - change `username` to your database username and `database_name` to your database name
 
 # database
 
