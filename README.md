@@ -41,6 +41,15 @@
         - `mysql -u username -p database_name < demo.sql`
             - change `username` to your database username and `database_name` to your database name
 
+
+- login credentials
+    - member :
+        - username : example_user@yahoo.com
+        - pass : 12345678
+    - user :
+        - username : example_member@gmail.com
+        - pass : 12345678
+        
 # database
 
 - Entity
