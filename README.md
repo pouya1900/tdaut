@@ -34,7 +34,7 @@
         - `composer install`
 - create database tables:
     - run this command to create your tables :
-        - `php artisan migrate`mo
+        - `php artisan migrate`
 - demo data
     - now if you want to import demo data you can use demo.sql file to import manually
     - or use this command :
