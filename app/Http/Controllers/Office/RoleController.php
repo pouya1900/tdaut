@@ -34,7 +34,7 @@ class RoleController extends Controller
             $data[] = [
                 'role'       => $role->title,
                 'permission' => $permission_text,
-                'action'     => $role->name != "head" ? view('office.includes.action', ['edit' => route('mg.office_roles_edit', ['office' => $office->id, 'role' => $role->id])])->render() : "",
+                'action'     => $role->name != "head" ? view('front.partials.action', ['edit' => route('mg.office_roles_edit', ['office' => $office->id, 'role' => $role->id])])->render() : "",
             ];
         }
 

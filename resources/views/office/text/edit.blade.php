@@ -13,7 +13,7 @@
         <div class="col-12 col-lg-10 p-0">
             <div class="mg-office-dashboard">
 
-                @include('office.includes.error_message')
+                @include('front.partials.error_message')
 
 
                 <form action="{{route('mg.content_update',$office->id)}}" method="post">

@@ -13,7 +13,7 @@
         <div class="col-12 col-lg-10 p-0">
             <div class="mg-office-dashboard">
                 <div class="my-table">
-                    @include('office.includes.error_message')
+                    @include('front.partials.error_message')
 
                     <div class="rfp_content">
                         <div class="rfp_header">

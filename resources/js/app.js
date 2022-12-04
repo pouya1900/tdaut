@@ -16,6 +16,11 @@ import {createApp} from 'vue';
 const app = createApp({});
 const appVideoPreview = createApp({});
 const appImagePreview = createApp({});
+const appTdImagePreview = createApp({});
+const appCapability = createApp({});
+const appSearchMember = createApp({});
+const memberRegisterApp = createApp({});
+const usernameApp = createApp({});
 
 
 import VueGoodTablePlugin from 'vue-good-table-next';
@@ -28,17 +33,44 @@ import productsTable from './components/productsTable.vue';
 import {UploadMedia, UpdateMedia} from 'vue-media-upload';
 import videoPreview from './components/videoPreview.vue';
 import imagePreview from './components/imagePreview.vue';
+import userRfpsTable from "./components/userRfpsTable";
+import officesTable from "./components/admin/officesTable";
+import adminProductsTable from "./components/admin/productsTable";
+import adminUsersTable from "./components/admin/usersTable";
+import adminMembersTable from "./components/admin/membersTable";
+import adminMemberOfficesTable from "./components/admin/memberOffices";
+import adminOfficeMembersTable from "./components/admin/officeMembers";
+import generalTable from "./components/admin/generalTable";
+import reportsTable from "./components/admin/reportsTable";
+import capability from "./components/capability";
+import searchMember from "./components/searchMember";
+import memberRegister from "./components/memberRegister";
+import username from "./components/username";
 
 app.use(VueGoodTablePlugin);
 app.component('members-table', membersTable);
 app.component('roles-table', rolesTable);
 app.component('supports-table', supportsTable);
 app.component('rfps-table', rfpsTable);
+app.component('user-rfps-table', userRfpsTable);
 app.component('products-table', productsTable);
+app.component('admin-products-table', adminProductsTable);
+app.component('admin-users-table', adminUsersTable);
+app.component('admin-members-table', adminMembersTable);
+app.component('admin-member-offices-table', adminMemberOfficesTable);
+app.component('admin-office-members-table', adminOfficeMembersTable);
+app.component('admin-reports-table', reportsTable);
+app.component('general-table', generalTable);
+app.component('offices-table', officesTable);
 app.component('upload-media', UploadMedia);
 app.component('update-media', UpdateMedia);
 appVideoPreview.component('video-input-preview', videoPreview);
 appImagePreview.component('image-input-preview', imagePreview);
+appTdImagePreview.component('td-image-input-preview', imagePreview);
+appCapability.component('capability', capability);
+appSearchMember.component('search-member', searchMember);
+memberRegisterApp.component('member-register', memberRegister);
+usernameApp.component('username', username);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -60,3 +92,8 @@ appImagePreview.component('image-input-preview', imagePreview);
 app.mount('#app');
 appVideoPreview.mount('#app-video-preview');
 appImagePreview.mount('#app-image-preview');
+appCapability.mount('#capability');
+appSearchMember.mount('#search-member');
+appTdImagePreview.mount('#app-td-image-preview');
+memberRegisterApp.mount('#app-member-register');
+usernameApp.mount('#username-check');

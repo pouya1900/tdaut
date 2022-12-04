@@ -18,8 +18,8 @@
                         <a href="{{route('mg.support_new_ticket',$office->id)}}"><i
                                 class="fa-solid fa-envelope-open-text"></i>  @lang('trs.add_new_ticket')</a>
                     </div>
-                    @include('office.includes.error_message')
-                    @include('office.supports.table')
+                    @include('front.partials.error_message')
+                    @include('front.partials.supports_table')
                 </div>
             </div>
         </div>

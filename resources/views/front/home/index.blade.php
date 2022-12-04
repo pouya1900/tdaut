@@ -35,7 +35,7 @@
                                     <div class="section_icon"><i class="fa-solid fa-building"></i></div>
                                 </div>
                                 <div class="col-8">
-                                    <div class="section_content"><span>دفتر خدمات فناوری</span></div>
+                                    <div class="section_content"><span>@lang('trs.technology_service_center')</span></div>
                                 </div>
                                 <div class="col-2">
                                     <div class="section_button"></div>
@@ -51,7 +51,7 @@
                                 <div class="section_icon"><i class="fa-solid fa-industry"></i></div>
                             </div>
                             <div class="col-8">
-                                <div class="section_content"><span>نمایشگاه دائمی</span></div>
+                                <div class="section_content"><span>@lang('trs.permanent_exhibition')</span></div>
                             </div>
                             <div class="col-2">
                                 <div class="section_button"></div>
@@ -60,13 +60,28 @@
                     </a>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="{{route('login','user')}}">
                         <div class="row full-width">
                             <div class="col-2">
                                 <div class="section_icon"><i class="fa-solid fa-building"></i></div>
                             </div>
                             <div class="col-8">
-                                <div class="section_content"><span>مشتریان</span></div>
+                                <div class="section_content"><span>@lang('trs.user_panel')</span></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="section_button"></div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{route('login','member')}}">
+                        <div class="row full-width">
+                            <div class="col-2">
+                                <div class="section_icon"><i class="fa-solid fa-building"></i></div>
+                            </div>
+                            <div class="col-8">
+                                <div class="section_content"><span>@lang('trs.member_panel')</span></div>
                             </div>
                             <div class="col-2">
                                 <div class="section_button"></div>

@@ -78,23 +78,20 @@ a {
     -ms-transition: all 0.25s ease-in-out;
     -o-transition: all 0.25s ease-in-out;
     transition: all 0.25s ease-in-out;
-    color: #F44336;
+    color: transparent;
     text-decoration: none !important;
 }
 
 a:hover {
-    color: #F44336;
     text-decoration: none;
 }
 
 a:focus {
-    color: #F44336;
     outline: none;
     text-decoration: none;
 }
 
 a:active {
-    color: #F44336;
     outline: none;
     text-decoration: none;
 }
@@ -265,7 +262,7 @@ video {
     left: 200px;
     width: max-content;
     text-align: center;
-    bottom: -40%;
+    bottom: -60%;
 }
 
 .infographic_container .infographic_section ul {
@@ -298,8 +295,12 @@ video {
     transform: scale(1.1);
 }
 
-.infographic_container .infographic_section ul li:nth-child(2), .infographic_container .infographic_section ul li:nth-child(3) {
+.infographic_container .infographic_section ul li:nth-child(2), .infographic_container .infographic_section ul li:nth-child(4) {
     left: 40px;
+}
+
+.infographic_container .infographic_section ul li:nth-child(3) {
+    left: 60px;
 }
 
 .infographic_container .infographic_section ul li:nth-child(1) {
@@ -334,40 +335,54 @@ video {
     color: #0c75b8;
 }
 
+.infographic_container .infographic_section ul li:nth-child(5) {
+    background: #0cb878;
+}
+
+.infographic_container .infographic_section ul li:nth-child(5) .section_icon {
+    color: #0cb878;
+}
 
 .infographic_container .infographic_section ul li:after {
     content: close-quote;
     height: 2px;
     position: absolute;
-    width: 80px;
+    width: 105px;
 }
 
 .infographic_container .infographic_section ul li:nth-child(1):after {
     transform: rotateZ(140deg);
-    left: -70px;
-    top: 50px;
+    left: -90px;
+    top: 60px;
     background: #d71c3d;
 }
 
 .infographic_container .infographic_section ul li:nth-child(2):after {
-    top: 30px;
-    transform: rotateZ(170deg);
-    left: -79px;
+    top: 45px;
+    transform: rotateZ(160deg);
+    left: -105px;
     background: #ee8637;
 }
 
 .infographic_container .infographic_section ul li:nth-child(3):after {
-    top: 16px;
-    transform: rotateZ(10deg);
-    left: -80px;
+    top: 25px;
+    transform: rotateZ(0deg);
+    left: -105px;
     background: #19a3a6;
 }
 
 .infographic_container .infographic_section ul li:nth-child(4):after {
-    transform: rotateZ(40deg);
-    left: -70px;
+    transform: rotateZ(30deg);
+    left: -90px;
     top: 0;
     background: #0c75b8;
+}
+
+.infographic_container .infographic_section ul li:nth-child(5):after {
+    transform: rotateZ(40deg);
+    left: -90px;
+    top: -10px;
+    background: #0cb878;
 }
 
 .infographic_container .infographic_section .section_icon {
@@ -570,7 +585,6 @@ video {
 }
 
 
-
 .top_menu ul {
     padding: 0;
     margin: 0;
@@ -622,7 +636,18 @@ video {
     -o-transition: all 0.3s;
     transition: all 0.3s;
 }
-.top_bar .top_bar_profile a:hover{
+
+.login_register_modal {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 40px;
+}
+
+.login_register_modal a {
+    color: #666;
+}
+
+.top_bar .top_bar_profile a:hover {
     color: var(--main-color);
 }
 
@@ -970,6 +995,14 @@ img {
     font-size: 14px;
 }
 
+.office_top_bar .office_top_bar_profile a {
+    color: #000;
+}
+
+.logout a {
+    color: #000;
+}
+
 .office_top_bar .office_title {
     text-align: center;
     margin-top: 20px;
@@ -1024,7 +1057,25 @@ img {
 .profile_side_container {
     height: 100%;
     background: var(--main-color);
-    padding: 60px 0 150px 0;
+    padding: 30px 0 150px 0;
+}
+
+.profile_side_container--member-name {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--secondary-color);
+}
+
+.profile_side_container--member-name img {
+    width: 50px;
+}
+
+.profile_side_container--member-name a {
+    color: #fff;
+}
+
+.profile_side_container--member-name a:hover {
+    color: #000;
 }
 
 .profile_side_container .profile_info {
@@ -1109,8 +1160,10 @@ img {
 .profile_main {
     padding: 20px;
     background: #fff;
-    box-shadow: 0 0 10px 2px #ccc;
+    box-shadow: 0 11px 35px 2px rgb(0 0 0 / 14%);
     position: relative;
+    text-align: center;
+    border-radius: 1em;
 }
 
 .profile_main_content {
@@ -1796,10 +1849,7 @@ img {
 .alert_js {
     color: #f00;
     font-size: 13px;
-    position: absolute;
-    right: 0;
-    left: 0;
-    display: none;
+    margin-top: 5px;
 }
 
 .register_form .submit, .mg-office--item .submit {
@@ -2085,6 +2135,53 @@ img {
     color: #555;
 }
 
+.member-result-list {
+    position: absolute;
+    background: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    top: 100%;
+    color: #000;
+    box-shadow: 0px 0px 5px 2px #ececec;
+    min-width: 223px;
+}
+
+#search-member {
+    position: relative;
+}
+
+.member-result-list ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.member-result-list ul li {
+    padding: 5px;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.member-result-list ul li img {
+    width: 40px;
+    border-radius: 60px;
+    height: 40px;
+}
+
+.member-result-list ul li span {
+    margin-right: 10px;
+}
+
+.member-result-list ul li:hover {
+    background: var(--main-color);
+    color: #fff;
+}
+
 /*content*/
 .content_edit--submit {
     width: 50%;
@@ -2111,7 +2208,7 @@ img {
 }
 
 .support_message--item {
-    padding: 5px;
+    padding: 5px 5px 0 5px;
     background: #f0f4f8;
     margin-bottom: 15px;
     width: 60%;
@@ -2133,6 +2230,19 @@ img {
 .support_message-send--message {
     text-align: right;
     margin-top: 30px;
+}
+
+.support_message--sender {
+    text-align: left;
+    color: #888;
+    font-size: 14px;
+}
+
+.support_message--date {
+    opacity: 0.7;
+    font-size: 14px;
+    text-align: left;
+    direction: ltr;
 }
 
 .support_message-send--message textarea {
@@ -2265,5 +2375,39 @@ img {
 }
 
 
+/*admin*/
+
+.admin_background {
+    background-image: url("../assets/siteContent/admin_cover.jpg");
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: -1;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.background-overlay {
+    background: #000;
+    opacity: 0.5;
+    height: 100%;
+    width: 100%;
+}
 
 
+.mg-admin-dashboard {
+    background-color: #FFFFFF;
+    width: 80%;
+    margin: 3em auto;
+    border-radius: 1.5em;
+    box-shadow: 0 11px 35px 2px rgb(0 0 0 / 14%);
+    text-align: center;
+    padding: 20px 0;
+    z-index: 999;
+    position: fixed;
+    right: 17%;
+    left: 0;
+    max-height: 550px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

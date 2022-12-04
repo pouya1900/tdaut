@@ -143,4 +143,26 @@ class ProfileController extends Controller
 
     }
 
+
+    public function search()
+    {
+        $string = $this->request->input('str');
+
+        $members = Member::wherehas('profile', function ($q) use ($string) {
+            return $q->where('username', 'like', "%$string%")->orwhere('first_name', 'like', "%$string%")->orwhere('last_name', 'like', "%$string%");
+        })->orwhere('email', 'like', "%$string%")->get();
+
+        $response = [];
+
+        foreach ($members as $member) {
+            $response[] = [
+                'name'   => $member->profile->fullName,
+                'id'     => $member->id,
+                'avatar' => $member->profile->avatar,
+            ];
+        }
+        return json_encode($response);
+    }
+
+
 }

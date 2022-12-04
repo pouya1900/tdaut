@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Events\SendConfirmationEmailEvent;
 use App\Http\Requests\LoginRequest;
+use App\Models\Degree;
 use App\Models\Department;
+use App\Models\Email;
 use App\Models\Member;
 use App\Models\Profile;
 use App\Models\Rank;
@@ -40,10 +42,16 @@ class AuthController extends Controller
         }
 
         if ($this->auth::guard('member')->check()) {
+            if ($type == 'user') {
+                return redirect(route('profile_show', $this->auth::guard('member')->user()->id))->with('account_alert', trans('trs.you_are_logged_in_as_member_please_logout_first'));
+            }
             return redirect(route('profile_show', $this->auth::guard('member')->user()->id));
         }
 
         if ($this->auth::guard('user')->check()) {
+            if ($type == 'member') {
+                return redirect(route('user.show', $this->auth::guard('user')->user()->id))->with('account_alert', trans('trs.you_are_logged_in_as_user_please_logout_first'));
+            }
             return redirect(route('user.show', $this->auth::guard('user')->user()->id));
         }
 
@@ -70,8 +78,8 @@ class AuthController extends Controller
 
         if ($this->auth::guard('member')->attempt($credentials, $request->has('remember'))) {
 
-            if (!$this->auth::user()->email_verified_at) {
-                $this->auth::logout();
+            if (!$this->auth::guard('member')->user()->email_verified_at) {
+                $this->auth::guard('member')->logout();
                 return redirect()->back()
                     ->withInput($request->only('email', 'remember'))
                     ->withErrors(['error' => trans('trs.account_not_confirmed_text')]);
@@ -109,6 +117,14 @@ class AuthController extends Controller
 
 
         if ($this->auth::guard('user')->attempt($credentials, $request->has('remember'))) {
+
+            if (!$this->auth::guard('user')->user()->email_verified_at) {
+                $this->auth::guard('user')->logout();
+                return redirect()->back()
+                    ->withInput($request->only('email', 'remember'))
+                    ->withErrors(['error' => trans('trs.account_not_confirmed_text')]);
+            }
+
             return redirect(route('user_show', $this->auth::guard('user')->user()->id));
         }
 
@@ -132,8 +148,16 @@ class AuthController extends Controller
     {
         $ranks = Rank::all();
         $departments = Department::all();
+        $degrees = Degree::all();
 
-        return view('front.auth.register_member', compact('ranks', 'departments'));
+        $data = [
+            'ranks'       => $ranks,
+            'departments' => $departments,
+            'degrees'     => $degrees,
+            'trans'       => trans('trs'),
+        ];
+
+        return view('front.auth.register_member', compact('data'));
     }
 
     public function register_user()
@@ -199,6 +223,12 @@ class AuthController extends Controller
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
+        $email = $this->request->input('email');
+
+        if (!Email::where('email', $email)->first()) {
+            return redirect()->back()->withInput()->withErrors(['error' => trans('trs.professor_email_not_found')]);
+        }
+
         do {
             $token = Str::random(12);
         } while ($this->member->where('confirmation_token', $token)->first());
@@ -213,7 +243,8 @@ class AuthController extends Controller
 
 //        Event::dispatch(new SendConfirmationEmailEvent($member->email, $link));
 
-        return view('front.auth.registered');
+        return redirect(route('registered', 'member') . "?link=" . $link);
+
     }
 
 
@@ -275,10 +306,16 @@ class AuthController extends Controller
 
 //        Event::dispatch(new SendConfirmationEmailEvent($user->email, $link));
 
-        return view('front.auth.registered');
+        return redirect(route('registered', 'user') . "?link=" . $link);
 
     }
 
+    public function registered($type)
+    {
+        $link = $this->request->link;
+        return view('front.auth.registered', compact('type', 'link'));
+
+    }
 
     public function confirmation_email_member($toekn)
     {
@@ -293,8 +330,8 @@ class AuthController extends Controller
             $member->update(['email_verified_at' => $now]);
         }
 
-
-        return view('front.auth.confirmation');
+        $type = 'member';
+        return view('front.auth.confirmation', compact('type'));
     }
 
     public function confirmation_email_user($toekn)
@@ -307,7 +344,19 @@ class AuthController extends Controller
 
         $now = date('Y-m-d H:i:s', strtotime('now'));
         $user->update(['email_verified_at' => $now]);
-        return view('front.auth.confirmation');
+
+        $type = 'user';
+        return view('front.auth.confirmation', compact('type'));
+    }
+
+    public function check_username()
+    {
+        $username = $this->request->username;
+
+        if (Profile::where('username', $username)->first()) {
+            return false;
+        }
+        return true;
     }
 
 }

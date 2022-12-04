@@ -20,7 +20,7 @@
                 <form action="{{route('mg.product_update',['office'=>$office->id,'product'=>$product->id])}}"
                       method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
-                    @include('office.includes.error_message')
+                    @include('front.partials.error_message')
                     <div class="row m-0">
                         <div class="col-12">
                             <div class="mg-office--item">
@@ -76,7 +76,7 @@
 
 
                                 <div id="app-image-preview">
-                                    <image-input-preview src="{{$product->hasLogo ? $product->logo : ""}}">
+                                    <image-input-preview  att_name="logo" src="{{$product->hasLogo ? $product->logo : ""}}">
                                     </image-input-preview>
                                 </div>
 
@@ -86,12 +86,27 @@
 
                         <div class="col-12">
                             <div class="mg-office--item">
+                                <label>@lang('trs.product_3d_picture')</label>
+
+
+                                <div id="app-td-image-preview">
+                                    <td-image-input-preview att_name="td" src="{{$product->td}}">
+                                    </td-image-input-preview>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                        <div class="col-12">
+                            <div class="mg-office--item">
                                 <label>@lang('trs.product_images')</label>
 
 
                                 <div id="app">
                                     <update-media
-                                        server="{{route('tmp_upload',['type'=>''])}}"
+                                        server="{{route('tmp_upload')}}"
                                         media_file_path="{{$product->imagesPath}}"
                                         media_server="{{route('mg.product_images',['office'=>$office->id,'product'=>$product->id])}}"
                                         error="@error('media'){{$message}}@enderror">

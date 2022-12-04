@@ -20,6 +20,7 @@ class MemberAuthMiddleware
         if (!Auth::guard('member')->check()) {
             return redirect(route('login',['type'=>'member']));
         }
+
         $request->current_member = Auth::guard('member')->user();
         return $next($request);
     }

@@ -2,8 +2,11 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\AdminAuthMiddleware;
+use App\Http\Middleware\AdminPermissionMiddleware;
 use App\Http\Middleware\MemberAuthMiddleware;
 use App\Http\Middleware\MemberPermissionMiddleware;
+use App\Http\Middleware\OfficeActiveMiddleware;
 use App\Http\Middleware\OptionalMemberAuthMiddleware;
 use App\Http\Middleware\OptionalUserAuthMiddleware;
 use App\Http\Middleware\UserAuthMiddleware;
@@ -75,5 +78,8 @@ class Kernel extends HttpKernel
         'user.auth'            => UserAuthMiddleware::class,
         'user.permission'      => UserPermissionMiddleware::class,
         'user.auth.optional'   => OptionalUserAuthMiddleware::class,
+        'admin.auth'           => AdminAuthMiddleware::class,
+        'admin.permission'     => AdminPermissionMiddleware::class,
+        'office.active'        => OfficeActiveMiddleware::class,
     ];
 }

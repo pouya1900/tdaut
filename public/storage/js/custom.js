@@ -45,6 +45,8 @@ jQuery(document).ready(function ($) {
 
     });
 
+    $('#accountAlertModal').modal('show');
+
 });
 
 

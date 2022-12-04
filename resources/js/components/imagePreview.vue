@@ -1,13 +1,14 @@
 <template>
     <div class="image-preview-container">
-        <input type="hidden" name="deleted_logo" :value="delete_value">
+        <input type="hidden" :name="'deleted_image_'+name" :value="delete_value">
         <div class="row">
             <div class="col-8 text-right">
-                <input name="logo" type="file" id="image" accept="image/*" @change="handleFileUpload( $event )"/>
+                <input :name="name" type="file" :id="name" accept="image/*"
+                       @change="handleFileUpload( $event )"/>
             </div>
             <div class="col-4">
                 <div class="image_preview--body">
-                    <img :src="source" id="image-preview" v-show="file != '' || source !=''">
+                    <img :src="source" :id="'image-preview-'+name" v-show="file != '' || source !=''">
 
                     <div id="delete_image" @click="deleteFile($event)" v-show="file != '' || source !=''">
                         <svg class="times-icon" xmlns="http://www.w3.org/2000/svg" width="0.65em" height="0.65em"
@@ -25,11 +26,11 @@
 
 <script>
 export default {
-    props: ['src'],
+    props: ['src', 'att_name'],
     name: 'video',
     methods: {
         previewImage() {
-            let image = document.getElementById('image-preview');
+            let image = document.getElementById('image-preview-' + this.name);
             let reader = new FileReader();
 
             reader.readAsDataURL(this.file);
@@ -47,7 +48,7 @@ export default {
             this.previewImage();
         },
         deleteFile(event) {
-            let imageInput = document.getElementById('image');
+            let imageInput = document.getElementById(this.name);
             imageInput.value = null;
             this.file = '';
             this.delete_value = 1;
@@ -58,7 +59,8 @@ export default {
         return {
             file: '',
             source: this.src,
-            delete_value: 0
+            delete_value: 0,
+            name: this.att_name
         }
     },
 }

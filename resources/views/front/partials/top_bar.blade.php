@@ -13,7 +13,7 @@
             </span>
         </div>
         <div class="top_bar_logo">
-            <span><a href="{{route('logout')}}">@lang('trs.logout')</a></span>
+            <span class="logout"><a href="{{route('logout')}}">@lang('trs.logout')</a></span>
             {{--            <img src="" alt="">--}}
         </div>
 

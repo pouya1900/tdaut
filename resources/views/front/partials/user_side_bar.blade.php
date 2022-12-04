@@ -20,6 +20,20 @@
                     </li>
                 @endif
 
+                <li class="{{url()->current()==route('user_rfp') ? "active" : ""}}">
+                    <a href="{{route('user_rfp')}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.rfps')</a>
+                </li>
+
+                <li class="{{url()->current()==route('user_supports') || (isset($support) && url()->current()==route('user_support_show',$support->id)) || url()->current()==route('user_support_new_ticket') ? "active" : ""}}">
+                    <a href="{{route('user_supports')}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.supports')</a>
+                </li>
+
+                <li class="{{url()->current()==route('user_messages')  ? "active" : ""}}">
+                    <a href="{{route('user_messages')}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.messages')</a>
+                </li>
 
             </ul>
         </div>

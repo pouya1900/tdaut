@@ -35,6 +35,11 @@ class Product extends Model
         return $this->morphMany(Report::class, 'reportable');
     }
 
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');
@@ -68,6 +73,24 @@ class Product extends Model
             return true;
         }
         return false;
+    }
+
+    public function getTdAttribute()
+    {
+        $image = $this->media()->where("model_type", 'productTd')
+            ->first();
+
+        if (!empty($image)) {
+            $path = Storage::disk("assetsStorage")->url('') . 'productTd/';
+            return $path . $image->title;
+        }
+        return null;
+    }
+
+    public function getTdModelAttribute()
+    {
+        return $this->media()->where("model_type", 'productTd')
+            ->first();
     }
 
     public function getImagesAttribute()
@@ -121,5 +144,9 @@ class Product extends Model
         $query->where('status', 'accepted');
     }
 
+    public function getModelNameAttribute()
+    {
+        return trans('trs.product');
+    }
 
 }

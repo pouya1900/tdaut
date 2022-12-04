@@ -18,8 +18,6 @@ return new class extends Migration {
             $table->string('reportable_type')->comment('تعیین مدل گزارش شده');
             $table->unsignedInteger('reportable_id')->comment('تعیین رکورد');
             $table->unsignedInteger('report_type_id')->comment('نعیین نوع گزارش');
-            $table->timestamp('seen_at')->comment('زمان دیده شدن توسط ادمین');
-            $table->unsignedInteger('seen_admin_id')->comment('تعیین ادمین بازدید کننده');
             $table->timestamps();
         });
     }

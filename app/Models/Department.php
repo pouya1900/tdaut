@@ -9,7 +9,9 @@ class Department extends Model
 {
     use HasFactory;
 
-
+    protected $fillable = [
+        'title',
+    ];
 
     public function offices()
     {

@@ -16,7 +16,7 @@
                     <h5>{{$role->title}}</h5>
                 </div>
                 <div class="member_edit_form">
-                    @include('office.includes.error_message')
+                    @include('front.partials.error_message')
                     <div class="member_edit_form--title">
                         <h6>@lang('trs.permissions')</h6>
                     </div>

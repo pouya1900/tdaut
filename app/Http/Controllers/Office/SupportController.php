@@ -24,8 +24,8 @@ class SupportController extends Controller
             $data[] = [
                 'title'      => $support->title,
                 'created_at' => date('Y-m-d H:i', strtotime($support->created_at)),
-                'status'     => view('office.includes.status', ['status' => $support->status])->render(),
-                'action'     => view('office.includes.action', ['show' => route('mg.support_show', ['office' => $office->id, 'support' => $support->id])])->render(),
+                'status'     => view('front.partials.status', ['status' => $support->status])->render(),
+                'action'     => view('front.partials.action', ['show' => route('mg.support_show', ['office' => $office->id, 'support' => $support->id])])->render(),
             ];
         }
 
@@ -34,14 +34,24 @@ class SupportController extends Controller
 
     public function show(Office $office, Support $support)
     {
+        if ($support->supportable != $office) {
+            abort(403);
+        }
         return view('office.supports.show', compact('office', 'support'));
     }
 
     public function store_message(supportMessageRequest $request, Office $office, Support $support)
     {
+        if ($support->supportable != $office) {
+            abort(403);
+        }
         $support->messages()->create([
             'sender' => 'user',
             'text'   => $request->input('message'),
+        ]);
+
+        $support->update([
+            'status' => 'pending',
         ]);
 
         return redirect(route('mg.support_show', ['office' => $office->id, 'support' => $support->id]));

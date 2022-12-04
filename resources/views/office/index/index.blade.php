@@ -10,7 +10,7 @@
             <div class="mg-office-dashboard">
                 <form action="{{route('mg.office_update',$office->id)}}" method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
-                    @include('office.includes.error_message')
+                    @include('front.partials.error_message')
                     <input type="hidden" name="id" value="{{$office->id}}">
                     <div class="row m-0">
                         <div class="col-12 col-lg-6">
@@ -85,11 +85,11 @@
 
                         <div class="col-12">
                             <div class="mg-office--item">
-                                <label>@lang('trs.product_logo')</label>
+                                <label>@lang('trs.office_logo')</label>
 
 
                                 <div id="app-image-preview">
-                                    <image-input-preview src="{{$office->hasLogo ? $office->logo : ""}}">
+                                    <image-input-preview att_name="image" src="{{$office->hasLogo ? $office->logo : ""}}">
                                     </image-input-preview>
                                 </div>
 

@@ -55,7 +55,7 @@ class Helper
 
     }
 
-    public static function productStatusTotranslated($status)
+    public static function productStatusToTranslated($status)
     {
         switch ($status) {
             case "pending" :
@@ -64,8 +64,39 @@ class Helper
                 return trans('trs.accepted');
             case "rejected" :
                 return trans('trs.rejected');
+            case "rfd" :
+                return trans('trs.rfd');
         }
         return trans('trs.unknown');
     }
 
+    public static function officeStatusToTranslated($status)
+    {
+        switch ($status) {
+            case "pending" :
+                return trans('trs.pending');
+            case "verified" :
+                return trans('trs.verified');
+            case "rejected" :
+                return trans('trs.rejected');
+            case 'rfd' :
+                return trans('trs.rfd');
+        }
+        return trans('trs.unknown');
+    }
+
+    public static function userStatusToTranslated($status)
+    {
+        switch ($status) {
+            case "pending" :
+                return trans('trs.pending');
+            case "verified" :
+                return trans('trs.verified');
+            case "rejected" :
+                return trans('trs.rejected');
+            case 'rfd' :
+                return trans('trs.rfd');
+        }
+        return trans('trs.unknown');
+    }
 }

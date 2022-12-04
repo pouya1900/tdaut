@@ -26,11 +26,11 @@ class proposalController extends Controller
             $data[] = [
                 'user'        => $rfp->user->profile->fullName,
                 'title'       => $rfp->title,
-                'description' => view('office.includes.action', ['modal' => 'description' . $rfp->id, 'modal_title' => trans('trs.show')])->render(),
-                'proposal'    => $rfp->proposal ? view('office.includes.action', ['modal' => 'proposal' . $rfp->proposal->id, 'modal_title' => trans('trs.show')])->render() : "",
+                'description' => view('front.partials.action', ['modal' => 'description' . $rfp->id, 'modal_title' => trans('trs.show')])->render(),
+                'proposal'    => $rfp->proposal ? view('front.partials.action', ['modal' => 'proposal' . $rfp->proposal->id, 'modal_title' => trans('trs.show')])->render() : "",
                 'created_at'  => date('Y-m-d H:i', strtotime($rfp->created_at)),
-                'file'        => view('office.includes.action', ['download' => $rfp->file])->render(),
-                'action'      => view('office.includes.action', ['send_proposal' => route('mg.create_proposal', ['office' => $office->id, 'document' => $rfp->id])])->render(),
+                'file'        => view('front.partials.action', ['download' => $rfp->file])->render(),
+                'action'      => view('front.partials.action', ['send_proposal' => route('mg.create_proposal', ['office' => $office->id, 'document' => $rfp->id])])->render(),
             ];
         }
 
@@ -46,6 +46,10 @@ class proposalController extends Controller
 
     public function store(StoreProposalRequest $request, Office $office, Document $document)
     {
+        if ($document->office->id != $office->id) {
+            abort(403);
+        }
+
         $proposal = $office->documents()->create([
             "title"       => $request->input('title'),
             "description" => $request->input('description'),

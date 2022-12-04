@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->unsignedTinyInteger('role_id')->comment('نوع ادمین که در جدول admin_roles وجود دارد.');
             $table->string('confirmation_token')->nullable();
             $table->string('reset_token')->nullable();
             $table->rememberToken();

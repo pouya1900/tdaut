@@ -32,12 +32,12 @@ class productController extends Controller
             $data[] = [
                 'title'          => $product->title,
                 'category'       => $product->category->title,
-                'status'         => Helper::productStatusTotranslated($product->status),
+                'status'         => Helper::productStatusToTranslated($product->status),
                 'status_message' => $product->status_message,
                 'status_date'    => $product->status_date,
                 'link'           => $product->link,
                 'created_at'     => date('Y-m-d H:i', strtotime($product->created_at)),
-                'action'         => view('office.includes.action', ['edit' => route('mg.product_edit', ['office' => $office->id, 'product' => $product->id]), 'remove' => route('mg.product_remove', ['office' => $office->id, 'product' => $product->id])])->render(),
+                'action'         => view('front.partials.action', ['edit' => route('mg.product_edit', ['office' => $office->id, 'product' => $product->id]), 'remove' => route('mg.product_remove', ['office' => $office->id, 'product' => $product->id])])->render(),
             ];
         }
 
@@ -68,6 +68,9 @@ class productController extends Controller
 
     public function edit(Office $office, Product $product)
     {
+        if ($product->office->id != $office->id) {
+            abort(403);
+        }
         $categories = Category::all();
 
         return view('office.products.edit', compact('office', 'product', 'categories'));
@@ -75,8 +78,19 @@ class productController extends Controller
 
     public function update(UpdateProductRequest $request, Office $office, Product $product)
     {
+        if ($product->office->id != $office->id) {
+            abort(403);
+        }
+
         $added_media = $request->input('added_media');
         $deleted_media = $request->input('deleted_media');
+
+        $product->update([
+            'title'       => $request->input('title'),
+            'description' => $request->input('description'),
+            'category_id' => $request->input('category'),
+            'link'        => $request->input('link'),
+        ]);
 
         if ($added_media) {
             foreach ($added_media as $media_name) {
@@ -101,7 +115,7 @@ class productController extends Controller
             }
         }
 
-        if ($request->input('deleted_logo')) {
+        if ($request->input('deleted_image_logo')) {
             $logo = $product->logoModel;
             if ($logo) {
                 $this->mediaRemove($logo, 'assetsStorage');
@@ -110,6 +124,17 @@ class productController extends Controller
         if ($request->hasFile('logo')) {
             $logo = $request->file('logo');
             $this->imageUpload($logo, 'productLogo', 'assetsStorage', $product);
+        }
+
+        if ($request->input('deleted_image_td')) {
+            $td = $product->tdModel;
+            if ($td) {
+                $this->mediaRemove($td, 'assetsStorage');
+            }
+        }
+        if ($request->hasFile('td')) {
+            $td = $request->file('td');
+            $this->imageUpload($td, 'productTd', 'assetsStorage', $product);
         }
 
 
@@ -131,12 +156,18 @@ class productController extends Controller
 
     public function remove(Office $office, Product $product)
     {
+        if ($product->office->id != $office->id) {
+            abort(403);
+        }
         $product->delete();
         return redirect(route('mg.products', $office->id))->with('message', trans('trs.remove_product_success'));
     }
 
     public function images(Office $office, Product $product)
     {
+        if ($product->office->id != $office->id) {
+            abort(403);
+        }
         $media = $product->imagesName;
 
         return ['media' => $media];

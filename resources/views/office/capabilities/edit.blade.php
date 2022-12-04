@@ -10,24 +10,13 @@
             <div class="mg-office-dashboard">
                 <form action="{{route('mg.office_capabilities_update',$office->id)}}" method="post">
                     {{csrf_field()}}
-                    @include('office.includes.error_message')
-                    <div class="row justify-content-center m-0">
-                        @if ($office->capabilities)
-                            @foreach($office->capabilities as $capability)
-                                <div class="col-12 col-lg-8">
-                                    <div class="mg-office--item">
-                                        <input type="text" name="capabilities[]" value="{{$capability->text}}"
-                                               placeholder="@lang('trs.capability')">
-                                        <button type="button" class="delete_capability">-</button>
-                                    </div>
-                                </div>
-                            @endforeach
-                        @endif
+                    @include('front.partials.error_message')
 
+                    <div id="capability">
+                        <capability :data="{{json_encode($office->capabilities)}}">
+                        </capability>
                     </div>
-                    <div class="mg-office--item">
-                        <button type="button"  name="add_capability" id="add_capability">+</button>
-                    </div>
+
                     <div class="row justify-content-center">
                         <div class="col-4 text-center">
                             <button type="submit" class="edit_profile_button">

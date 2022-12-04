@@ -14,7 +14,7 @@
             <div class="mg-office-dashboard">
                 <div class="my-table">
 
-                    @include('office.includes.error_message')
+                    @include('front.partials.error_message')
 
                     @include('office.rfps.table')
                 </div>

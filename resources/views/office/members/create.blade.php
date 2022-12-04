@@ -17,14 +17,12 @@
                     <form action="{{route('mg.office_member_store',$office->id)}}"
                           method="post">
                         {{csrf_field()}}
-                        @include('office.includes.error_message')
+                        @include('front.partials.error_message')
 
-
-                        <div class="member_edit_form--new">
-                                <label>@lang('trs.email')</label>
-                                <input type="text" name="email" placeholder="@lang('trs.email')">
-                                <input type="hidden" name="member_id" value="2">
+                        <div id="search-member">
+                            <search-member :link="{{json_encode(route('search_member'))}}" :label="{{json_encode(trans('trs.search_member_label'))}}"></search-member>
                         </div>
+
                         <div class="member_edit_form--title">
                             <h6>@lang('trs.roles')</h6>
                         </div>

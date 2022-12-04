@@ -39,7 +39,7 @@ class MemberController extends Controller
                 'username' => $member->profile->username,
                 'gender'   => Helper::genderToTranslated($member->profile->gender),
                 'role'     => $role_text,
-                'action'   => view('office.includes.action', ['edit' => route('mg.office_members_edit', ['office' => $office->id, 'member' => $member->id]), 'remove' => route('mg.office_members_remove', ['office' => $office->id, 'member' => $member->id])])->render(),
+                'action'   => view('front.partials.action', ['edit' => route('mg.office_members_edit', ['office' => $office->id, 'member' => $member->id]), 'remove' => route('mg.office_members_remove', ['office' => $office->id, 'member' => $member->id])])->render(),
             ];
         }
 
@@ -48,6 +48,9 @@ class MemberController extends Controller
 
     public function edit(Office $office, Member $member)
     {
+        if (!$member->isOfficeMember($office->id)) {
+            abort(403);
+        }
         $roles = Office_role::all();
 
         $role_head = Office_role::where('name', 'head')->first();
@@ -57,6 +60,10 @@ class MemberController extends Controller
 
     public function update(UpdateMemberRoleRequest $request, Office $office, Member $member)
     {
+        if (!$member->isOfficeMember($office->id)) {
+            abort(403);
+        }
+
         $roles = $request->input('role');
 
         $role_head = Office_role::where('name', 'head')->first();

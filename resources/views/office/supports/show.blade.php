@@ -12,7 +12,7 @@
 
         <div class="col-12 col-lg-10 p-0">
             <div class="mg-office-dashboard">
-                @include('office.includes.error_message')
+                @include('front.partials.error_message')
 
                 <div class="support_title">
                     <p>{{$support->title}}</p>

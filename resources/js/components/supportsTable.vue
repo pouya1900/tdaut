@@ -15,12 +15,20 @@
 <script>
 export default {
     props: [
-        'supports_data'
+        'supports_data',
+        'is_admin'
     ],
     name: 'roles',
     methods: {
         get_columns() {
             let array = [];
+            if (this.is_admin) {
+                array.push({
+                    label: 'نام',
+                    field: 'name',
+                },
+                );
+            }
             array.push(
                 {
                     label: 'عنوان',

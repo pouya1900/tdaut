@@ -45,6 +45,11 @@ class Office extends Model
         return $this->hasMany(Message::class, "office_id");
     }
 
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
     public function connect_users()
     {
         return $this->belongsToMany(User::class, 'messages');
@@ -127,7 +132,7 @@ class Office extends Model
         $image = $this->media()->where("model_type", 'officeSlideshow')
             ->get();
         $exist_image = [];
-        if (!empty($image)) {
+        if (!empty($image->all())) {
             $path = Storage::disk("assetsStorage")->url('') . 'officeSlideshow/';
             foreach ($image as $item) {
                 $exist_image[] = $path . $item->title;
@@ -135,7 +140,8 @@ class Office extends Model
             return $exist_image;
         }
 
-        return [];
+        $path = Storage::disk("assetsStorage")->url('') . 'siteContent/';
+        return [$path . "slider-d1.jpg", $path . "slider-d2.jpg", $path . "slider-d3.jpg"];
     }
 
     public function getCategoriesListAttribute()
@@ -147,6 +153,19 @@ class Office extends Model
     public function scopeActive($query)
     {
         $query->where('status', 'verified');
+    }
+
+    public function isVerified()
+    {
+        if ($this->status == "verified") {
+            return true;
+        }
+        return false;
+    }
+
+    public function getModelNameAttribute()
+    {
+        return trans('trs.office');
     }
 
 }

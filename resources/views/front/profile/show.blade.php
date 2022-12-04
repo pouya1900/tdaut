@@ -111,6 +111,29 @@
     </div>
 
 
+    @if (session('account_alert'))
+        <div class="modal fade" id="accountAlertModal" tabindex="-1" aria-labelledby="accountAlertModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            {{session('account_alert')}}
+                        </p>
 
+                        <div class="login_register_modal">
+                            <p>
+                                <a href="{{route('logout')}}">@lang('trs.logout')</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 
 @endsection
+

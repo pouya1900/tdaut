@@ -5,20 +5,15 @@
                 <img src="storage/assets/test/logo.jpg">
 
                 @if ($current_user || $current_member)
-
-                    @php
-                        if ($current_user) {
-                          $user_instance=$current_user;
-                        }
-                          else {
-                              $user_instance=$current_member;
-                         }
-                    @endphp
-
-
                     <div class="office_top_bar_profile">
                         <span><i class="fa-solid fa-user"></i></span>
-                        <span>{{$user_instance->profile->fullName}}</span>
+                        @if ($current_member)
+                            <span><a
+                                    href="{{route('profile_show',$current_member->id)}}">{{$current_member->profile->fullName}}</a></span>
+                        @else
+                            <span><a
+                                    href="{{route('user_show',$current_user->id)}}">{{$current_user->profile->fullName}}</a></span>
+                        @endif
                     </div>
                 @endif
             </div>
@@ -33,6 +28,8 @@
         </div>
         <div class="col-3">
             <div class="office_logo">
+                <span class="logout"><a href="{{route('logout')}}">@lang('trs.logout')</a></span>
+
                 <a href="{{route('office_show',$office->id)}}">
                     <img src="{{$office->logo}}" title="{{$office->name}}" alt="{{$office->name}}">
                 </a>

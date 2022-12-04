@@ -17,7 +17,7 @@
                         <a href="{{route('mg.product_create',$office->id)}}">@lang('trs.add_new_product')</a>
                     </div>
 
-                    @include('office.includes.error_message')
+                    @include('front.partials.error_message')
 
 
                     @include('office.products.table')

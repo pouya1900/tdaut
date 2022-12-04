@@ -51,6 +51,22 @@ class Profile extends Model
         return $path . "ic_no_avatar.png";
     }
 
+    public function getHasAvatarAttribute()
+    {
+        $image = $this->media()->where('model_type', 'avatar')
+            ->first();
+        if ($image) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getAvatarModelAttribute()
+    {
+        return $this->media()->where('model_type', 'avatar')
+            ->first();
+    }
+
     public function getCvAttribute()
     {
         $file = $this->media()->where('model_type', 'cv')

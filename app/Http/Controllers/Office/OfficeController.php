@@ -113,14 +113,14 @@ class OfficeController extends Controller
             "projects_count" => $request->input('projects_count'),
         ]);
 
-        if ($request->input('deleted_logo')) {
+        if ($request->input('deleted_image_image')) {
             $logo = $office->logoModel;
             if ($logo) {
                 $this->mediaRemove($logo, 'assetsStorage');
             }
         }
-        if ($request->hasFile('logo')) {
-            $logo = $request->file('logo');
+        if ($request->hasFile('image')) {
+            $logo = $request->file('image');
             $this->imageUpload($logo, 'officeLogo', 'assetsStorage', $office);
         }
 
@@ -161,6 +161,11 @@ class OfficeController extends Controller
         ]);
 
         return redirect(route('mg.content_edit', $office->id))->with('message', trans('trs.changed_successfully'));
+    }
+
+    public function not_active(Office $office)
+    {
+        return view('office.active.not_active', compact('office'));
     }
 
 

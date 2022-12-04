@@ -10,7 +10,7 @@
             <div class="mg-office-dashboard">
                 <form action="{{route('mg.product_store',$office->id)}}" method="post">
                     {{csrf_field()}}
-                    @include('office.includes.error_message')
+                    @include('front.partials.error_message')
                     <div class="row m-0">
                         <div class="col-12">
                             <div class="mg-office--item">

@@ -17,7 +17,7 @@
                         <a href="{{route('mg.office_member_create',$office->id)}}">@lang('trs.add_new_member')</a>
                     </div>
 
-                    @include('office.includes.error_message')
+                    @include('front.partials.error_message')
 
 
                     @include('office.members.table')
