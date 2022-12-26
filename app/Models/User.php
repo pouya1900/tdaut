@@ -22,6 +22,8 @@ class User extends Authenticatable
         'email',
         'email_verified_at',
         'password',
+        'company_name',
+        'phone',
         'role_id',
         'status',
         'status_message',
@@ -53,9 +55,9 @@ class User extends Authenticatable
         return $this->morphOne(Profile::class, 'profileable');
     }
 
-    public function documents()
+    public function rfps()
     {
-        return $this->hasMany(Document::class, "user_id");
+        return $this->hasMany(Rfp::class, "user_id");
     }
 
     public function messages()

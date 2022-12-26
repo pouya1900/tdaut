@@ -13,6 +13,7 @@ class Administrator extends Authenticatable
 
     protected $fillable = [
         'email',
+        'role_id',
         'password',
         'reset_token',
     ];

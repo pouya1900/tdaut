@@ -2,7 +2,6 @@
     <div class="row m-0">
         <div class="col-3">
             <div class="uni_logo">
-                <img src="storage/assets/test/logo.jpg">
 
                 @if ($current_user || $current_member)
                     <div class="office_top_bar_profile">
@@ -14,6 +13,21 @@
                             <span><a
                                     href="{{route('user_show',$current_user->id)}}">{{$current_user->profile->fullName}}</a></span>
                         @endif
+                    </div>
+                @else
+                    <div class="top_bar_profile">
+                        <div class="login_register">
+                            <span><a href="{{route('register_member')}}">ثبت نام</a></span>
+                            <span>/</span>
+                            <span><a href="{{route('login','member')}}">ورود</a></span>
+                            <span>اعضا</span>
+                        </div>
+                        <div class="login_register">
+                            <span><a href="{{route('register_user')}}">ثبت نام</a></span>
+                            <span>/</span>
+                            <span><a href="{{route('login','user')}}">ورود</a></span>
+                            <span>کارفرمایان</span>
+                        </div>
                     </div>
                 @endif
             </div>
@@ -28,8 +42,9 @@
         </div>
         <div class="col-3">
             <div class="office_logo">
-                <span class="logout"><a href="{{route('logout')}}">@lang('trs.logout')</a></span>
-
+                @if ($current_user || $current_member)
+                    <span class="logout"><a href="{{route('logout')}}">@lang('trs.logout')</a></span>
+                @endif
                 <a href="{{route('office_show',$office->id)}}">
                     <img src="{{$office->logo}}" title="{{$office->name}}" alt="{{$office->name}}">
                 </a>

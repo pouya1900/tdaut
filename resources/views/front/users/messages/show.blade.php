@@ -45,7 +45,7 @@
                 {{--                        </button>--}}
 
                 <input name="message" class="chat__conversation-panel__input panel-item"
-                       placeholder="Type a message..."/>
+                       placeholder="@lang('trs.type_your_message')"/>
                 <button type="submit" class="chat__conversation-panel__button panel-item btn-icon send-message-button">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                          fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

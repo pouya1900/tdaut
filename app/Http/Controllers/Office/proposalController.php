@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProposalRequest;
 use App\Models\Document;
 use App\Models\Office;
+use App\Models\Rfp;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Comment\Doc;
 
 class proposalController extends Controller
 {
@@ -19,43 +21,42 @@ class proposalController extends Controller
 
     public function index(Office $office)
     {
-
         $data = [];
-        $rfps = $office->documents()->where('type', 'rfp')->get();
+        $rfps = $office->rfps;
         foreach ($rfps as $rfp) {
             $data[] = [
-                'user'        => $rfp->user->profile->fullName,
-                'title'       => $rfp->title,
-                'description' => view('front.partials.action', ['modal' => 'description' . $rfp->id, 'modal_title' => trans('trs.show')])->render(),
-                'proposal'    => $rfp->proposal ? view('front.partials.action', ['modal' => 'proposal' . $rfp->proposal->id, 'modal_title' => trans('trs.show')])->render() : "",
-                'created_at'  => date('Y-m-d H:i', strtotime($rfp->created_at)),
-                'file'        => view('front.partials.action', ['download' => $rfp->file])->render(),
-                'action'      => view('front.partials.action', ['send_proposal' => route('mg.create_proposal', ['office' => $office->id, 'document' => $rfp->id])])->render(),
+                'user'       => $rfp->user->profile->fullName,
+                'title'      => $rfp->title,
+                'created_at' => date('Y-m-d H:i', strtotime($rfp->created_at)),
+                'action'     => view('front.partials.action', ['show' => route('mg.rfp.show', ['office' => $office->id, 'rfp' => $rfp->id])])->render(),
             ];
         }
 
-        $proposals = $office->documents()->where('type', 'proposal')->where('parent_id', '>', '0')->get();
-
-        return view('office.rfps.index', compact('office', 'data', 'rfps', 'proposals'));
+        return view('office.rfps.index', compact('office', 'data', 'rfps'));
     }
 
-    public function create(Office $office, Document $document)
+    public function show(Office $office, Rfp $rfp)
     {
-        return view('office.rfps.create_proposal', compact('office', 'document'));
+        return view('office.rfps.show', compact('office', 'rfp'));
     }
 
-    public function store(StoreProposalRequest $request, Office $office, Document $document)
+    public function create(Office $office, Rfp $rfp)
     {
-        if ($document->office->id != $office->id) {
+        return view('office.rfps.create_proposal', compact('office', 'rfp'));
+    }
+
+    public function store(StoreProposalRequest $request, Office $office, Rfp $rfp)
+    {
+        if ($rfp->office->id != $office->id) {
             abort(403);
         }
 
-        $proposal = $office->documents()->create([
-            "title"       => $request->input('title'),
-            "description" => $request->input('description'),
-            'user_id'     => $document->user_id,
-            'type'        => 'proposal',
-            'parent_id'   => $document->id,
+        $current_member = $this->request->current_member;
+
+        $proposal = $rfp->documents()->create([
+            "text"   => $request->input('description'),
+            'type'   => 'proposal',
+            'status' => $current_member->id == $office->head->id ? 'sent' : 'pending',
         ]);
 
         if ($request->hasFile('proposal')) {
@@ -70,6 +71,40 @@ class proposalController extends Controller
             ]);
         }
 
-        return redirect(route('mg.rfps', $office->id));
+        return redirect(route('mg.rfp.show', ['office' => $office->id, 'rfp' => $rfp->id]));
     }
+
+    public function send(Office $office, Document $document)
+    {
+        if ($document->rfp->office->id != $office->id) {
+            abort(403);
+        }
+        if ($this->request->current_member->id != $office->head->id) {
+            abort(403);
+        }
+
+        $document->update([
+            'status' => 'sent',
+        ]);
+
+        return redirect(route('mg.rfp.show', ['office' => $office->id, 'rfp' => $document->rfp->id]));
+
+    }
+
+    public function delete(Office $office, Document $document)
+    {
+        if ($document->rfp->office->id != $office->id) {
+            abort(403);
+        }
+        if ($this->request->current_member->id != $office->head->id) {
+            abort(403);
+        }
+
+        $document->delete();
+
+        return redirect(route('mg.rfp.show', ['office' => $office->id, 'rfp' => $document->rfp->id]));
+
+    }
+
+
 }

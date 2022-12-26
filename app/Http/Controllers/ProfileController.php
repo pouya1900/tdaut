@@ -10,6 +10,7 @@ use App\Models\Member;
 use App\Models\Profile;
 use App\Models\Rank;
 use App\Models\User;
+use App\Traits\UploadUtilsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -17,6 +18,8 @@ use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
+    use UploadUtilsTrait;
+
     public function __construct(Request $request, Profile $profile, Member $member)
     {
         $this->request = $request;
@@ -97,20 +100,35 @@ class ProfileController extends Controller
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
-        $member->update($update);
-        $member->profile->update($update_profile);
+        try {
+            $member->update($update);
+            $member->profile->update($update_profile);
 
-        if ($this->request->hasFile('resume')) {
-            $file = $this->request->file('resume');
-            Storage::disk("assetsStorage")->put('cv', $file);
+            if ($this->request->hasFile('resume')) {
+                $file = $this->request->file('resume');
+                Storage::disk("assetsStorage")->put('cv', $file);
 
-            $member->profile->media()->create([
-                "title"      => $file->hashName(),
-                "model_type" => "cv",
-                "ext"        => $file->extension(),
-                "size"       => $file->getSize() / 1024,
-            ]);
+                $member->profile->media()->create([
+                    "title"      => $file->hashName(),
+                    "model_type" => "cv",
+                    "ext"        => $file->extension(),
+                    "size"       => $file->getSize() / 1024,
+                ]);
+            }
+
+            if ($this->request->input('deleted_avatar')) {
+                $this->mediaRemove($member->profile->avatarModel, 'assetsStorage');
+            }
+
+            if ($this->request->hasFile('avatar')) {
+                $avatar = $this->request->file('avatar');
+
+                $this->imageUpload($avatar, 'avatar', 'assetsStorage', $member->profile);
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
+
 
         return redirect(route('profile_show', $member->id));
 

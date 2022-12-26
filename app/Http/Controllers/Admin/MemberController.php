@@ -102,7 +102,6 @@ class MemberController extends Controller
             return redirect(route('admin.members'))->with('message', trans('trs.changed_successfully'));
 
         } catch (\Exception $e) {
-            dd($e);
             return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
     }

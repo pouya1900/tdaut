@@ -4,8 +4,10 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProposalRequest;
+use App\Http\Requests\storeRfpByIdRequest;
 use App\Models\Document;
 use App\Models\Office;
+use App\Models\Rfp;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -23,21 +25,101 @@ class ProposalController extends Controller
         $user = $this->request->current_user;
 
         $data = [];
-        $rfps = $user->documents()->where('type', 'rfp')->orderBy('created_at', 'desc')->get();
+        $rfps = $user->rfps()->orderBy('created_at', 'desc')->get();
         foreach ($rfps as $rfp) {
             $data[] = [
-                'office'      => $rfp->office->name,
-                'title'       => $rfp->title,
-                'description' => view('front.partials.action', ['modal' => 'description' . $rfp->id, 'modal_title' => trans('trs.show')])->render(),
-                'proposal'    => $rfp->proposal ? view('front.partials.action', ['modal' => 'proposal' . $rfp->proposal->id, 'modal_title' => trans('trs.show')])->render() : "",
-                'created_at'  => date('Y-m-d H:i', strtotime($rfp->created_at)),
-                'file'        => view('front.partials.action', ['download' => $rfp->file])->render(),
+                'office'     => $rfp->office->name,
+                'title'      => $rfp->title,
+                'created_at' => date('Y-m-d H:i', strtotime($rfp->created_at)),
+                'action'     => view('front.partials.action', ['show' => route('user_rfp_show', ['rfp' => $rfp->id])])->render(),
             ];
         }
 
-        $proposals = $user->documents()->where('type', 'proposal')->where('parent_id', '>', '0')->get();
+        return view('front.users.rfps.index', compact('user', 'data', 'rfps'));
+    }
 
-        return view('front.users.rfps.index', compact('user', 'data', 'rfps', 'proposals'));
+    public function show(Rfp $rfp)
+    {
+        $user = $this->request->current_user;
+
+        if ($rfp->user->id != $user->id) {
+            abort(403);
+        }
+
+        return view('front.users.rfps.show', compact('rfp', 'user'));
+    }
+
+    public function create(Rfp $rfp)
+    {
+        $user = $this->request->current_user;
+
+        if ($rfp->user->id != $user->id) {
+            abort(403);
+        }
+
+        return view('front.users.rfps.create_rfp', compact('rfp', 'user'));
+    }
+
+    public function store(StoreProposalRequest $request, Rfp $rfp)
+    {
+        $user = $this->request->current_user;
+
+        if ($rfp->user->id != $user->id) {
+            abort(403);
+        }
+
+        $document = $rfp->documents()->create([
+            "text" => $request->input('description'),
+            'type' => 'rfp',
+        ]);
+
+        if ($request->hasFile('proposal')) {
+            $file = $request->file('proposal');
+            Storage::disk("privateStorage")->put('rfp', $file);
+
+            $document->media()->create([
+                "title"      => $file->hashName(),
+                "model_type" => "rfp",
+                "ext"        => $file->extension(),
+                "size"       => $file->getSize() / 1024,
+            ]);
+        }
+
+        return redirect(route('user_rfp_show', ['rfp' => $rfp->id]));
+    }
+
+    public function create_rfp()
+    {
+        $user = $this->request->current_user;
+
+        return view('front.users.rfps.new_rfp', compact('user'));
+    }
+
+    public function store_rfp(StoreRfpByIdRequest $request)
+    {
+        $rfp = Rfp::create([
+            "title"        => $request->input('title'),
+            "description"  => $request->input('description'),
+            "short_title"  => $request->input('short_title'),
+            "goals"        => $request->input('goals'),
+            "achievements" => $request->input('achievements'),
+            'office_id'    => $request->input('office_id'),
+            'user_id'      => $this->request->current_user->id,
+        ]);
+
+        if ($request->hasFile('rfp')) {
+            $file = $request->file('rfp');
+            Storage::disk("privateStorage")->put('rfp', $file);
+
+            $rfp->media()->create([
+                "title"      => $file->hashName(),
+                "model_type" => "rfp",
+                "ext"        => $file->extension(),
+                "size"       => $file->getSize() / 1024,
+            ]);
+        }
+
+        return redirect(route('user_rfps'));
     }
 
 }

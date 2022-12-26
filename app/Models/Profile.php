@@ -82,7 +82,30 @@ class Profile extends Model
 
     public function getFullNameAttribute()
     {
+        if ($this->type == "real") {
+            return $this->first_name . " " . $this->last_name;
+        } else {
+            return $this->profileable->company_name;
+        }
+    }
+
+    public function getAgentFullNameAttribute()
+    {
         return $this->first_name . " " . $this->last_name;
+
+    }
+
+    public function getVisitCardAttribute()
+    {
+        $file = $this->media()->where('model_type', 'visitCard')
+            ->first();
+
+        if (!empty($file)) {
+            $path = Storage::disk("assetsStorage")->url('') . 'visitCard/';
+            return $path . $file->title;
+        }
+
+        return "";
     }
 
 }

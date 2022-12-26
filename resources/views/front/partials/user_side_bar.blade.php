@@ -20,9 +20,9 @@
                     </li>
                 @endif
 
-                <li class="{{url()->current()==route('user_rfp') ? "active" : ""}}">
-                    <a href="{{route('user_rfp')}}"> <i
-                            class="fa-solid fa-user"></i>@lang('trs.rfps')</a>
+                <li class="{{url()->current()==route('user_rfps') || (isset($rfp) && url()->current()==route('user_rfp_show',$rfp->id)) ? "active" : ""}}">
+                    <a href="{{route('user_rfps')}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.rfps_and_proposal')</a>
                 </li>
 
                 <li class="{{url()->current()==route('user_supports') || (isset($support) && url()->current()==route('user_support_show',$support->id)) || url()->current()==route('user_support_new_ticket') ? "active" : ""}}">

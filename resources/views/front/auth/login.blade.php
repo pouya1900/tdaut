@@ -19,7 +19,10 @@
                         <strong>{{ $errors->first() }}</strong>
                     </div>
                 @endif
-                <input class="login_form--info" type="email" name="email" placeholder="@lang('trs.email')">
+                <input class="login_form--info" type="{{$type=='member' ? "text" : "email"}}"
+                       name="{{$type=='member' ? "username" : 'email'}}"
+                       value="{{$type=='member' ? old('username') : old('email')}}"
+                       placeholder="{{$type=='member' ? trans('trs.username') : trans('trs.email')}}">
 
                 <input class="login_form--info" type="password" name="password" placeholder="@lang('trs.password')">
 

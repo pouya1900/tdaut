@@ -15,6 +15,11 @@
                 <div class="profile_main">
                     <div class="my-table">
                         @include('front.partials.error_message')
+
+                        <div class="new_member_button">
+                            <a href="{{route('user_new_rfp_create')}}">@lang('trs.new_rfp')</a>
+                        </div>
+
                         @include('front.users.rfps.table')
                     </div>
                 </div>
@@ -22,8 +27,6 @@
         </div>
     </div>
 
-    @include('office.rfps.description')
-    @include('office.rfps.proposals')
 
 @endsection
 

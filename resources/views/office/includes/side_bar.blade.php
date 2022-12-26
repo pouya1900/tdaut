@@ -15,9 +15,13 @@
 
         <div class="profile_side-item--container">
             <ul>
+                <li class="{{url()->current()==route('mg.office.dashboard',$office->id) ? "active" : ""}}">
+                    <a href="{{route('mg.office.dashboard',$office->id)}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.dashboard')</a>
+                </li>
                 <li class="{{url()->current()==route('mg.office',$office->id) ? "active" : ""}}">
                     <a href="{{route('mg.office',$office->id)}}"> <i
-                            class="fa-solid fa-user"></i>@lang('trs.dashboard')</a>
+                            class="fa-solid fa-user"></i>@lang('trs.setting')</a>
                 </li>
                 <li class="{{url()->current()==route('mg.office_capabilities',$office->id) ? "active" : ""}}">
                     <a href="{{route('mg.office_capabilities',$office->id)}}"> <i
@@ -46,9 +50,9 @@
                     <a href="{{route('mg.messages',$office->id)}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.messages')</a>
                 </li>
-                <li class="{{url()->current()==route('mg.rfps',$office->id) ? "active" : ""}}">
+                <li class="{{url()->current()==route('mg.rfps',$office->id) || (isset($rfp) && url()->current()==route('mg.rfp.show',['office'=>$office->id,'rfp'=>$rfp->id])) ? "active" : ""}}">
                     <a href="{{route('mg.rfps',$office->id)}}"> <i
-                            class="fa-solid fa-user"></i>@lang('trs.rfps')</a>
+                            class="fa-solid fa-user"></i>@lang('trs.rfps_and_proposal')</a>
                 </li>
                 <li class="{{url()->current()==route('mg.products',$office->id) ? "active" : ""}}">
                     <a href="{{route('mg.products',$office->id)}}"> <i

@@ -14,14 +14,23 @@
                 <li class="{{url()->current()==route('admin.offices') || (isset($office) && (url()->current()==route('admin.office.edit',$office->id) || url()->current()==route('admin.office.members',$office->id))) ? "active" : ""}}">
                     <a href="{{route('admin.offices')}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.offices')</a>
+                    @if (\App\Models\Office::where('status','pending')->first())
+                        <span class="admin_notification">*</span>
+                    @endif
                 </li>
                 <li class="{{url()->current()==route('admin.products') || (isset($product) && url()->current()==route('admin.product.edit',$product->id)) ? "active" : ""}}">
                     <a href="{{route('admin.products')}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.products')</a>
+                    @if (\App\Models\Product::where('status','pending')->first())
+                        <span class="admin_notification">*</span>
+                    @endif
                 </li>
                 <li class="{{url()->current()==route('admin.users') || (isset($user) && url()->current()==route('admin.user.edit',$user->id)) ? "active" : ""}}">
                     <a href="{{route('admin.users')}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.users')</a>
+                    @if (\App\Models\User::where('status','pending')->first())
+                        <span class="admin_notification">*</span>
+                    @endif
                 </li>
                 <li class="{{url()->current()==route('admin.members') || (isset($member) && (url()->current()==route('admin.member.edit',$member->id) || url()->current()==route('admin.member.offices',$member->id))) ? "active" : ""}}">
                     <a href="{{route('admin.members')}}"> <i
@@ -30,6 +39,9 @@
                 <li class="{{url()->current()==route('admin.supports','office') || (isset($support) && isset($office) && url()->current()==route('admin.support.show',$support->id))? "active" : ""}}">
                     <a href="{{route('admin.supports','office')}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.office_support')</a>
+                    @if (\App\Models\Support::where('status','pending')->where('supportable_type',\App\Models\Member::class)->first())
+                        <span class="admin_notification">*</span>
+                    @endif
                 </li>
                 <li class="{{url()->current()==route('admin.tags') || url()->current()==route('admin.tag.create') || (isset($tag) && url()->current()==route('admin.tag.edit',$tag->id))? "active" : ""}}">
                     <a href="{{route('admin.tags')}}"> <i
@@ -38,6 +50,9 @@
                 <li class="{{url()->current()==route('admin.supports','user') || (isset($support) && isset($user) && url()->current()==route('admin.support.show',$support->id))? "active" : ""}}">
                     <a href="{{route('admin.supports','user')}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.user_support')</a>
+                    @if (\App\Models\Support::where('status','pending')->where('supportable_type',\App\Models\User::class)->first())
+                        <span class="admin_notification">*</span>
+                    @endif
                 </li>
                 <li class="{{url()->current()==route('admin.categories') || url()->current()==route('admin.category.create') || (isset($category) && url()->current()==route('admin.category.edit',$category->id))? "active" : ""}}">
                     <a href="{{route('admin.categories')}}"> <i
@@ -63,6 +78,14 @@
                 <li class="{{url()->current()==route('admin.reports') || (isset($report) && url()->current()==route('admin.report.show',$report->id))? "active" : ""}}">
                     <a href="{{route('admin.reports')}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.reports')</a>
+                </li>
+                <li class="{{url()->current()==route('admin.admins') || (isset($administrator) && url()->current()==route('admin.admin.edit',$administrator->id)) || url()->current()==route('admin.admin.create') ? "active" : ""}}">
+                    <a href="{{route('admin.admins')}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.admins')</a>
+                </li>
+                <li class="{{url()->current()==route('admin.roles') || (isset($role) && url()->current()==route('admin.role.edit',$role->id)) ? "active" : ""}}">
+                    <a href="{{route('admin.roles')}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.roles')</a>
                 </li>
             </ul>
         </div>

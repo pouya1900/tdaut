@@ -31,18 +31,12 @@ export default {
                     field: 'title',
                 },
                 {
-                    label: 'توضیحات',
-                    field: 'description',
-                    html: true,
+                    label: 'تاریخ ایجاد',
+                    field: 'created_at',
                 },
                 {
-                    label: 'فایل',
-                    field: 'file',
-                    html: true
-                },
-                {
-                    label: 'پروپوزال',
-                    field: 'proposal',
+                    label: 'عملیات',
+                    field: 'action',
                     html: true
                 },
             );

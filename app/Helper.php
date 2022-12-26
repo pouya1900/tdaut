@@ -81,6 +81,8 @@ class Helper
                 return trans('trs.rejected');
             case 'rfd' :
                 return trans('trs.rfd');
+            case 'created' :
+                return trans('trs.new');
         }
         return trans('trs.unknown');
     }

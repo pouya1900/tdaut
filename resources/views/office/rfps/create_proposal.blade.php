@@ -19,13 +19,11 @@
                         <div class="rfp_header">
                             <h4>پروپوزال</h4>
                         </div>
-                        <form action="{{route('mg.store_proposal',['office'=>$office->id,'document'=>$document->id])}}"
+                        <form action="{{route('mg.store_proposal',['office'=>$office->id,'rfp'=>$rfp->id])}}"
                               method="post" enctype="multipart/form-data">
                             {{csrf_field()}}
-                            <div class="rfp_title">
-                                <label for="title" class="form-label">@lang('trs.proposal_title')</label>
-                                <input type="text" name="title" class="form-control" id="title"
-                                       placeholder="@lang('trs.proposal_title')">
+                            <div class="create_rfp_title">
+                                <h6>@lang('trs.rfp_title') : {{$rfp->title}}</h6>
                             </div>
                             <div class="rfp_description">
                                 <label for="description" class="form-label">@lang('trs.description')</label>
@@ -37,7 +35,13 @@
                             </div>
 
                             <div class="rfp_submit">
-                                <button type="submit">@lang('trs.send')</button>
+                                @if ($current_member->id==$office->head->id)
+                                    <button type="submit">@lang('trs.send')</button>
+                                @else
+                                    <button type="submit">@lang('trs.submit')</button>
+                                    <p>@lang('trs.you_can_submit_proposal_but_head_must_send')</p>
+                                @endif
+
                             </div>
                         </form>
                     </div>

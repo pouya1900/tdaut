@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Administrator;
+use App\Models\Member;
+use App\Models\Office;
+use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -17,6 +21,12 @@ class DashboardController extends Controller
     public function index()
     {
         $admin = $this->request->admin;
-        return view('admin.dashboard.index', compact('admin'));
+
+        $members = Member::all();
+        $users = User::all();
+        $offices = Office::all();
+        $products = Product::all();
+
+        return view('admin.dashboard.index', compact('admin', 'members', 'users', 'offices', 'products'));
     }
 }

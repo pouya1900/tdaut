@@ -12,38 +12,21 @@ class Document extends Model
 
 
     protected $fillable = [
-        'title',
-        'description',
-        'office_id',
-        'user_id',
+        'text',
         'type',
-        'parent_id',
+        'status',
+        'rfp_id',
     ];
 
-
-    public function office()
-    {
-        return $this->belongsTo(Office::class, "office_id");
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class, "user_id");
-    }
 
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');
     }
 
-    public function proposal()
-    {
-        return $this->hasOne(Document::class, 'parent_id');
-    }
-
     public function rfp()
     {
-        return $this->belongsTo(Document::class, 'parent_id');
+        return $this->belongsTo(Rfp::class, 'rfp_id');
     }
 
     public function getFileAttribute()

@@ -63,16 +63,22 @@
                                             <p class="item_title">سمت</p>
                                             <p class="item_value">{{\App\Helper::memberType($member->type)}}</p>
                                         </div>
-                                        <div class="col-6">
-                                            <p class="item_title">دانشکده</p>
-                                            <p class="item_value">{{$member->department ? $member->department->title : '-'}}</p>
-                                        </div>
+                                        @if ($member->type=="professor" || $member->type=="student")
+                                            <div class="col-6">
+                                                <p class="item_title">دانشکده</p>
+                                                <p class="item_value">{{$member->department ? $member->department->title : '-'}}</p>
+                                            </div>
+                                        @endif
+
                                         <div class="col-6">
                                             @if ($member->type=="professor")
                                                 <p class="item_title">رتبه</p>
                                                 <p class="item_value">{{$member->rank->title}}</p>
+                                            @elseif ($member->type=="student")
+                                                <p class="item_title">@lang('trs.degree')</p>
+                                                <p class="item_value">{{$member->degree->title}}</p>
                                             @else
-                                                <p class="item_title">مدرک</p>
+                                                <p class="item_title">@lang('trs.degree_of_education')</p>
                                                 <p class="item_value">{{$member->degree->title}}</p>
                                             @endif
 
@@ -81,7 +87,7 @@
                                             @if ($member->type=="professor")
                                                 <p class="item_title">گروه</p>
                                                 <p class="item_value">{{$member->group}}</p>
-                                            @else
+                                            @elseif($member->type=="student")
                                                 <p class="item_title">شماره دانشجویی</p>
                                                 <p class="item_value">{{$member->student_number}}</p>
                                             @endif

@@ -126,17 +126,30 @@ class productController extends Controller
             $this->imageUpload($logo, 'productLogo', 'assetsStorage', $product);
         }
 
-        if ($request->input('deleted_image_td')) {
-            $td = $product->tdModel;
-            if ($td) {
-                $this->mediaRemove($td, 'assetsStorage');
-            }
-        }
-        if ($request->hasFile('td')) {
-            $td = $request->file('td');
-            $this->imageUpload($td, 'productTd', 'assetsStorage', $product);
+//        if ($request->input('deleted_image_td')) {
+//            $td = $product->tdModel;
+//            if ($td) {
+//                $this->mediaRemove($td, 'assetsStorage');
+//            }
+//        }
+//        if ($request->hasFile('td')) {
+//            $td = $request->file('td');
+//            $this->imageUpload($td, 'productTd', 'assetsStorage', $product);
+//        }
+
+        if ($request->hasFile('td_model')) {
+            $old_model = $product->tdModel;
+            $this->mediaRemove($old_model, 'assetsStorage');
+            $td_model = $request->file('td_model');
+            $this->documentUpload($td_model, 'productTd', 'assetsStorage', $product);
         }
 
+        if ($request->hasFile('catalog')) {
+            $old_catalog = $product->catalogModel;
+            $this->mediaRemove($old_catalog, 'assetsStorage');
+            $catalog = $request->file('catalog');
+            $this->documentUpload($catalog, 'productCatalog', 'assetsStorage', $product);
+        }
 
         if ($request->input('deleted_video')) {
             $video = $product->videoModel;

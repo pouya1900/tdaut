@@ -23,9 +23,6 @@
         </div>
     </div>
 
-    @include('office.rfps.description')
-    @include('office.rfps.proposals')
-
 @endsection
 
 @section('script')

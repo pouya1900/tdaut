@@ -53,9 +53,9 @@
                         <div class="col-12 col-lg-6">
                             <div class="mg-office--item">
 
-                                <label>@lang('trs.demo_link')</label>
+                                <label>@lang('trs.demo_link_optional')</label>
                                 <input type="text" name="link"
-                                       placeholder="@lang('trs.demo_link')">
+                                       placeholder="@lang('trs.demo_link_optional')">
                             </div>
                         </div>
 

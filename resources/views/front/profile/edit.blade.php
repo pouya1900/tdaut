@@ -13,6 +13,8 @@
                 <form action="{{route('profile_update')}}" method="post" enctype="multipart/form-data">
                     {{csrf_field()}}
                     <div class="profile_main">
+                        @include('front.partials.error_message')
+
                         <div class="profile_main--link">
                             <ul>
                                 <li class="profile_main--link--edit_li">
@@ -43,7 +45,8 @@
 
                                 <li class="profile_main--link--edit_li">
                                     <div class="input-group">
-                                        <input name="resume" type="file" accept="application/pdf" class="form-control left-to-right" id="resume">
+                                        <input name="resume" type="file" accept="application/pdf"
+                                               class="form-control left-to-right" id="resume">
                                         <label class="input-group-text" for="resume"><i
                                                 class="fa-solid fa-file-pdf"></i><span>@lang('trs.resume')</span></label>
                                     </div>
@@ -59,7 +62,10 @@
                                     <div class="row">
                                         <div class="col-3">
                                             <div class="profile_main--avatar">
-                                                <img src="{{$member->profile->avatar}}" title="" alt="">
+                                                <div id="app-change-avatar">
+                                                    <change-avatar
+                                                        :avatar="{{json_encode($member->profile->avatar)}}"></change-avatar>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-9">
@@ -87,23 +93,25 @@
                                                 <p class="item_value">{{\App\Helper::memberType($member->type)}}</p>
                                                 <input type="hidden" name="type" value="{{$member->type}}">
                                             </div>
-                                            <div class="col-6">
-                                                <p class="item_title"><label
-                                                        for="department"> @lang('trs.department')</label></p>
+                                            @if ($member->type=="professor" || $member->type=="student")
+                                                <div class="col-6">
+                                                    <p class="item_title"><label
+                                                            for="department"> @lang('trs.department')</label></p>
 
-                                                <select name="department" class="form-select" id="department">
-                                                    <option>@lang('trs.department')...</option>
+                                                    <select name="department" class="form-select" id="department">
+                                                        <option>@lang('trs.department')...</option>
 
-                                                    @foreach($departments as $department)
-                                                        <option
-                                                            value="{{$department->id}}"
-                                                            {{$department->id==$member->department->id ? "selected" : ""}}>
-                                                            {{$department->title}}
-                                                        </option>
-                                                    @endforeach
+                                                        @foreach($departments as $department)
+                                                            <option
+                                                                value="{{$department->id}}"
+                                                                {{$department->id==$member->department->id ? "selected" : ""}}>
+                                                                {{$department->title}}
+                                                            </option>
+                                                        @endforeach
 
-                                                </select>
-                                            </div>
+                                                    </select>
+                                                </div>
+                                            @endif
                                             <div class="col-6">
                                                 @if ($member->type=="professor")
                                                     <p class="item_title"><label for="rank">@lang('trs.rank')</label>
@@ -122,11 +130,13 @@
 
                                                 @else
                                                     <p class="item_title"><label
-                                                            for="degree">@lang('trs.degree')</label>
+                                                            for="degree">{{$member->type=="student" ? trans('trs.degree') : trans('trs.degree_of_education')}}</label>
                                                     </p>
 
                                                     <select name="degree" class="form-select" id="degree">
-                                                        <option>@lang('trs.degree')...</option>
+                                                        <option>{{$member->type=="student" ? trans('trs.degree') : trans('trs.degree_of_education')}}
+                                                            ...
+                                                        </option>
 
                                                         @foreach($degrees as $degree)
                                                             <option
@@ -146,7 +156,7 @@
 
                                                     <input type="text" class="form-control" name="group" id="group"
                                                            value="{{$member->group}}" placeholder="@lang('trs.group')">
-                                                @else
+                                                @elseif($member->type=="student")
                                                     <p class="item_title"><label
                                                             for="student_number">@lang('trs.student_number')</label></p>
 

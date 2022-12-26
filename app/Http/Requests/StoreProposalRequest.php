@@ -24,7 +24,6 @@ class StoreProposalRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'       => 'required',
             'description' => 'required',
             'file'        => 'nullable|mimes:pdf,doc,docx',
         ];

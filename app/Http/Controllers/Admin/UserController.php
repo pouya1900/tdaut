@@ -69,7 +69,7 @@ class UserController extends Controller
             }
             $user->update([
                 'email'          => $request->input('email'),
-                'role'           => $request->input('role'),
+                'role_id'        => $request->input('role'),
                 'type'           => $request->input('type'),
                 'status'         => $request->input('status'),
                 'status_message' => $request->input('status_message'),

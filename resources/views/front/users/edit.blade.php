@@ -13,6 +13,7 @@
                     <form action="{{route('user_update')}}" method="post" enctype="multipart/form-data">
                         {{csrf_field()}}
                         <div class="profile_main">
+                            @include('front.partials.error_message')
                             <div class="profile_main--link">
                                 <ul>
                                     <li class="profile_main--link--edit_li">
@@ -31,22 +32,37 @@
                             <div class="profile_main_content">
 
                                 <div class="row justify-content-around">
-                                    <div class="col-12 col-lg-4">
+                                    <div class="col-12 col-lg-5">
                                         <div class="row">
                                             <div class="col-3">
                                                 <div class="profile_main--avatar">
-                                                    <img src="{{$user->profile->avatar}}" title="" alt="">
+                                                    <div id="app-change-avatar">
+                                                        <change-avatar
+                                                            :avatar="{{json_encode($user->profile->avatar)}}"></change-avatar>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-9">
-                                                <div class="profile_main--name">
-                                                    <input type="text" class="form-control" name="first_name"
-                                                           value="{{$user->profile->first_name}}"
-                                                           placeholder="@lang('trs.first_name')">
-                                                    <input type="text" class="form-control" name="last_name"
-                                                           value="{{$user->profile->last_name}}"
-                                                           placeholder="@lang('trs.last_name')">
-                                                </div>
+                                                @if ($user->type=="real")
+                                                    <div class="profile_main--name">
+                                                        <input type="text" class="form-control" name="first_name"
+                                                               value="{{$user->profile->first_name}}"
+                                                               placeholder="@lang('trs.first_name')">
+                                                        <input type="text" class="form-control" name="last_name"
+                                                               value="{{$user->profile->last_name}}"
+                                                               placeholder="@lang('trs.last_name')">
+                                                    </div>
+                                                @else
+                                                    <div class="profile_main--name">
+                                                        <p>{{$user->profile->fullName}}</p>
+                                                        <p>{{$user->profile->agentFullName}}</p>
+                                                    </div>
+                                                    <input type="hidden" name="first_name"
+                                                           value="{{$user->profile->first_name}}">
+                                                    <input type="hidden" name="last_name"
+                                                           value="{{$user->profile->last_name}}">
+                                                @endif
+
                                                 <div class="profile_main--about">
                                                     <p class="about_title">@lang('trs.about')</p>
                                                     <textarea name="about" class="about_text form-control"
@@ -55,7 +71,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-12 col-lg-5">
                                         <div class="profile_main--item">
                                             <div class="row">
                                                 <div class="col-6">
@@ -90,3 +106,10 @@
 
 
 @endsection
+<script>
+    import ChangeAvatar from "../../../js/components/changeAvatar";
+
+    export default {
+        components: {ChangeAvatar}
+    }
+</script>

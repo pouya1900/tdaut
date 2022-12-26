@@ -14,21 +14,25 @@
 
 
                     @foreach($messages as $message)
-                        <div
-                            class="chat__conversation-board__message-container {{$message->sender=="office" ? "reversed" : ""}} ">
-                            <div class="chat__conversation-board__message__person">
-                                <div class="chat__conversation-board__message__person__avatar"><img
-                                        src="{{$message->sender=="office" ? $message->office->logo : $message->user->profile->avatar}}"
-                                        alt="{{$message->sender=="office" ? $message->office->name : $message->user->profile->fullName}}"/>
+                        <form action="{{route('office_store_chat',['office'=>$office->id])}}" method="post">
+                            {{csrf_field()}}
+                            <div
+                                class="chat__conversation-board__message-container {{$message->sender=="office" ? "reversed" : ""}} ">
+                                <div class="chat__conversation-board__message__person">
+                                    <div class="chat__conversation-board__message__person__avatar"><img
+                                            src="{{$message->sender=="office" ? $message->office->logo : $message->user->profile->avatar}}"
+                                            alt="{{$message->sender=="office" ? $message->office->name : $message->user->profile->fullName}}"/>
+                                    </div>
+                                    <span
+                                        class="chat__conversation-board__message__person__nickname">{{$message->sender=="office" ? $message->office->name : $message->user->profile->fullName}}</span>
                                 </div>
-                                <span
-                                    class="chat__conversation-board__message__person__nickname">{{$message->sender=="office" ? $message->office->name : $message->user->profile->fullName}}</span>
-                            </div>
-                            <div class="chat__conversation-board__message__context">
-                                <div class="chat__conversation-board__message__bubble"><span>{{$message->text}}</span>
+                                <div class="chat__conversation-board__message__context">
+                                    <div class="chat__conversation-board__message__bubble">
+                                        <span>{{$message->text}}</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            <form>
                     @endforeach
 
                 </div>
@@ -52,7 +56,8 @@
                         {{--                                <line x1="15" y1="9" x2="15.01" y2="9"></line>--}}
                         {{--                            </svg>--}}
                         {{--                        </button>--}}
-                        <input class="chat__conversation-panel__input panel-item" placeholder="Type a message..."/>
+                        <input name="message" class="chat__conversation-panel__input panel-item"
+                               placeholder="@lang('trs.type_your_message')"/>
                         <button class="chat__conversation-panel__button panel-item btn-icon send-message-button">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"

@@ -6,12 +6,15 @@ use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Profile;
 use App\Models\User;
+use App\Traits\UploadUtilsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    use UploadUtilsTrait;
+
     public function __construct(Request $request, Profile $profile, User $user)
     {
         $this->request = $request;
@@ -34,12 +37,31 @@ class UserController extends Controller
     {
         $user = $this->request->current_user;
 
-        $user->profile()->update([
-            'first_name' => $request->input('first_name'),
-            'last_name'  => $request->input('last_name'),
-            'about'      => $request->input('about'),
-            'linkedin'   => $request->input('linkedin'),
-        ]);
+        try {
+            $update = [
+                'about'    => $request->input('about'),
+                'linkedin' => $request->input('linkedin'),
+            ];
+            if ($user->type == "real") {
+                $update['first_name'] = $request->input('first_name');
+                $update['last_name'] = $request->input('last_name');
+            }
+
+            $user->profile()->update($update);
+
+            if ($this->request->input('deleted_avatar')) {
+                $this->mediaRemove($user->profile->avatarModel, 'assetsStorage');
+            }
+
+            if ($request->hasFile('avatar')) {
+                $avatar = $request->file('avatar');
+
+                $this->imageUpload($avatar, 'avatar', 'assetsStorage', $user->profile);
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
+
         return redirect(route('user_show', $user->id));
     }
 

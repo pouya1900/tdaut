@@ -1,7 +1,16 @@
 @extends('layouts.office_panel')
 
 @section('content')
+    <style>
+        .close-btn[data-v-3904557e] {
+            left: 34px !important;
+            right: unset !important;
+        }
 
+        .custum-icon[data-v-3904557e] {
+            margin-left: unset !important;
+        }
+    </style>
     <div class="row m-0 full-height">
 
         @include('office.includes.side_bar')
@@ -89,13 +98,34 @@
 
 
                                 <div id="app-image-preview">
-                                    <image-input-preview att_name="image" src="{{$office->hasLogo ? $office->logo : ""}}">
+                                    <image-input-preview att_name="image"
+                                                         src="{{$office->hasLogo ? $office->logo : ""}}">
                                     </image-input-preview>
                                 </div>
 
 
                             </div>
                         </div>
+
+                        <div class="col-12">
+                            <div class="mg-office--item">
+                                <label>@lang('trs.office_slide_show_image')</label>
+
+
+                                <div id="app">
+                                    <update-media
+                                        server="{{route('tmp_upload')}}"
+                                        media_file_path="{{$office->SlideshowPath}}"
+                                        media_server="{{route('mg.slideshow_images',['office'=>$office->id])}}"
+                                        error="@error('media'){{$message}}@enderror">
+                                    </update-media>
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-4 text-center">

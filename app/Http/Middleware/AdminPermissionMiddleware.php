@@ -17,19 +17,19 @@ class AdminPermissionMiddleware
     public function handle(Request $request, Closure $next, ...$permission)
     {
         if (!$permission) {
-            abort(403, 'عدم دسترسی');
+            return redirect(route('admin.dashboard'))->withErrors(['error' => trans('trs.dont_have_permission')]);
         }
 
         $admin = $request->admin;
 
         if (!$admin) {
-            abort(403, 'عدم دسترسی');
+            return redirect(route('admin.dashboard'))->withErrors(['error' => trans('trs.dont_have_permission')]);
         }
         if (
             empty($admin->hasPermission($permission)) &&
             !$admin->isSuperAdmin()
         ) {
-            abort(403, 'عدم دسترسی');
+            return redirect(route('admin.dashboard'))->withErrors(['error' => trans('trs.dont_have_permission')]);
         }
 
         return $next($request);

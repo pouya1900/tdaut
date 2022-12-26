@@ -25,6 +25,7 @@ class StoreRfpRequest extends FormRequest
     {
         return [
             'title'       => "required",
+            'short_title' => "required",
             'description' => "required",
         ];
     }

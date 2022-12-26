@@ -17,6 +17,8 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('company_name')->nullable()->comment('نام سازمان برای مشتریان حقوقی');
+            $table->string('phone')->nullable()->comment('تلفن ثابت برای مشتریان حقوقی');
             $table->unsignedTinyInteger('role_id')->comment('نوع کاربر که در جدول roles وجود دارد.');
             $table->enum('type', ['real', 'legal'])->comment('نوع کاربر ، حقیقی حقوقی');
             $table->enum('status', ["verified", 'rejected', 'pending', 'rfd'])->default('pending')->comment('وضعیت دفتر rfd : request for document');

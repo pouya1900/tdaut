@@ -31,25 +31,13 @@ export default {
                     field: 'title',
                 },
                 {
-                    label: 'توضیحات',
-                    field: 'description',
-                    html: true,
-                },
-                {
-                    label: 'فایل',
-                    field: 'file',
-                    html: true
-                },
-                {
-                    label: 'پروپوزال',
-                    field: 'proposal',
-                    html: true
+                    label: 'تاریخ ایجاد',
+                    field: 'created_at',
                 },
                 {
                     label: 'عملیات',
                     field: 'action',
                     html: true
-
                 }
             );
             return array;

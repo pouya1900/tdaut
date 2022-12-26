@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Events\SendConfirmationEmailEvent;
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\MemberLoginRequest;
 use App\Models\Degree;
 use App\Models\Department;
 use App\Models\Email;
@@ -12,6 +13,8 @@ use App\Models\Profile;
 use App\Models\Rank;
 use App\Models\Role;
 use App\Models\User;
+use App\Services\hampa;
+use App\Traits\UploadUtilsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Event;
@@ -25,6 +28,8 @@ class AuthController extends Controller
     private $member;
     private $request;
     private $auth;
+
+    use UploadUtilsTrait;
 
     public function __construct(User $user, Member $member, Request $request, Auth $auth)
     {
@@ -59,9 +64,11 @@ class AuthController extends Controller
     }
 
 
-    public function do_member_login(LoginRequest $request)
+    public function do_member_login(MemberLoginRequest $request)
     {
-        $login = $request->input('email');
+        $username = $request->input('username');
+
+        $profile = Profile::where('username', $username)->first();
 
         // check login field
 //        $login_type = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
@@ -74,20 +81,25 @@ class AuthController extends Controller
 //            $credentials = $request->only('username', 'password');
 //        }
 
-        $credentials = $request->only('email', 'password');
+        if ($profile) {
+            $credentials = ['email' => $profile->profileable->email, 'password' => $request->input('password')];
 
-        if ($this->auth::guard('member')->attempt($credentials, $request->has('remember'))) {
+            if ($this->auth::guard('member')->attempt($credentials, $request->has('remember'))) {
 
-            if (!$this->auth::guard('member')->user()->email_verified_at) {
-                $this->auth::guard('member')->logout();
-                return redirect()->back()
-                    ->withInput($request->only('email', 'remember'))
-                    ->withErrors(['error' => trans('trs.account_not_confirmed_text')]);
+                if (!$this->auth::guard('member')->user()->email_verified_at) {
+                    $this->auth::guard('member')->logout();
+                    return redirect()->back()
+                        ->withInput($request->only('email', 'remember'))
+                        ->withErrors(['error' => trans('trs.account_not_confirmed_text')]);
+                }
+
+                $hampa = new hampa();
+
+                $hampa->login($this->auth::guard('member')->user(), $request->input('password'));
+
+                return redirect(route('profile_show', $this->auth::guard('member')->user()->id));
             }
-
-            return redirect(route('profile_show', $this->auth::guard('member')->user()->id));
         }
-
 
         return redirect()->back()
             ->withInput($request->only('email', 'remember'))
@@ -146,9 +158,18 @@ class AuthController extends Controller
 
     public function register_member()
     {
+        if ($this->auth::guard('member')->check()) {
+            return redirect(route('profile_show', $this->auth::guard('member')->user()->id));
+        }
+        if ($this->auth::guard('user')->check()) {
+            return redirect(route('user.show', $this->auth::guard('user')->user()->id));
+        }
+
         $ranks = Rank::all();
         $departments = Department::all();
         $degrees = Degree::all();
+
+        $link = route('check_professor');
 
         $data = [
             'ranks'       => $ranks,
@@ -157,12 +178,23 @@ class AuthController extends Controller
             'trans'       => trans('trs'),
         ];
 
-        return view('front.auth.register_member', compact('data'));
+        return view('front.auth.register_member', compact('data', 'link'));
     }
 
     public function register_user()
     {
-        return view('front.auth.register_user');
+        if ($this->auth::guard('member')->check()) {
+            return redirect(route('profile_show', $this->auth::guard('member')->user()->id));
+        }
+        if ($this->auth::guard('user')->check()) {
+            return redirect(route('user.show', $this->auth::guard('user')->user()->id));
+        }
+
+        $data = [
+            'trans' => trans('trs'),
+        ];
+
+        return view('front.auth.register_user', compact('data'));
     }
 
     public function do_register_member()
@@ -171,8 +203,6 @@ class AuthController extends Controller
 
         $validation = [
             "type"       => "required|in:1,2,3",
-            "email"      => "required|unique:members,email",
-            "username"   => "required|unique:profiles,username",
             "first_name" => "required",
             "last_name"  => "required",
             "gender"     => "required",
@@ -200,6 +230,9 @@ class AuthController extends Controller
             $validation["rank"] = "required|exists:ranks,id";
             $validation["department"] = "required|exists:departments,id";
             $validation["group"] = "required";
+            $validation["email"] = "required";
+            $validation["username"] = "required|exists:profiles,username";
+
         } else if ($type == 2) {
             $save['type'] = 'student';
             $save['department_id'] = $this->request->input('department');
@@ -209,12 +242,17 @@ class AuthController extends Controller
             $validation["department"] = "required|exists:departments,id";
             $validation["degree"] = "required|exists:degrees,id";
             $validation["student_number"] = "required";
+            $validation["email"] = "required|unique:members,email";
+            $validation["username"] = "required|unique:profiles,username";
 
         } else if ($type == 3) {
             $save['type'] = 'staff';
             $save['degree_id'] = $this->request->input('degree');
 
             $validation["degree"] = "required|exists:degrees,id";
+            $validation["email"] = "required|unique:members,email";
+            $validation["username"] = "required|unique:profiles,username";
+
         }
 
 
@@ -223,21 +261,22 @@ class AuthController extends Controller
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
-        $email = $this->request->input('email');
-
-        if (!Email::where('email', $email)->first()) {
-            return redirect()->back()->withInput()->withErrors(['error' => trans('trs.professor_email_not_found')]);
-        }
-
         do {
             $token = Str::random(12);
         } while ($this->member->where('confirmation_token', $token)->first());
 
         $save["confirmation_token"] = $token;
 
-        $member = $this->member->create($save);
+        if ($type == 1) {
+            $username = $this->request->input('username');
+            $member = Profile::where('username', $username)->first()->profileable;
+            $member->update($save);
+            $profile = $member->profile()->update($save_profile);
+        } else {
+            $member = $this->member->create($save);
+            $profile = $member->profile()->create($save_profile);
+        }
 
-        $profile = $member->profile()->create($save_profile);
 
         $link = route('confirmation_email_member', ['token' => $member->confirmation_token]);
 
@@ -256,11 +295,9 @@ class AuthController extends Controller
         $role = Role::where('name', 'employer')->first();
 
         $validation = [
-            "type"       => "required|in:1,2",
-            "email"      => "required|unique:users,email",
-            "username"   => "required|unique:profiles,username",
-            "first_name" => "required",
-            "password"   => "required|confirmed",
+            "type"     => "required|in:1,2",
+            "email"    => "required|unique:users,email",
+            "password" => "required|confirmed",
         ];
         $save = [
             'email'    => $this->request->input('email'),
@@ -270,26 +307,37 @@ class AuthController extends Controller
         ];
 
         $save_profile = [
-            'username'   => $this->request->input('username'),
-            'first_name' => $this->request->input('first_name'),
         ];
 
         if ($type == 1) {
             $save['type'] = 'real';
-            $save_profile['gender'] = $this->request->input('gender');
+            $save_profile['first_name'] = $this->request->input('first_name');
             $save_profile['last_name'] = $this->request->input('last_name');
+            $save_profile['gender'] = $this->request->input('gender');
 
-
-            $validation["gender"] = "required";
+            $validation["first_name"] = "required";
             $validation["last_name"] = "required";
+            $validation["gender"] = "required";
         } else if ($type == 2) {
             $save['type'] = 'legal';
+            $save_profile['first_name'] = $this->request->input('agent_first_name');
+            $save_profile['last_name'] = $this->request->input('agent_last_name');
+            $save['company_name'] = $this->request->input('name');
+            $save['phone'] = $this->request->input('phone');
+
+            $validation["agent_first_name"] = "required";
+            $validation["agent_last_name"] = "required";
+            $validation["name"] = "required";
         }
 
 
         $validator = Validator::make($this->request->all(), $validation);
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator->errors());
+        }
+
+        if (!$this->request->hasFile('card') && !$this->request->input('phone')) {
+            return redirect()->back()->withInput()->withErrors(['error' => trans('trs.you_should_provide_visit_card_or_phone')]);
         }
 
         do {
@@ -301,6 +349,12 @@ class AuthController extends Controller
         $user = $this->user->create($save);
 
         $profile = $user->profile()->create($save_profile);
+
+        if ($this->request->hasFile('card')) {
+            $card = $this->request->file('card');
+
+            $this->imageUpload($card, 'visitCard', 'privateStorage', $profile);
+        }
 
         $link = route('confirmation_email_user', ['token' => $user->confirmation_token]);
 
@@ -349,14 +403,17 @@ class AuthController extends Controller
         return view('front.auth.confirmation', compact('type'));
     }
 
-    public function check_username()
+    public function check_professor()
     {
-        $username = $this->request->username;
+        $username = $this->request->national_id;
 
-        if (Profile::where('username', $username)->first()) {
-            return false;
+        if ($profile = Profile::where('username', $username)->first()) {
+            if ($profile->profileable->type != 'professor') {
+                return false;
+            }
+            return ['profile' => $profile, 'member' => $profile->profileable];
         }
-        return true;
+        return false;
     }
 
 }

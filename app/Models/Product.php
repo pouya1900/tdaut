@@ -93,6 +93,11 @@ class Product extends Model
             ->first();
     }
 
+    public function getTdPathAttribute()
+    {
+        return Storage::disk("assetsStorage")->url('') . 'productTd/';
+    }
+
     public function getImagesAttribute()
     {
         $image = $this->media()->where("model_type", 'productImage')
@@ -147,6 +152,24 @@ class Product extends Model
     public function getModelNameAttribute()
     {
         return trans('trs.product');
+    }
+
+    public function getCatalogAttribute()
+    {
+        $catalog = $this->media()->where("model_type", 'productCatalog')
+            ->first();
+
+        if (!empty($catalog)) {
+            $path = Storage::disk("assetsStorage")->url('') . 'productCatalog/';
+            return $path . $catalog->title;
+        }
+        return null;
+    }
+
+    public function getCatalogModelAttribute()
+    {
+        return $this->media()->where("model_type", 'productCatalog')
+            ->first();
     }
 
 }

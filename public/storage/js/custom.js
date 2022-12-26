@@ -7,6 +7,9 @@ jQuery(document).ready(function ($) {
 
     });
 
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
     $('#video0').on('ended', function () {
         $("#image0").removeClass('display-none');
         $(".infographic_container").removeClass('display-none');

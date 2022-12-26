@@ -35,9 +35,9 @@ class Office extends Model
         return $this->belongsTo(Department::class, "department_id");
     }
 
-    public function documents()
+    public function rfps()
     {
-        return $this->hasMany(Document::class, "office_id");
+        return $this->hasMany(Rfp::class, "office_id");
     }
 
     public function messages()
@@ -142,6 +142,27 @@ class Office extends Model
 
         $path = Storage::disk("assetsStorage")->url('') . 'siteContent/';
         return [$path . "slider-d1.jpg", $path . "slider-d2.jpg", $path . "slider-d3.jpg"];
+    }
+
+    public function getSlideshowNameAttribute()
+    {
+        $images = $this->media()->where("model_type", 'officeSlideshow')->select('title as name')->get();
+        return $images;
+    }
+
+    public function getSlideshowPathAttribute()
+    {
+        return Storage::disk("assetsStorage")->url('') . 'officeSlideshow/';
+    }
+
+    public function getHasSlideshowAttribute()
+    {
+        $image = $this->media()->where("model_type", 'officeSlideshow')
+            ->first();
+        if (!empty($image)) {
+            return 1;
+        }
+        return 0;
     }
 
     public function getCategoriesListAttribute()

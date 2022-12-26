@@ -47,10 +47,26 @@ trait UploadUtilsTrait
         ]);
     }
 
+    public function documentUpload($file, $model_type, $disk, $model)
+    {
+        Storage::disk($disk)->put($model_type, $file);
+
+        $media = $model->media()->create([
+            "title"      => $file->hashName(),
+            "ext"        => $file->extension(),
+            "size"       => $file->getSize() / 1024,
+            "model_type" => $model_type,
+        ]);
+
+        return $media;
+    }
+
     public function mediaRemove($media, $disk)
     {
-        Storage::disk($disk)->delete($media->model_type . '/' . $media->title);
-        $media->delete();
+        if ($media) {
+            Storage::disk($disk)->delete($media->model_type . '/' . $media->title);
+            $media->delete();
+        }
     }
 
 }
