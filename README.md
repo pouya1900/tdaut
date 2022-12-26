@@ -20,7 +20,7 @@
 - open your terminal
 - go to your domain root directory
 - clone repository to your server with :
-    - `git clone -b feature-office git@github.com:pouya1900/tdaut.git`
+    - `git clone -b final-ux1 git@github.com:pouya1900/tdaut.git`
 - create a file with name .env
     - open file .env.example and copy it to .env
     - find DB_DATABASE , DB_USERNAME and DB_PASSWORD in .env
