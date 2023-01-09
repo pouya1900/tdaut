@@ -255,6 +255,9 @@ video {
     width: 180px;
     z-index: 999;
     position: relative;
+    background: #fff;
+    border-radius: 150px;
+    padding: 15px;
 }
 
 .infographic_container .infographic_section {
@@ -262,7 +265,7 @@ video {
     left: 200px;
     width: max-content;
     text-align: center;
-    bottom: -60%;
+    bottom: -83%;
 }
 
 .infographic_container .infographic_section ul {
@@ -295,11 +298,11 @@ video {
     transform: scale(1.1);
 }
 
-.infographic_container .infographic_section ul li:nth-child(2), .infographic_container .infographic_section ul li:nth-child(4) {
+.infographic_container .infographic_section ul li:nth-child(2), .infographic_container .infographic_section ul li:nth-child(5) {
     left: 40px;
 }
 
-.infographic_container .infographic_section ul li:nth-child(3) {
+.infographic_container .infographic_section ul li:nth-child(3) , .infographic_container .infographic_section ul li:nth-child(4) {
     left: 60px;
 }
 
@@ -343,46 +346,61 @@ video {
     color: #0cb878;
 }
 
+.infographic_container .infographic_section ul li:nth-child(6) {
+    background: #0c5656;
+}
+
+.infographic_container .infographic_section ul li:nth-child(6) .section_icon {
+    color: #0c5656;
+}
+
 .infographic_container .infographic_section ul li:after {
     content: close-quote;
     height: 2px;
     position: absolute;
-    width: 105px;
+    width: 130px;
 }
 
 .infographic_container .infographic_section ul li:nth-child(1):after {
-    transform: rotateZ(140deg);
-    left: -90px;
-    top: 60px;
+    transform: rotateZ(130deg);
+    left: -104px;
+    top: 78px;
     background: #d71c3d;
 }
 
 .infographic_container .infographic_section ul li:nth-child(2):after {
-    top: 45px;
-    transform: rotateZ(160deg);
-    left: -105px;
+    top: 55px;
+    transform: rotateZ(150deg);
+    left: -115px;
     background: #ee8637;
 }
 
 .infographic_container .infographic_section ul li:nth-child(3):after {
-    top: 25px;
-    transform: rotateZ(0deg);
-    left: -105px;
+    top: 30px;
+    transform: rotateZ(-7deg);
+    left: -123px;
     background: #19a3a6;
 }
 
 .infographic_container .infographic_section ul li:nth-child(4):after {
-    transform: rotateZ(30deg);
-    left: -90px;
-    top: 0;
+    transform: rotateZ(10deg);
+    left: -120px;
+    top: 15px;
     background: #0c75b8;
 }
 
 .infographic_container .infographic_section ul li:nth-child(5):after {
-    transform: rotateZ(40deg);
-    left: -90px;
+    transform: rotateZ(30deg);
+    left: -120px;
     top: -10px;
     background: #0cb878;
+}
+
+.infographic_container .infographic_section ul li:nth-child(6):after {
+    transform: rotateZ(52deg);
+    left: -102px;
+    top: -31px;
+    background: #0c5656;
 }
 
 .infographic_container .infographic_section .section_icon {
@@ -496,6 +514,15 @@ video {
     padding: 15px;
     border-radius: 5px;
 }
+
+.redirect_loading--container {
+    text-align: center;
+    min-height: 200px;
+    padding-top: 30px;
+}
+.redirect_loading--container img{
+    width: 100px;
+    margin-top: 20px}
 
 .side_container {
     background: #000;
@@ -617,8 +644,11 @@ video {
 
 .top_bar_profile {
     flex: auto;
-    margin-right: 5%;
-    margin-top: 8px;
+    padding-right: 20px;
+}
+
+.profile_info--container {
+    margin-top: 20px;
 }
 
 .login_register {
@@ -657,6 +687,20 @@ video {
 
 .top_bar .top_bar_logo img {
     width: 50px;
+}
+
+.site_name_middle {
+    position: absolute;
+    right: 45%;
+}
+
+.site_name_middle a {
+    color: #000;
+    font-size: 16px;
+}
+
+.site_name_middle a:hover {
+    color: var(--main-color);
 }
 
 /*offices page*/
@@ -1253,7 +1297,6 @@ img {
 }
 
 
-
 .profile_main--avatar img {
     border-radius: 5px;
 }
@@ -1417,6 +1460,22 @@ img {
     height: 100%;
     position: fixed;
     background: #FAFAFA;
+}
+
+.loading-page--image {
+    width: 40%;
+    margin-right: 30%;
+}
+
+.loading-page--bar--container {
+    margin: 20px 0 20px 0;
+    background: #fff;
+    padding: 8px;
+}
+
+.loading-page--bar--body {
+    padding: 2px;
+    background: var(--main-color);
 }
 
 .office_members {

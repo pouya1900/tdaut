@@ -122,5 +122,12 @@ class OfficeController extends Controller
         return view('admin.offices.members', compact('admin', 'office', 'data'));
     }
 
+    public function slideshow_images(Office $office)
+    {
+        $media = $office->slideshowName;
+
+        return ['media' => $media];
+    }
+
 
 }

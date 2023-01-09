@@ -25,8 +25,9 @@ class Setting extends Model
             $path = Storage::disk("assetsStorage")->url('') . 'siteContent/';
             return $path . $image->title;
         }
+        $path = Storage::disk("assetsStorage")->url('') . 'siteContent/';
 
-        return "";
+        return $path . 'aut_logo.png';
     }
 
     public function getIconAttribute()

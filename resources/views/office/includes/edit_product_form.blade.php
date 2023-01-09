@@ -86,7 +86,7 @@
             <update-media
                 server="{{route('tmp_upload')}}"
                 media_file_path="{{$product->imagesPath}}"
-                media_server="{{!$office ? route('admin.product.images',['product'=>$product->id]) : route('mg.product_images',['office'=>$office->id,'product'=>$product->id])}}"
+                media_server="{{!isset($office) ? route('admin.product.images',['product'=>$product->id]) : route('mg.product_images',['office'=>$office->id,'product'=>$product->id])}}"
                 error="@error('media'){{$message}}@enderror">
             </update-media>
         </div>

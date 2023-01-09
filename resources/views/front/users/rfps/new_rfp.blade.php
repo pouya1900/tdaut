@@ -50,6 +50,7 @@
                                           placeholder="@lang('trs.achievements')"></textarea>
                             </div>
                             <div class="rfp_attachment">
+                                <label for="file" class="form-label">@lang('trs.sending_file')</label>
                                 <input type="file" name="rfp" class="form-control" id="file">
                             </div>
 

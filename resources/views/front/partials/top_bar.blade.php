@@ -12,11 +12,6 @@
                 @endif
             </span>
         </div>
-        <div class="top_bar_logo">
-            <span class="logout"><a href="{{route('logout')}}">@lang('trs.logout')</a></span>
-            {{--            <img src="" alt="">--}}
-        </div>
-
     @else
         <div class="top_bar_profile">
             <div class="login_register">
@@ -31,6 +26,17 @@
                 <span><a href="{{route('login','user')}}">ورود</a></span>
                 <span>کارفرمایان</span>
             </div>
+        </div>
+    @endif
+
+    <div class="site_name_middle">
+        <a href="{{route('index')}}">{{$setting->title}}</a>
+    </div>
+    @if ($current_user || $current_member)
+
+        <div class="top_bar_logo">
+            <span class="logout"><a href="{{route('logout')}}">@lang('trs.logout')</a></span>
+            {{--            <img src="" alt="">--}}
         </div>
     @endif
 

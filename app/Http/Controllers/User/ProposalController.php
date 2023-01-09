@@ -9,6 +9,7 @@ use App\Models\Document;
 use App\Models\Office;
 use App\Models\Rfp;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -44,6 +45,14 @@ class ProposalController extends Controller
 
         if ($rfp->user->id != $user->id) {
             abort(403);
+        }
+
+        foreach ($rfp->documents as $document) {
+            if (!$document->seen_at && $document->type == "proposal") {
+                $document->update([
+                    'seen_at' => date('Y-m-d H:i', strtotime('now')),
+                ]);
+            }
         }
 
         return view('front.users.rfps.show', compact('rfp', 'user'));

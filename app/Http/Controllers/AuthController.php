@@ -328,6 +328,11 @@ class AuthController extends Controller
             $validation["agent_first_name"] = "required";
             $validation["agent_last_name"] = "required";
             $validation["name"] = "required";
+
+            if (!$this->request->hasFile('card') && !$this->request->input('phone')) {
+                return redirect()->back()->withInput()->withErrors(['error' => trans('trs.you_should_provide_visit_card_or_phone')]);
+            }
+
         }
 
 
@@ -336,9 +341,7 @@ class AuthController extends Controller
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
 
-        if (!$this->request->hasFile('card') && !$this->request->input('phone')) {
-            return redirect()->back()->withInput()->withErrors(['error' => trans('trs.you_should_provide_visit_card_or_phone')]);
-        }
+
 
         do {
             $token = Str::random(12);

@@ -1,6 +1,16 @@
 @extends('layouts.admin')
 
 @section('content')
+    <style>
+        .close-btn[data-v-3904557e] {
+            left: 34px !important;
+            right: unset !important;
+        }
+
+        .custum-icon[data-v-3904557e] {
+            margin-left: unset !important;
+        }
+    </style>
     <div class="my-table">
         @include('front.partials.error_message')
 
@@ -90,6 +100,25 @@
 
                     </div>
                 </div>
+
+                <div class="col-12">
+                    <div class="mg-office--item">
+                        <label>@lang('trs.office_slide_show_image')</label>
+
+
+                        <div id="app">
+                            <update-media
+                                server="{{route('tmp_upload')}}"
+                                media_file_path="{{$office->SlideshowPath}}"
+                                media_server="{{route('admin.office.slideshow_images',['office'=>$office->id])}}"
+                                error="@error('media'){{$message}}@enderror">
+                            </update-media>
+                        </div>
+
+
+                    </div>
+                </div>
+
                 <div class="col-12 col-lg-6">
                     <div class="mg-office--item">
                         <label>@lang('trs.status')</label>

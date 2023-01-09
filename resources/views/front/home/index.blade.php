@@ -23,7 +23,7 @@
             </ul>
         </div>
         <div class="infographic_logo">
-            <img src="storage/assets/siteContent/logo.png">
+            <img src="{{$setting->logo}}">
         </div>
         <div class="infographic_section">
             <ul>
@@ -35,7 +35,8 @@
                                     <div class="section_icon"><i class="fa-solid fa-building"></i></div>
                                 </div>
                                 <div class="col-8">
-                                    <div class="section_content"><span>@lang('trs.technology_service_center')</span></div>
+                                    <div class="section_content"><span>@lang('trs.technology_service_center')</span>
+                                    </div>
                                 </div>
                                 <div class="col-2">
                                     <div class="section_button"></div>
@@ -104,7 +105,38 @@
                         </div>
                     </a>
                 </li>
+                <li>
+                    <a href="#" id="hampa">
+                        <div class="row full-width">
+                            <div class="col-2">
+                                <div class="section_icon"><i class="fa-solid fa-industry"></i></div>
+                            </div>
+                            <div class="col-8">
+                                <div class="section_content"><span>ورود به همپا</span></div>
+                            </div>
+                            <div class="col-2">
+                                <div class="section_button"></div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
             </ul>
+        </div>
+    </div>
+
+    <div class="modal fade" id="hampaRedirectModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="hampaRedirectModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="redirect_loading--container">
+                        <p>
+                            @lang('trs.redirecting_to_hampa')
+                        </p>
+                        <img src="storage/assets/siteContent/loading.gif">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 

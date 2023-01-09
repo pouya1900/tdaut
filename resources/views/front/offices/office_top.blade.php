@@ -1,7 +1,7 @@
 <div class="office_top_bar">
     <div class="row m-0">
         <div class="col-3">
-            <div class="uni_logo">
+            <div class="profile_info--container">
 
                 @if ($current_user || $current_member)
                     <div class="office_top_bar_profile">
@@ -45,8 +45,8 @@
                 @if ($current_user || $current_member)
                     <span class="logout"><a href="{{route('logout')}}">@lang('trs.logout')</a></span>
                 @endif
-                <a href="{{route('office_show',$office->id)}}">
-                    <img src="{{$office->logo}}" title="{{$office->name}}" alt="{{$office->name}}">
+                <a href="{{route('index')}}">
+                    <img src="{{$setting->logo}}" title="{{$setting->title}}" alt="{{$setting->title}}">
                 </a>
             </div>
         </div>

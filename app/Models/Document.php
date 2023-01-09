@@ -16,6 +16,7 @@ class Document extends Model
         'type',
         'status',
         'rfp_id',
+        'seen_at',
     ];
 
 

@@ -82,10 +82,10 @@ class Profile extends Model
 
     public function getFullNameAttribute()
     {
-        if ($this->type == "real") {
-            return $this->first_name . " " . $this->last_name;
-        } else {
+        if ($this->type == "legal") {
             return $this->profileable->company_name;
+        } else {
+            return $this->first_name . " " . $this->last_name;
         }
     }
 

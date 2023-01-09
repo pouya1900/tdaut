@@ -50,6 +50,12 @@ jQuery(document).ready(function ($) {
 
     $('#accountAlertModal').modal('show');
 
+    $('#hampa').on('click', function () {
+        $('#hampaRedirectModal').modal('show');
+
+        window.location.replace("http://autpayesh.ir/");
+    });
+
 });
 
 

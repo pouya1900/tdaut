@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->unsignedInteger('rfp_id')->comment('تعیین rfp');
             $table->enum('type', ['rfp', 'proposal'])->comment('تعیین نوع سند');
             $table->enum('status', ['pending', 'sent'])->nullable()->comment('تعیین نوع سند');
+            $table->timestamp('seen_at')->nullable();
             $table->timestamps();
         });
     }

@@ -133,14 +133,14 @@ Route::group(['middleware' => ['user.auth']], function () {
     Route::get('/user/rfps/new/create', 'App\Http\Controllers\User\ProposalController@create_rfp')->name('user_new_rfp_create');
     Route::post('/user/rfps/new/store', 'App\Http\Controllers\User\ProposalController@store_rfp')->name('user_new_rfp_store');
 
-    Route::get('/user/supports', 'App\Http\Controllers\User\supportController@index')->name('user_supports');
-    Route::get('/user/supports/show/{support}', 'App\Http\Controllers\User\supportController@show')->name('user_support_show');
-    Route::post('/user/supports/show/{support}', 'App\Http\Controllers\User\supportController@store_message')->name('user_support_new_message');
-    Route::get('/user/supports/create', 'App\Http\Controllers\User\supportController@create')->name('user_support_new_ticket');
-    Route::post('/user/supports/store', 'App\Http\Controllers\User\supportController@store')->name('user_support_new_ticket_store');
+    Route::get('/user/supports', 'App\Http\Controllers\User\SupportController@index')->name('user_supports');
+    Route::get('/user/supports/show/{support}', 'App\Http\Controllers\User\SupportController@show')->name('user_support_show');
+    Route::post('/user/supports/show/{support}', 'App\Http\Controllers\User\SupportController@store_message')->name('user_support_new_message');
+    Route::get('/user/supports/create', 'App\Http\Controllers\User\SupportController@create')->name('user_support_new_ticket');
+    Route::post('/user/supports/store', 'App\Http\Controllers\User\SupportController@store')->name('user_support_new_ticket_store');
 
-    Route::get('/user/messages/show/{office?}', 'App\Http\Controllers\User\messageController@index')->name('user_messages');
-    Route::post('/user/messages/store/{office}', 'App\Http\Controllers\User\messageController@store')->name('user_store_message');
+    Route::get('/user/messages/show/{office?}', 'App\Http\Controllers\User\MessageController@index')->name('user_messages');
+    Route::post('/user/messages/store/{office}', 'App\Http\Controllers\User\MessageController@store')->name('user_store_message');
 
 
 });
@@ -156,6 +156,7 @@ Route::group(['middleware' => ['admin.auth'], 'prefix' => 'administrator', 'name
     Route::post('/offices/update/{office}', 'OfficeController@update')->name('admin.office.update')->middleware('admin.permission:office.*');
     Route::get('/offices/remove/{office}', 'OfficeController@remove')->name('admin.office.remove')->middleware('admin.permission:office.*');
     Route::get('/offices/members/{office}', 'OfficeController@members')->name('admin.office.members')->middleware('admin.permission:office.*');
+    Route::get('/offices/slideshow_images/{office}', 'OfficeController@slideshow_images')->name('admin.office.slideshow_images')->middleware('admin.permission:office.*');
 
     Route::get('/products/all/{office?}', 'ProductController@index')->name('admin.products')->middleware('admin.permission:product.*');
     Route::get('/products/edit/{product}', 'ProductController@edit')->name('admin.product.edit')->middleware('admin.permission:product.*');

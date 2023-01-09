@@ -27,8 +27,11 @@ class messageController extends Controller
             $default_user = $users->first();
         }
 
-        $messages = $office->messages()->where('user_id', $default_user->id)->orderBy('created_at', 'asc')->get();
-
+        if ($default_user) {
+            $messages = $office->messages()->where('user_id', $default_user->id)->orderBy('created_at', 'asc')->get();
+        } else {
+            $messages = [];
+        }
         return view('office.messages.index', compact('office', 'users', 'default_user', 'messages'));
     }
 
