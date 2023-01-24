@@ -17,7 +17,8 @@ Route::post('/temp/upload', 'App\Http\Controllers\MediaController@tmp')->name('t
 
 Route::get('/', 'App\Http\Controllers\HomeController@index')->name('index');
 Route::get('/home2', 'App\Http\Controllers\HomeController@index2')->name('index2');
-Route::get('/test/{office}', 'App\Http\Controllers\TestController@index')->name('test');
+Route::get('/test', 'App\Http\Controllers\TestController@index')->name('test');
+Route::post('/test', 'App\Http\Controllers\TestController@do')->name('do_test');
 
 Route::get('/search-member', 'App\Http\Controllers\ProfileController@search')->name('search_member');
 Route::get('/username/check', 'App\Http\Controllers\AuthController@check_username')->name('check_username');
@@ -80,7 +81,7 @@ Route::group(['middleware' => ['member.auth']], function () {
     Route::get('/office/supports/{office}/create', 'App\Http\Controllers\Office\SupportController@create')->name('mg.support_new_ticket')->middleware('member.permission:support.*');
     Route::post('/office/supports/{office}/store', 'App\Http\Controllers\Office\SupportController@store')->name('mg.support_new_ticket_store')->middleware('member.permission:support.*');
 
-    Route::get('/office/messages/{office}/show/{user?}', 'App\Http\Controllers\Office\messageController@index')->name('mg.messages')->middleware('member.permission:messages.*');
+    Route::get('/office/messages/{office}/show/{user?}', 'App\Http\Controllers\Office\messageController@index')->name('mg.messages')->middleware('member.permission:message.*');
     Route::post('/office/messages/{office}/store/{user}', 'App\Http\Controllers\Office\messageController@store')->name('mg.store_message')->middleware('member.permission:message.*');
 
     Route::get('/office/rfps/{office}', 'App\Http\Controllers\Office\proposalController@index')->name('mg.rfps')->middleware('member.permission:rfp.*');
@@ -236,6 +237,24 @@ Route::group(['middleware' => ['admin.auth'], 'prefix' => 'administrator', 'name
     Route::get('/roles', 'RoleController@index')->name('admin.roles')->middleware('admin.permission:*');
     Route::get('/roles/edit/{role}', 'RoleController@edit')->name('admin.role.edit')->middleware('admin.permission:*');
     Route::post('/roles/update/{role}', 'RoleController@update')->name('admin.role.update')->middleware('admin.permission:*');
+    Route::get('/roles/remove/{role}', 'RoleController@remove')->name('admin.role.remove')->middleware('admin.permission:*');
+    Route::get('/roles/create', 'RoleController@create')->name('admin.role.create')->middleware('admin.permission:*');
+    Route::post('/roles/store', 'RoleController@store')->name('admin.role.store')->middleware('admin.permission:*');
+
+    Route::get('/office-roles', 'OfficeRoleController@index')->name('admin.office-roles')->middleware('admin.permission:list.*');
+    Route::get('/office-roles/edit/{role}', 'OfficeRoleController@edit')->name('admin.office-role.edit')->middleware('admin.permission:list.*');
+    Route::post('/office-roles/update/{role}', 'OfficeRoleController@update')->name('admin.office-role.update')->middleware('admin.permission:list.*');
+    Route::get('/office-roles/remove/{role}', 'OfficeRoleController@remove')->name('admin.office-role.remove')->middleware('admin.permission:list.*');
+    Route::get('/office-roles/create', 'OfficeRoleController@create')->name('admin.office-role.create')->middleware('admin.permission:list.*');
+    Route::post('/office-roles/store', 'OfficeRoleController@store')->name('admin.office-role.store')->middleware('admin.permission:list.*');
+
+
+
+    Route::get('/settings', 'SettingController@edit')->name('admin.settings')->middleware('admin.permission:*');
+    Route::post('/settings', 'SettingController@update')->name('admin.settings.update')->middleware('admin.permission:*');
+
+    Route::get('/professors', 'MemberController@professors_insert')->name('admin.professors')->middleware('admin.permission:*');
+    Route::post('/professors', 'MemberController@professors_do_insert')->name('admin.professors.insert')->middleware('admin.permission:*');
 
 
 });

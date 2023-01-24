@@ -168,7 +168,7 @@ class ProfileController extends Controller
 
         $members = Member::wherehas('profile', function ($q) use ($string) {
             return $q->where('username', 'like', "%$string%")->orwhere('first_name', 'like', "%$string%")->orwhere('last_name', 'like', "%$string%");
-        })->orwhere('email', 'like', "%$string%")->get();
+        })->orwhere('email', 'like', "%$string%")->orwhere('student_number', 'like', "%$string%")->get();
 
         $response = [];
 

@@ -19,7 +19,7 @@ class messageController extends Controller
     public function index(Office $office, User $user = null)
     {
 
-        $users = $office->connect_users()->orderBy('messages.created_at', 'desc')->distinct()->get();
+        $users = $office->connect_users()->orderBy('messages.created_at', 'desc')->get()->unique('id');
 
         $default_user = $user;
 

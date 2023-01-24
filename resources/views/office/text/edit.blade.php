@@ -24,9 +24,9 @@
                     </textarea>
 
                     <div class="content_edit--submit">
-                    <button type="submit" class="edit_profile_button">
-                        @lang('trs.submit')
-                    </button>
+                        <button type="submit" class="edit_profile_button">
+                            @lang('trs.submit')
+                        </button>
                     </div>
                 </form>
 
@@ -59,7 +59,8 @@
             relative_urls: false,
             remove_script_host: false,
             convert_urls: true,
-
+            font_formats:
+                "Andale Mono=andale mono,times; B Nazanin=B Nazanin; B Mitra=B Mitra; B Yekan=B Yekan; Arial=arial,helvetica,sans-serif; Arial Black=arial black,avant garde; Book Antiqua=book antiqua,palatino; Comic Sans MS=comic sans ms,sans-serif; Courier New=courier new,courier; Georgia=georgia,palatino; Helvetica=helvetica; Impact=impact,chicago; Symbol=symbol; Tahoma=tahoma,arial,helvetica,sans-serif; Terminal=terminal,monaco; Times New Roman=times new roman,times; Trebuchet MS=trebuchet ms,geneva; Verdana=verdana,geneva; Webdings=webdings; Wingdings=wingdings,zapf dingbats",
             content_css: [
                 '//fonts.googleapis.com/css?family=Lato:300,300i,400,400i',
                 '//www.tinymce.com/css/codepen.min.css']

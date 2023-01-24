@@ -15,6 +15,7 @@ use App\Models\Rank;
 use App\Traits\UploadUtilsTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 class MemberController extends Controller
 {
@@ -108,8 +109,14 @@ class MemberController extends Controller
 
     public function remove(Member $member)
     {
-        $member->delete();
-        return redirect(route('admin.members'))->with('message', trans('trs.changed_successfully'));
+        try {
+            $member->profile()->delete();
+            $member->delete();
+            return redirect(route('admin.members'))->with('message', trans('trs.changed_successfully'));
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 
     public function offices(Member $member)
@@ -182,5 +189,57 @@ class MemberController extends Controller
         }
 
     }
+
+    public function professors_insert()
+    {
+        $admin = $this->request->admin;
+
+        return view('admin.members.insert_professors', compact('admin'));
+    }
+
+    public function professors_do_insert()
+    {
+
+        try {
+            $the_file = $this->request->file('file');
+
+            $spreadsheet = IOFactory::load($the_file->getRealPath());
+            $sheet = $spreadsheet->getActiveSheet();
+            $row_limit = $sheet->getHighestDataRow();
+            $column_limit = $sheet->getHighestDataColumn();
+            $row_range = range(2, $row_limit);
+            $column_range = range('F', $column_limit);
+            $startcount = 2;
+            foreach ($row_range as $row) {
+
+                if (!$sheet->getCell('C' . $row)->getValue() || !$sheet->getCell('F' . $row)->getValue()) {
+                    continue;
+                }
+
+                if (Member::where('email', $sheet->getCell('F' . $row)->getValue())->first()) {
+                    continue;
+                }
+
+                $member = Member::create([
+                    'email'    => $sheet->getCell('F' . $row)->getValue(),
+                    'password' => '',
+                    'type'     => 'professor',
+                ]);
+
+                $member->profile()->create([
+                    'first_name' => $sheet->getCell('A' . $row)->getValue(),
+                    'last_name'  => $sheet->getCell('B' . $row)->getValue(),
+                    'username'   => $sheet->getCell('C' . $row)->getValue(),
+                ]);
+
+                $startcount++;
+            }
+
+            return redirect(route('admin.members') . "?type=professor");
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
+    }
+
 
 }

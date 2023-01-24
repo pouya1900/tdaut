@@ -9,6 +9,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Admin_role extends Model
 {
+    protected $fillable = [
+        'title',
+        'name',
+    ];
     use HasFactory;
 
     /**
@@ -16,7 +20,7 @@ class Admin_role extends Model
      */
     public function permissions(): BelongsToMany
     {
-        return $this->belongsToMany(Admin_permission::class, 'admin_permission_role','role_id','permission_id');
+        return $this->belongsToMany(Admin_permission::class, 'admin_permission_role', 'role_id', 'permission_id');
     }
 
     /**

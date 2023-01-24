@@ -106,8 +106,13 @@ class UserController extends Controller
 
     public function remove(User $user)
     {
-        $user->delete();
-        return redirect(route('admin.users'))->with('message', trans('trs.changed_successfully'));
-    }
+        try {
+            $user->profile()->delete();
+            $user->delete();
+            return redirect(route('admin.users'))->with('message', trans('trs.changed_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
 
+    }
 }

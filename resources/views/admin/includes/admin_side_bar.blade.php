@@ -36,10 +36,14 @@
                     <a href="{{route('admin.members')}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.members')</a>
                 </li>
+                <li class="{{url()->current()==route('admin.office-roles') || url()->current()==route('admin.office-role.create') || (isset($role) && url()->current()==route('admin.office-role.edit',$role->id))? "active" : ""}}">
+                    <a href="{{route('admin.office-roles')}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.office_roles')</a>
+                </li>
                 <li class="{{url()->current()==route('admin.supports','office') || (isset($support) && isset($office) && url()->current()==route('admin.support.show',$support->id))? "active" : ""}}">
                     <a href="{{route('admin.supports','office')}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.office_support')</a>
-                    @if (\App\Models\Support::where('status','pending')->where('supportable_type',\App\Models\Member::class)->first())
+                    @if (\App\Models\Support::where('status','pending')->where('supportable_type',\App\Models\Office::class)->first())
                         <span class="admin_notification">*</span>
                     @endif
                 </li>
@@ -86,6 +90,14 @@
                 <li class="{{url()->current()==route('admin.roles') || (isset($role) && url()->current()==route('admin.role.edit',$role->id)) ? "active" : ""}}">
                     <a href="{{route('admin.roles')}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.roles')</a>
+                </li>
+                <li class="{{url()->current()==route('admin.settings') ? "active" : ""}}">
+                    <a href="{{route('admin.settings')}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.settings')</a>
+                </li>
+                <li class="{{url()->current()==route('admin.professors') ? "active" : ""}}">
+                    <a href="{{route('admin.professors')}}"> <i
+                            class="fa-solid fa-user"></i>@lang('trs.insert_professors')</a>
                 </li>
             </ul>
         </div>

@@ -92,7 +92,7 @@ class Member extends Authenticatable
 
     public function scopeActive()
     {
-        return $this->whereNotNull('emailed_verified_at');
+        return $this->whereNotNull('email_verified_at');
     }
 
     public function hasPermission($permission, $office_id)

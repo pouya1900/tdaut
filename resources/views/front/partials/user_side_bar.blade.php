@@ -11,6 +11,9 @@
             <img src="{{$user->profile->avatar}}" title="" alt="">
             <p class="profile_side-info--name">{{$user->profile->fullName}}</p>
             <p class="profile_side-info--type">{{\App\Helper::userType($user->type)}}</p>
+            @if ($current_user && $current_user->id==$user->id && $user->status!="verified")
+                <p class="alert_red">{{\App\Helper::userStatusToTranslated($user->status)}}</p>
+            @endif
         </div>
 
         <div class="profile_side-item--container">

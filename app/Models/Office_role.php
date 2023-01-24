@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Office_role extends Model
 {
+    protected $fillable = [
+        'title',
+        'name',
+    ];
     use HasFactory;
-
 
     public function members($office_id = null)
     {

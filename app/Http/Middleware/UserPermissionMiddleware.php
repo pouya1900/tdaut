@@ -26,6 +26,10 @@ class UserPermissionMiddleware
             abort(403, 'عدم دسترسی');
         }
 
+        if ($user->status != "verified") {
+            abort(403, 'عدم دسترسی');
+        }
+
         if (
             empty($user->hasPermission($permission))
         ) {

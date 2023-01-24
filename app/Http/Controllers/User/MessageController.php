@@ -17,7 +17,7 @@ class MessageController extends Controller
     public function index(Office $office = null)
     {
         $user = $this->request->current_user;
-        $offices = $user->connect_offices()->orderBy('messages.created_at', 'desc')->distinct()->get();
+        $offices = $user->connect_offices()->orderBy('messages.created_at', 'desc')->get()->unique('id');
 
         $default_office = $office;
 
@@ -25,7 +25,12 @@ class MessageController extends Controller
             $default_office = $offices->first();
         }
 
-        $messages = $user->messages()->where('office_id', $default_office->id)->orderBy('created_at', 'asc')->get();
+        if ($default_office) {
+            $messages = $user->messages()->where('office_id', $default_office->id)->orderBy('created_at', 'asc')->get();
+        } else {
+            $messages = [];
+        }
+
 
         return view('front.users.messages.index', compact('offices', 'user', 'default_office', 'messages'));
     }

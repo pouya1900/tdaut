@@ -86,6 +86,7 @@ class OfficeController extends Controller
             "department_id"  => $request->input('department'),
             "projects_count" => $request->input('projects_count'),
             "status"         => "created",
+            "status_date"    => date('Y-m-d H:i', strtotime('now')),
         ]);
 
         if (!$office) {
@@ -101,7 +102,7 @@ class OfficeController extends Controller
 
         $role_head->permissions()->attach($head_permission->id, ['office_id' => $office->id, 'created_at' => $now, 'updated_at' => $now]);
 
-        return redirect(route('mg.office', $office->id))->with('message', trans('office_created_wait_for_verify'));
+        return redirect(route('mg.office', $office->id))->with('message', trans('trs.office_created_wait_for_verify'));
 
     }
 

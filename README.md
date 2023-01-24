@@ -20,7 +20,7 @@
 - open your terminal
 - go to your domain root directory
 - clone repository to your server with :
-    - `git clone -b feature-office git@github.com:pouya1900/tdaut.git`
+    - `git clone -b v1 git@github.com:pouya1900/tdaut.git`
 - create a file with name .env
     - open file .env.example and copy it to .env
     - find DB_DATABASE , DB_USERNAME and DB_PASSWORD in .env
@@ -35,10 +35,10 @@
 - create database tables:
     - run this command to create your tables :
         - `php artisan migrate`
-- demo data
-    - now if you want to import demo data you can use demo.sql file to import manually
+-  data
+    - now you must import demo data , use tdaut.sql file to import manually
     - or use this command :
-        - `mysql -u username -p database_name < demo.sql`
+        - `mysql -u username -p database_name < tdaut.sql`
             - change `username` to your database username and `database_name` to your database name
 
 

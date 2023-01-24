@@ -21,7 +21,7 @@ class RoleController extends Controller
     public function index(Office $office)
     {
         $data = [];
-        foreach ($office->roles()->orderBy('role_id')->distinct()->get() as $role) {
+        foreach ($office->roles()->orderBy('role_id')->get()->unique('id') as $role) {
             $permission_text = "";
             $f = 0;
             foreach ($role->permissions as $permission) {

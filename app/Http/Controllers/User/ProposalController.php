@@ -4,7 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProposalRequest;
-use App\Http\Requests\storeRfpByIdRequest;
+use App\Http\Requests\StoreRfpByIdRequest;
 use App\Models\Document;
 use App\Models\Office;
 use App\Models\Rfp;

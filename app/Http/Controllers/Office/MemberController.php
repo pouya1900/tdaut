@@ -23,7 +23,7 @@ class MemberController extends Controller
     public function index(Office $office)
     {
         $data = [];
-        foreach ($office->members()->orderBy('role_id')->distinct()->get() as $member) {
+        foreach ($office->members()->orderBy('role_id')->get()->unique('id') as $member) {
             $role_text = "";
             $f = 0;
             foreach ($member->roles as $role) {

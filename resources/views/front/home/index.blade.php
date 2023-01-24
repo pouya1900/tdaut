@@ -4,11 +4,11 @@
     <div id="main_container">
         <div class="video_background background_full">
             <video class="" id="video0" autoplay muted>
-                <source src="storage/assets/background/video0.mp4">
+                <source src="{{$setting->backgroundVideo}}">
             </video>
         </div>
         <div class="image_background background_full ">
-            <img class="display-none" id="image0" src="storage/assets/background/image0.png">
+            <img class="display-none" id="image0" src="{{$setting->backgroundImage}}">
         </div>
     </div>
 
@@ -17,9 +17,19 @@
     <div class="infographic_container display-none">
         <div class="top_menu">
             <ul>
-                <li><a href="#">درباره ما</a></li>
-                <li><a href="#">تماس با ما</a></li>
-                <li><a href="#">مدیریت واحد</a></li>
+                <li>
+                    <a data-bs-toggle="modal" data-bs-target="#aboutModal"
+                       href="#">@lang('trs.about_us')</a>
+                </li>
+                <li>
+                    <a data-bs-toggle="modal" data-bs-target="#aboutModal"
+                       href="#">@lang('trs.contact_us')</a>
+                </li>
+                <li>
+                    <a data-bs-toggle="modal" data-bs-target="#aboutModal"
+                       href="#">@lang('trs.manager')</a>
+                </li>
+
             </ul>
         </div>
         <div class="infographic_logo">
@@ -134,6 +144,33 @@
                             @lang('trs.redirecting_to_hampa')
                         </p>
                         <img src="storage/assets/siteContent/loading.gif">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="aboutModal" tabindex="-1" aria-labelledby="aboutModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="about_us_modal_item">
+                        <p>@lang('trs.about_us') : </p>
+                        <p>@lang('trs.about_us_text')</p>
+                    </div>
+                    <div class="about_us_modal_item">
+                        <p>@lang('trs.contact_us') : </p>
+                        <p>{{$setting->phone}}</p>
+                        <p>{{$setting->email}}</p>
+                    </div>
+                    <div class="about_us_modal_item">
+                        <p>@lang('trs.manager') : </p>
+                        <p>@lang('trs.manager_name')</p>
                     </div>
                 </div>
             </div>

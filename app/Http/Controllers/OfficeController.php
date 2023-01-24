@@ -76,8 +76,7 @@ class OfficeController extends Controller
         when($type, function ($query) use ($type) {
             $roles_id = Office_role::where('name', $type)->pluck('id')->toArray();
             return $query->wherein('role_id', $roles_id);
-
-        })->distinct()->get();
+        })->distinct()->whereNotNull('email_verified_at')->get();
 
         return view('front.offices.members', compact('office', 'members'));
     }

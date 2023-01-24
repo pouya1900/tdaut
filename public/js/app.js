@@ -26541,6 +26541,8 @@ __webpack_require__.r(__webpack_exports__);
 var app = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
 var appVideoPreview = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
 var appImagePreview = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
+var appImagePreview2 = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
+var appImagePreview3 = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
 var appTdImagePreview = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
 var appCapability = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
 var appSearchMember = (0,vue__WEBPACK_IMPORTED_MODULE_1__.createApp)({});
@@ -26604,6 +26606,8 @@ app.component('product-td', _components_productTd__WEBPACK_IMPORTED_MODULE_29__[
 app.component('search-office', _components_searchOffice__WEBPACK_IMPORTED_MODULE_30__["default"]);
 appVideoPreview.component('video-input-preview', _components_videoPreview_vue__WEBPACK_IMPORTED_MODULE_9__["default"]);
 appImagePreview.component('image-input-preview', _components_imagePreview_vue__WEBPACK_IMPORTED_MODULE_10__["default"]);
+appImagePreview2.component('image-input-preview', _components_imagePreview_vue__WEBPACK_IMPORTED_MODULE_10__["default"]);
+appImagePreview3.component('image-input-preview', _components_imagePreview_vue__WEBPACK_IMPORTED_MODULE_10__["default"]);
 appTdImagePreview.component('td-image-input-preview', _components_imagePreview_vue__WEBPACK_IMPORTED_MODULE_10__["default"]);
 appCapability.component('capability', _components_capability__WEBPACK_IMPORTED_MODULE_22__["default"]);
 appSearchMember.component('search-member', _components_searchMember__WEBPACK_IMPORTED_MODULE_23__["default"]);
@@ -26631,6 +26635,8 @@ changeAvatarApp.component('change-avatar', _components_changeAvatar__WEBPACK_IMP
 app.mount('#app');
 appVideoPreview.mount('#app-video-preview');
 appImagePreview.mount('#app-image-preview');
+appImagePreview2.mount('#app-image-preview2');
+appImagePreview3.mount('#app-image-preview3');
 appCapability.mount('#capability');
 appSearchMember.mount('#search-member');
 appTdImagePreview.mount('#app-td-image-preview');

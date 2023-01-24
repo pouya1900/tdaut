@@ -55,9 +55,9 @@ class AuthController extends Controller
 
         if ($this->auth::guard('user')->check()) {
             if ($type == 'member') {
-                return redirect(route('user.show', $this->auth::guard('user')->user()->id))->with('account_alert', trans('trs.you_are_logged_in_as_user_please_logout_first'));
+                return redirect(route('user_show', $this->auth::guard('user')->user()->id))->with('account_alert', trans('trs.you_are_logged_in_as_user_please_logout_first'));
             }
-            return redirect(route('user.show', $this->auth::guard('user')->user()->id));
+            return redirect(route('user_show', $this->auth::guard('user')->user()->id));
         }
 
         return view('front.auth.login', compact('type'));
@@ -162,7 +162,7 @@ class AuthController extends Controller
             return redirect(route('profile_show', $this->auth::guard('member')->user()->id));
         }
         if ($this->auth::guard('user')->check()) {
-            return redirect(route('user.show', $this->auth::guard('user')->user()->id));
+            return redirect(route('user_show', $this->auth::guard('user')->user()->id));
         }
 
         $ranks = Rank::all();
@@ -187,7 +187,7 @@ class AuthController extends Controller
             return redirect(route('profile_show', $this->auth::guard('member')->user()->id));
         }
         if ($this->auth::guard('user')->check()) {
-            return redirect(route('user.show', $this->auth::guard('user')->user()->id));
+            return redirect(route('user_show', $this->auth::guard('user')->user()->id));
         }
 
         $data = [
@@ -300,10 +300,11 @@ class AuthController extends Controller
             "password" => "required|confirmed",
         ];
         $save = [
-            'email'    => $this->request->input('email'),
-            'password' => bcrypt($this->request->input('password')),
-            'role_id'  => $role->id,
-            'status'   => 'pending',
+            'email'       => $this->request->input('email'),
+            'password'    => bcrypt($this->request->input('password')),
+            'role_id'     => $role->id,
+            'status'      => 'pending',
+            'status_date' => date('Y-m-d H:i', strtotime('now')),
         ];
 
         $save_profile = [
@@ -340,7 +341,6 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withInput()->withErrors($validator->errors());
         }
-
 
 
         do {

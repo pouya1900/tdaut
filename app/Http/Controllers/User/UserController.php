@@ -24,6 +24,10 @@ class UserController extends Controller
 
     public function show(User $user)
     {
+        if ($user->status != "verified" && (!$this->request->current_user || $this->request->current_user->id != $user->id)) {
+            abort(404);
+        }
+
         return view('front.users.show', compact('user'));
     }
 

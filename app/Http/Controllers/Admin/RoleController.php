@@ -40,7 +40,7 @@ class RoleController extends Controller
             $data[] = [
                 'title'       => $role->title,
                 'permissions' => $permission_text,
-                'action'      => $role->name != "super" ? view('front.partials.action', ['edit' => route('admin.role.edit', ['role' => $role->id])])->render() : "",
+                'action'      => $role->name != "super" ? view('front.partials.action', ['edit' => route('admin.role.edit', ['role' => $role->id]), 'remove' => route('admin.role.remove', ['role' => $role->id])])->render() : "",
             ];
         }
         return view('admin.admin_roles.index', compact('admin', 'data'));
@@ -58,20 +58,67 @@ class RoleController extends Controller
 
     public function update(UpdateRolePermissionRequest $request, Admin_role $role)
     {
-        $permissions = $request->input('permission');
+        try {
+            $permissions = $request->input('permission');
 
-        if ($role->name == "super") {
-            return redirect()->withErrors(['error' => trans('trs.super_permission_cant_change')]);
-        }
-
-        $role->permissions()->detach();
-        if ($permissions) {
-            foreach ($permissions as $permission) {
-                $role->permissions()->attach($permission);
+            if ($role->name == "super") {
+                return redirect()->withErrors(['error' => trans('trs.super_permission_cant_change')]);
             }
+
+            $role->permissions()->detach();
+            if ($permissions) {
+                foreach ($permissions as $permission) {
+                    $role->permissions()->attach($permission);
+                }
+            }
+            return redirect(route('admin.roles'))->with('message', trans('trs.changed_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-        return redirect(route('admin.roles'))->with('message', trans('trs.changed_successfully'));
     }
 
+    public function create()
+    {
+        $admin = $this->request->admin;
+        $permissions = Admin_permission::all();
+
+        return view('admin.admin_roles.create', compact('admin', 'permissions'));
+    }
+
+    public function store(UpdateRolePermissionRequest $request)
+    {
+        try {
+            $permissions = $request->input('permission');
+
+            if ($request->input('name') == "super") {
+                return redirect()->withErrors(['error' => trans('trs.super_permission_cant_change')]);
+            }
+
+            $role = Admin_role::create([
+                'name'  => $request->input('name'),
+                'title' => $request->input('title'),
+            ]);
+
+            if ($permissions) {
+                foreach ($permissions as $permission) {
+                    $role->permissions()->attach($permission);
+                }
+            }
+            return redirect(route('admin.roles'))->with('message', trans('trs.changed_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
+    }
+
+    public function remove(Admin_role $role)
+    {
+        try {
+            $role->delete();
+            return redirect(route('admin.roles'))->with('message', trans('trs.changed_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
+
+    }
 
 }

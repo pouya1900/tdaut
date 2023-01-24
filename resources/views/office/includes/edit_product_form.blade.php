@@ -122,13 +122,17 @@
                     <input type="file" name="catalog" accept="application/pdf">
                 </div>
                 <div class="col-6">
-                    <div class="product_catalog--exist">
+
+                    @if ($product->catalog)
+                        <div class="product_catalog--exist">
                     <span><i
                             class="fa-solid fa-file-pdf"></i>
                     <a href="{{$product->catalog}}">@lang('trs.download_catalog_submitted_before')</a>
                     </span>
 
-                    </div>
+                        </div>
+                    @endif
+
                 </div>
 
             </div>
