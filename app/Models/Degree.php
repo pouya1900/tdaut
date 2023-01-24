@@ -9,6 +9,10 @@ class Degree extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+    ];
+
     public function members()
     {
         return $this->hasMany(Member::class, "degree_id");

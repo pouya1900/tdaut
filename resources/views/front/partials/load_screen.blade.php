@@ -8,11 +8,11 @@
                     <!-- Loading -->
                     <div class="loading-page">
                         <div class="counter">
-
-                            <div class="margin-tb-30px padding-8px background-white">
-                                <div class="animation padding-2px background-main-color"></div>
+                            <div class="text-center loading-page--image"><a href="{{route('index')}}"><img src="{{$setting->logo}}" alt=""></a></div>
+                            <div class="loading-page--bar--container">
+                                <div class="animation loading-page--bar--body"></div>
                             </div>
-                            <div>loading... <span class="num">0%</span></div>
+                            <div>@lang('trs.loading')<span class="num">0%</span></div>
                         </div>
                     </div>
                     <!-- // Loading -->

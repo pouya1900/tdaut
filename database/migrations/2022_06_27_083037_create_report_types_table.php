@@ -15,7 +15,7 @@ return new class extends Migration {
         Schema::create('report_types', function (Blueprint $table) {
             $table->id();
             $table->string('title')->comment('عنوان نوع گزارش');
-            $table->string('description')->comment('توضیح کوتاه');
+            $table->string('description')->nullable()->comment('توضیح کوتاه');
             $table->timestamps();
         });
     }

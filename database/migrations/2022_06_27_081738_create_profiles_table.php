@@ -19,10 +19,11 @@ return new class extends Migration {
             $table->string('first_name');
             $table->string('last_name');
             $table->string('username')->unique()->nullable();
-            $table->enum('gender', ['male', 'female']);
+            $table->enum('gender', ['male', 'female'])->nullable();
             $table->timestamp('birthday')->nullable();
             $table->string('about')->nullable();
             $table->string('linkedin')->nullable();
+            $table->string('github')->nullable();
             $table->timestamps();
         });
     }

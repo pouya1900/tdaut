@@ -28,7 +28,7 @@ class Media extends Model
     // **************************************** relations ****************************************
     public function mediable()
     {
-        return $this->morphTo();
+        return $this->morphTo('mediable');
     }
 
 

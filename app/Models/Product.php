@@ -10,6 +10,16 @@ class Product extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'description',
+        'category_id',
+        'link',
+        'status',
+        'status_message',
+        'status_date',
+    ];
+
     public function category()
     {
         return $this->belongsTo(Category::class, "category_id");
@@ -23,6 +33,11 @@ class Product extends Model
     public function reports()
     {
         return $this->morphMany(Report::class, 'reportable');
+    }
+
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 
     public function media()
@@ -44,6 +59,45 @@ class Product extends Model
         return $path . "ic_no_product_logo.png";
     }
 
+    public function getLogoModelAttribute()
+    {
+        return $this->media()->where("model_type", 'productLogo')
+            ->first();
+    }
+
+    public function getHasLogoAttribute()
+    {
+        $image = $this->media()->where("model_type", 'productLogo')
+            ->first();
+        if (!empty($image)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getTdAttribute()
+    {
+        $image = $this->media()->where("model_type", 'productTd')
+            ->first();
+
+        if (!empty($image)) {
+            $path = Storage::disk("assetsStorage")->url('') . 'productTd/';
+            return $path . $image->title;
+        }
+        return null;
+    }
+
+    public function getTdModelAttribute()
+    {
+        return $this->media()->where("model_type", 'productTd')
+            ->first();
+    }
+
+    public function getTdPathAttribute()
+    {
+        return Storage::disk("assetsStorage")->url('') . 'productTd/';
+    }
+
     public function getImagesAttribute()
     {
         $image = $this->media()->where("model_type", 'productImage')
@@ -61,21 +115,61 @@ class Product extends Model
         return [];
     }
 
-    public function getVideosAttribute()
+    public function getImagesNameAttribute()
     {
-        $image = $this->media()->where("model_type", 'productVideo')
-            ->get();
-        $exist_image = [];
+        $images = $this->media()->where("model_type", 'productImage')->select('title as name')->get();
+        return $images;
+    }
 
-        if (!empty($image)) {
+    public function getImagesPathAttribute()
+    {
+        return Storage::disk("assetsStorage")->url('') . 'productImage/';
+    }
+
+    public function getVideoAttribute()
+    {
+        $video = $this->media()->where("model_type", 'productVideo')
+            ->first();
+
+        if (!empty($video)) {
             $path = Storage::disk("assetsStorage")->url('') . 'productVideo/';
-            foreach ($image as $item) {
-                $exist_image[] = $path . $item->title;
-            }
-            return $exist_image;
+            return $path . $video->title;
         }
+        return null;
+    }
 
-        return [];
+    public function getVideoModelAttribute()
+    {
+        return $this->media()->where("model_type", 'productVideo')
+            ->first();
+    }
+
+    public function scopeActive($query)
+    {
+        $query->where('status', 'accepted');
+    }
+
+    public function getModelNameAttribute()
+    {
+        return trans('trs.product');
+    }
+
+    public function getCatalogAttribute()
+    {
+        $catalog = $this->media()->where("model_type", 'productCatalog')
+            ->first();
+
+        if (!empty($catalog)) {
+            $path = Storage::disk("assetsStorage")->url('') . 'productCatalog/';
+            return $path . $catalog->title;
+        }
+        return null;
+    }
+
+    public function getCatalogModelAttribute()
+    {
+        return $this->media()->where("model_type", 'productCatalog')
+            ->first();
     }
 
 }

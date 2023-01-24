@@ -9,11 +9,6 @@ class Report extends Model
 {
     use HasFactory;
 
-    public function administrator()
-    {
-        return $this->belongsTo(Administrator::class, "seen_admin_id");
-    }
-
     public function reportable()
     {
         return $this->morphTo();

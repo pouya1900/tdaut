@@ -9,6 +9,14 @@ class Message extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'office_id',
+        'user_id',
+        'sender',
+        'text',
+        'seen_at',
+    ];
+
     public function office()
     {
         return $this->belongsTo(Office::class, 'office_id');

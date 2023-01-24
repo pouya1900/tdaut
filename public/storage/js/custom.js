@@ -7,6 +7,9 @@ jQuery(document).ready(function ($) {
 
     });
 
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+
     $('#video0').on('ended', function () {
         $("#image0").removeClass('display-none');
         $(".infographic_container").removeClass('display-none');
@@ -32,7 +35,25 @@ jQuery(document).ready(function ($) {
     });
 
     $('.infographic_section li').on('click', function (e) {
-        $('.infographic_section li').not(this).css('opacity',0);
+        $('.infographic_section li').not(this).css('opacity', 0);
+    });
+
+    $('#profile_side_menu').on('click', function () {
+        var element = $('#profile_side');
+        if (element.hasClass('profile_side_mobile')) {
+            element.removeClass('profile_side_mobile');
+        } else {
+            element.addClass('profile_side_mobile');
+        }
+
+    });
+
+    $('#accountAlertModal').modal('show');
+
+    $('#hampa').on('click', function () {
+        $('#hampaRedirectModal').modal('show');
+
+        window.location.replace("http://autpayesh.ir/");
     });
 
 });

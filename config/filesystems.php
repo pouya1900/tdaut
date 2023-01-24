@@ -39,18 +39,24 @@ return [
         'public' => [
             'driver'     => 'local',
             'root'       => storage_path('app/public'),
-            'url'        => env('APP_URL') . '/storage',
+            'url'        => env('APP_URL') . 'storage',
             'visibility' => 'public',
             'throw'      => false,
         ],
 
         'assetsStorage' => [
             'driver'     => 'local',
-            'root'       => env('APP_ENV') == 'development' ? public_path('/storage/assets') : storage_path('app/public') . '/storage/assets',
-            'url'        => env('APP_URL') . '/storage/assets',
+            'root'       => public_path('/storage/assets'),
+            'url'        => env('APP_URL') . 'storage/assets',
             'visibility' => 'public',
         ],
 
+        'privateStorage' => [
+            'driver'     => 'local',
+            'root'       => storage_path('app/public/storage/assets'),
+            'url'        => env('APP_URL') . 'storage',
+            'visibility' => 'public',
+        ],
 
         's3' => [
             'driver'                  => 's3',

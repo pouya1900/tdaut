@@ -15,9 +15,9 @@ return new class extends Migration {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->string('title')->comment('عنوان سایت');
-            $table->string('email')->comment('ایمیل شرکت');
-            $table->string('address')->comment('ادرس شرکت');
-            $table->string('phone')->comment('تلفن شرکت');
+            $table->string('email')->nullable()->comment('ایمیل شرکت');
+            $table->string('address')->nullable()->comment('ادرس شرکت');
+            $table->string('phone')->nullable()->comment('تلفن شرکت');
             $table->timestamps();
         });
     }

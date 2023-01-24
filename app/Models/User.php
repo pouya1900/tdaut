@@ -18,11 +18,19 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'type',
         'email',
+        'email_verified_at',
         'password',
+        'company_name',
+        'phone',
+        'role_id',
+        'status',
+        'status_message',
+        'status_date',
+        'confirmation_token',
+        'reset_token',
     ];
-
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -47,15 +55,21 @@ class User extends Authenticatable
         return $this->morphOne(Profile::class, 'profileable');
     }
 
-    public function documents()
+    public function rfps()
     {
-        return $this->hasMany(Document::class, "user_id");
+        return $this->hasMany(Rfp::class, "user_id");
     }
 
     public function messages()
     {
         return $this->hasMany(Message::class, "user_id");
     }
+
+    public function connect_offices()
+    {
+        return $this->belongsToMany(Office::class, 'messages');
+    }
+
 
     public function role()
     {
@@ -66,4 +80,28 @@ class User extends Authenticatable
     {
         return $this->morphMany(Support::class, 'supportable');
     }
+
+
+    public function scopeActive()
+    {
+        return $this->whereNotNull('emailed_verified_at');
+    }
+
+    public function hasPermission($permission)
+    {
+        if (is_array($permission)) {
+            if (empty($permission = $this->role->permissions()->whereIn('name', $permission)->first())) {
+                return false;
+            }
+
+            return $permission;
+        }
+
+        if (empty($permission = $this->role->permissions()->where('name', $permission)->first())) {
+            return false;
+        }
+
+        return $permission;
+    }
+
 }

@@ -7,28 +7,43 @@ use Illuminate\Database\Eloquent\Model;
 
 class Office_role extends Model
 {
+    protected $fillable = [
+        'title',
+        'name',
+    ];
     use HasFactory;
 
-
-    public function getMembersAttribute()
+    public function members($office_id = null)
     {
-        if ($this->pivot && $office_id = $this->pivot->office_id) {
-            return $this->belongsToMany(Member::class, "office_member", 'role_id', 'member_id')->where('office_id', $office_id)->get();
+        if ($office_id) {
+            return $this->belongsToMany(Member::class, "office_member", 'role_id', 'member_id')->where('office_id', $office_id);
         }
-        return $this->belongsToMany(Member::class, "office_member", 'role_id', 'member_id')->get()->unique('id');
+
+        if ($this->pivot && $office_id = $this->pivot->office_id) {
+            return $this->belongsToMany(Member::class, "office_member", 'role_id', 'member_id')->where('office_id', $office_id);
+        }
+        return $this->belongsToMany(Member::class, "office_member", 'role_id', 'member_id');
     }
 
-    public function getOfficesAttribute()
+    public function offices()
     {
         if ($this->pivot && $member_id = $this->pivot->member_id) {
-            return $this->belongsToMany(Office::class, "office_member", 'role_id', 'office_id')->where('member_id', $member_id)->get();
+            return $this->belongsToMany(Office::class, "office_member", 'role_id', 'office_id')->where('member_id', $member_id);
         }
-        return $this->belongsToMany(Office::class, 'office_member', 'role_id', 'office_id')->get()->unique('id');
+        return $this->belongsToMany(Office::class, 'office_member', 'role_id', 'office_id');
     }
 
-    public function permissions()
+    public function permissions($office_id = null)
     {
-        return $this->belongsToMany(Office_permission::class, 'office_permission_role');
+        if ($office_id) {
+            return $this->belongsToMany(Office_permission::class, 'office_permission_role', 'role_id', 'permission_id')->where('office_id', $office_id);
+        }
+
+        if ($this->pivot && $office_id = $this->pivot->office_id) {
+            return $this->belongsToMany(Office_permission::class, 'office_permission_role', 'role_id', 'permission_id')->where('office_id', $office_id);
+        }
+
+        return $this->belongsToMany(Office_permission::class, 'office_permission_role', 'role_id', 'permission_id');
     }
 
 }

@@ -18,10 +18,10 @@ return new class extends Migration {
             $table->string('description')->comment('توضیحات');
             $table->unsignedInteger('office_id')->comment('تعیین دفتر');
             $table->unsignedInteger('category_id')->comment('تعیین دسته');
-            $table->enum('status', ['accepted', 'rejected', 'pending', 'rfd'])->comment('وضعیت تایید محضول توسط ادمین');
+            $table->enum('status', ['accepted', 'rejected', 'pending', 'rfd'])->default('pending')->comment('وضعیت تایید محضول توسط ادمین');
             $table->string('status_message')->nullable();
             $table->timestamp('status_date')->nullable()->comment('تاریخ تغییر وضعیت');
-            $table->string('link')->comment('لینک دموی انلاین');
+            $table->string('link')->nullable()->comment('لینک دموی انلاین');
             $table->timestamps();
         });
     }

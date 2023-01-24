@@ -4,19 +4,43 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Document extends Model
 {
     use HasFactory;
 
-    public function office()
+
+    protected $fillable = [
+        'text',
+        'type',
+        'status',
+        'rfp_id',
+        'seen_at',
+    ];
+
+
+    public function media()
     {
-        return $this->belongsTo(Office::class, "office_id");
+        return $this->morphMany(Media::class, 'mediable');
     }
 
-    public function user()
+    public function rfp()
     {
-        return $this->belongsTo(User::class, "user_id");
+        return $this->belongsTo(Rfp::class, 'rfp_id');
+    }
+
+    public function getFileAttribute()
+    {
+        $file = $this->media()->where('model_type', 'rfp')
+            ->first();
+
+        if ($file) {
+            $path = Storage::disk("privateStorage")->url('') . 'rfp/';
+            return $path . $file->title;
+        }
+
+        return null;
     }
 
 }

@@ -1,0 +1,35 @@
+<?php
+
+namespace App\Http\Requests\Admin;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class UpdateOfficeRequest extends FormRequest
+{
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
+    public function authorize()
+    {
+        return true;
+    }
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array<string, mixed>
+     */
+    public function rules()
+    {
+        return [
+            "name"           => "required",
+            "email"          => "required|unique:offices,email," . $this->id,
+            "projects_count" => "required|numeric",
+            "phone"          => "required",
+            "department"     => "required|exists:departments,id",
+            "status"         => "required|in:pending,verified,rejected,rfd",
+        ];
+    }
+}

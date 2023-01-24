@@ -1,4 +1,4 @@
-@extends('layouts.front')
+@extends('layouts.main')
 @section('content')
 
     <div id="main_container">
@@ -99,26 +99,6 @@
       "three": "https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.module.min.js"
     }
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </script>
     <script type="module" src="storage/js/threejscode.js"></script>
