@@ -88,7 +88,6 @@ class SettingController extends Controller
             return redirect(route('admin.settings'));
 
         } catch (\Exception $e) {
-            dd($e);
             return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
     }
