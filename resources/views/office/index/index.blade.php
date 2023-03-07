@@ -111,7 +111,6 @@
                             <div class="mg-office--item">
                                 <label>@lang('trs.office_slide_show_image')</label>
 
-
                                 <div id="app">
                                     <update-media
                                         server="{{route('tmp_upload')}}"
@@ -125,6 +124,17 @@
                             </div>
                         </div>
 
+                        <div class="col-12">
+                            <div class="mg-office--item">
+                                <label>@lang('trs.head_introduction_video')</label>
+
+                                <div id="app-video-preview">
+                                    <video-input-preview src="{{$office->headIntroduction}}">
+                                    </video-input-preview>
+                                </div>
+
+                            </div>
+                        </div>
 
                     </div>
                     <div class="row justify-content-center">

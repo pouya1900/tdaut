@@ -1,5 +1,6 @@
 @extends('layouts.office')
 @section('content')
+    @include('front.offices.menu')
 
     <div class="page_wrapper">
         <div class="offices_container">

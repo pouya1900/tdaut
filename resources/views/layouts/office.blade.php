@@ -8,6 +8,8 @@
 
 @yield('content')
 
+@include('front.offices.modal')
+
 @include('front.offices.footer')
 
 @include('front.includes.layout_bottom')

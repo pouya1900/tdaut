@@ -2,10 +2,10 @@
     <div class="row">
         <div class="col">
             <div class="footer_logo">
-                <img src="storage/assets/siteContent/logo.png">
+                <img src="{{$setting->logo}}" title="{{$setting->title}}" alt="{{$setting->title}}">
             </div>
             <div class="footer_about">
-                لورم ایپسوم یک متن ساختگی با تولید ساختگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است .
+                @lang('trs.footer_description_text')
             </div>
         </div>
         <div class="col">
@@ -13,24 +13,25 @@
                 <span>منو</span>
             </div>
             <ul>
-                <li>لورم ایپسوم متن</li>
-                <li>لورم ایپسوم</li>
-                <li>لورم ایپسوم متن ساختگی</li>
+                <li><a href="{{route('index')}}">@lang('trs.site_main_page')</a></li>
+                <li><a href="{{route('offices')}}">@lang('trs.technology_service_center')</a></li>
+                <li><a href="{{route('login','member')}}">@lang('trs.member_panel') </a></li>
+                <li><a href="{{route('login','user')}}">@lang('trs.user_panel')</a></li>
             </ul>
         </div>
         <div class="col">
-                <div class="footer_title">
-                    <span>لینک های مفید</span>
-                </div>
-                <ul>
-                    <li>سایت دانشگاه</li>
-                    <li>سایت نهاد ریاست جمهوری</li>
-                    <li>سایت شرکت های دانش بنیان</li>
-                </ul>
+            <div class="footer_title">
+                <span>لینک های مفید</span>
+            </div>
+            <ul>
+                <li><a href="https://aut.ac.ir/">سایت دانشگاه</a></li>
+                <li><a href="https://industry.aut.ac.ir/">سایت ارتباط با صنعت</a></li>
+                <li><a href="https://itech.aut.ac.ir/">سایت همپا</a></li>
+            </ul>
         </div>
     </div>
 
     <div class="copy_right">
-        <span>تمامی حقوق این وب سایت برای شرکت ایرسا گستر محفوظ است.</span>
+        <span>کلیه حقوق مادی و معنوی این وبسایت متعلق به صنایع پژوهش و فناوری های فائق میباشد.</span>
     </div>
 </div>

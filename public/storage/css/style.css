@@ -220,6 +220,10 @@ video {
     color: #aa0000;
 }
 
+.margin-right-10 {
+    margin-right: 10px;
+}
+
 /*style code*/
 
 
@@ -669,6 +673,11 @@ video {
     color: #7a7a7a;
 }
 
+.login_register i {
+    margin-left: 2px;
+    vertical-align: middle;
+}
+
 .top_bar_profile a {
     color: #7a7a7a;
     -webkit-transition: all 0.3s;
@@ -693,7 +702,7 @@ video {
 }
 
 .top_bar_logo {
-    margin-left: 5%;
+    margin-left: 1%;
 }
 
 .top_bar .top_bar_logo img {
@@ -702,7 +711,7 @@ video {
 
 .site_name_middle {
     position: absolute;
-    right: 45%;
+    right: 40%;
 }
 
 .site_name_middle a {
@@ -714,6 +723,19 @@ video {
     color: var(--main-color);
 }
 
+.main_tech_page_link {
+    margin-left: 5px;
+}
+
+.main_tech_page_link a {
+    color: #000;
+}
+
+.main_tech_page_link a:hover {
+    color: var(--main-color);
+}
+
+
 /*offices page*/
 .office_page_poster {
 }
@@ -723,19 +745,19 @@ video {
 }
 
 .office_page_poster .poster_content {
-    padding: 12% 7% 0 7%;
+    padding: 4% 4% 0 4%;
     background: linear-gradient(45deg, #01605d, var(--gradient-main));
     height: 100%;
     color: #fff;
 }
 
 .office_page_poster .poster_content .poster_title {
-    margin-bottom: 50px;
+    margin-bottom: 30px;
 }
 
 .office_page_poster .poster_content .poster_description {
     margin-bottom: 40px;
-    width: 80%;
+    font-size: 14px;
 }
 
 .office_page_poster .poster_content .poster_button {
@@ -796,7 +818,7 @@ video {
 
 .offices_container .office_container .office_thumbnail .sparkle {
     box-sizing: border-box;
-    padding: 0.75em;
+    padding: 0.5em;
     position: absolute;
     top: 10px;
     bottom: 10px;
@@ -838,6 +860,8 @@ video {
 
 .offices_container .office_container .office_thumbnail .sparkle ul {
     list-style: none;
+    padding: 0;
+    margin: 0;
 }
 
 .offices_container .office_container .office_thumbnail .sparkle ul li {
@@ -936,7 +960,10 @@ video {
 }
 
 .footer .footer_logo img {
-    width: 50px;
+    width: 70px;
+    padding: 5px;
+    border-radius: 50px;
+    background: #fff;
 }
 
 .footer .footer_about {
@@ -952,12 +979,21 @@ video {
     margin-top: 10px;
 }
 
+.footer ul li a{
+    color: #fff;
+}
+
+.footer ul li a:hover{
+    color: var(--main-color);
+}
+
 .footer .footer_title {
     font-size: 16px;
     font-weight: 500;
     color: #fff;
     margin-bottom: 30px
 }
+
 
 .footer .copy_right {
     width: 100%;
@@ -1090,8 +1126,17 @@ img {
     color: #000;
 }
 
+.logout {
+    margin-right: 10px;
+}
+
 .logout a {
-    color: #000;
+    color: #666 !important;
+    font-size: 15px;
+}
+
+.logout a:hover {
+    color: var(--main-color) !important;
 }
 
 .office_top_bar .office_title {
@@ -1115,7 +1160,7 @@ img {
     position: absolute;
     z-index: 999;
     width: 100%;
-    background: rgba(190, 190, 190, 0.5);
+    background: var(--main-color);
 }
 
 .slideContainer .slideshow-container {
@@ -1555,6 +1600,31 @@ img {
     font-size: 16px;
 }
 
+.office_member--head-intro {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.office_member--head-intro--video {
+    width: 70%;
+    margin-right: 15%;
+    margin-top: 50px;
+}
+
+.office_member--head-intro--title {
+    border-bottom: 5px solid var(--main-color);
+}
+
+.product_show--section-title {
+    border-bottom: 5px solid var(--main-color);
+    margin-bottom: 30px;
+    width: 50%;
+}
+
+.product_show--description--container,.product_show--video--container,.product_show--catalog--container {
+    margin-bottom: 60px;
+}
 
 /*products*/
 
@@ -2017,6 +2087,11 @@ img {
 
 .product_catalog--exist i {
     color: var(--main-color);
+}
+
+.mg-office--item--product_image_hint {
+    font-size: 14px;
+    color: #777;
 }
 
 /*rfp page*/

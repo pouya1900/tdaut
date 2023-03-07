@@ -44,17 +44,21 @@ class supportController extends Controller
 
     public function store_message(supportMessageRequest $request, Support $support)
     {
-        $user = $this->request->current_user;
+        try {
+            $user = $this->request->current_user;
 
-        if ($support->supportable != $user) {
-            abort(403);
+            if ($support->supportable != $user) {
+                abort(403);
+            }
+            $support->messages()->create([
+                'sender' => 'user',
+                'text'   => $request->input('message'),
+            ]);
+
+            return redirect(route('user_support_show', ['support' => $support->id]));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-        $support->messages()->create([
-            'sender' => 'user',
-            'text'   => $request->input('message'),
-        ]);
-
-        return redirect(route('user_support_show', ['support' => $support->id]));
     }
 
     public function create()
@@ -65,18 +69,21 @@ class supportController extends Controller
 
     public function store(supportStoreRequest $request)
     {
-        $user = $this->request->current_user;
+        try {
+            $user = $this->request->current_user;
 
-        $support = $user->supports()->create([
-            'title' => $request->input('title'),
-        ]);
+            $support = $user->supports()->create([
+                'title' => $request->input('title'),
+            ]);
 
-        $support->messages()->create([
-            'sender' => 'user',
-            'text'   => $request->input('message'),
-        ]);
+            $support->messages()->create([
+                'sender' => 'user',
+                'text'   => $request->input('message'),
+            ]);
 
-        return redirect(route('user_support_show', ['support' => $support->id]));
-
+            return redirect(route('user_support_show', ['support' => $support->id]));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 }

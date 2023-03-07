@@ -77,18 +77,21 @@ class UserController extends Controller
 
     public function update_password(UpdatePasswordRequest $request)
     {
-        $user = $this->request->current_user;
+        try {
+            $user = $this->request->current_user;
 
-        if (!Hash::check($request->input('old_password'), $user->password)) {
-            return redirect()->back()->withErrors(['error' => trans('trs.wrong_old_password')]);
+            if (!Hash::check($request->input('old_password'), $user->password)) {
+                return redirect()->back()->withErrors(['error' => trans('trs.wrong_old_password')]);
+            }
+
+            $user->update([
+                'password' => bcrypt($request->input('password')),
+            ]);
+
+            return redirect(route('user_password'))->with('message', trans('trs.password_changed'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-
-        $user->update([
-            'password' => bcrypt($request->input('password')),
-        ]);
-
-        return redirect(route('user_password'))->with('message', trans('trs.password_changed'));
-
     }
 
 

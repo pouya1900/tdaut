@@ -4,6 +4,7 @@
 @endsection
 
 @section('content')
+    @include('front.offices.menu')
 
     <div class="page_wrapper">
         <div class="container">
@@ -68,27 +69,6 @@
                                 @lang('trs.description')
                             </button>
                         </li>
-                        @if ($product->video)
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="video-tab" data-bs-toggle="tab"
-                                        data-bs-target="#video-tab-pane" type="button" role="tab"
-                                        aria-controls="video-tab-pane"
-                                        aria-selected="true">
-                                    @lang('trs.video')
-                                </button>
-                            </li>
-                        @endif
-
-                        @if ($product->catalog)
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="catalog-tab" data-bs-toggle="tab"
-                                        data-bs-target="#catalog-tab-pane" type="button" role="tab"
-                                        aria-controls="catalog-tab-pane"
-                                        aria-selected="false">
-                                    @lang('trs.catalog')
-                                </button>
-                            </li>
-                        @endif
 
                         @if ($product->td)
                             <li class="nav-item" role="presentation">
@@ -105,31 +85,31 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="description-tab-pane" role="tabpanel"
                              aria-labelledby="description-tab" tabindex="0">
+
                             <div class="product_show--description--container">
-                                <p>{{$product->description}}</p>
+                                <div class="product_show--section-title">
+                                    <h6>@lang('trs.description')</h6>
+                                </div>
+                                <p class="margin-right-10">{{$product->description}}</p>
+                            </div>
+                            <div class="product_show--video--container">
+                                <div class="product_show--section-title">
+                                    <h6>@lang('trs.video')</h6>
+                                </div>
+                                <video controls>
+                                    <source src="{{$product->video}}">
+                                </video>
+                            </div>
+
+                            <div class="product_show--catalog--container">
+                                <div class="product_show--section-title">
+                                    <h6>@lang('trs.catalog')</h6>
+                                </div>
+                                <a href="{{$product->catalog}}"><i
+                                        class="fa-solid fa-file-pdf"></i> @lang('trs.download_catalog')</a>
                             </div>
                         </div>
-                        @if ($product->video)
-                            <div class="tab-pane fade show" id="video-tab-pane" role="tabpanel"
-                                 aria-labelledby="video-tab" tabindex="0">
-                                <div class="product_show--video--container">
-                                    <video controls>
-                                        <source src="{{$product->video}}">
-                                    </video>
-                                </div>
-                            </div>
-                        @endif
 
-                        @if ($product->catalog)
-                            <div class="tab-pane fade" id="catalog-tab-pane" role="tabpanel"
-                                 aria-labelledby="catalog-tab"
-                                 tabindex="0">
-                                <div class="product_show--catalog--container">
-                                    <a href="{{$product->catalog}}"><i
-                                            class="fa-solid fa-file-pdf"></i> @lang('trs.download_catalog')</a>
-                                </div>
-                            </div>
-                        @endif
 
                         @if ($product->td)
                             <div class="tab-pane fade" id="td_view-tab-pane" role="tabpanel"
@@ -164,6 +144,9 @@
       "three": "https://cdn.jsdelivr.net/npm/three@0.140.0/build/three.module.min.js"
     }
   }
+
+
+
 
 
 

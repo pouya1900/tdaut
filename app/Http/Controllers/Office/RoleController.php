@@ -50,21 +50,24 @@ class RoleController extends Controller
 
     public function update(UpdateRolePermissionRequest $request, Office $office, Office_role $role)
     {
-        $permissions = $request->input('permission');
+        try {
+            $permissions = $request->input('permission');
 
-        if ($role->name == "head") {
-            return redirect()->withErrors(['error' => trans('trs.head_permission_cant_change')]);
-        }
-
-        $role->permissions()->wherePivot('office_id', $office->id)->detach();
-        if ($permissions) {
-            foreach ($permissions as $permission) {
-                $role->permissions()->attach($permission, ['office_id' => $office->id]);
+            if ($role->name == "head") {
+                return redirect()->withErrors(['error' => trans('trs.head_permission_cant_change')]);
             }
-        }
-        return redirect(route('mg.office_roles', $office->id));
-    }
 
+            $role->permissions()->wherePivot('office_id', $office->id)->detach();
+            if ($permissions) {
+                foreach ($permissions as $permission) {
+                    $role->permissions()->attach($permission, ['office_id' => $office->id]);
+                }
+            }
+            return redirect(route('mg.office_roles', $office->id));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
+    }
 
 
 }

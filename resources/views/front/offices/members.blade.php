@@ -1,9 +1,9 @@
 @extends('layouts.office')
 @section('content')
 
+    @include('front.offices.menu')
 
     <div class="page_wrapper">
-
         <div class="office_members">
             <div class="offices_container">
                 <div class="row">
@@ -69,6 +69,19 @@
                         </div>
                     @endforeach
                 </div>
+
+                @if ($type=="head" && $office->headIntroduction)
+                    <div class="office_member--head-intro">
+                        <div class="office_member--head-intro--title">
+                            <p>@lang('trs.head_introduction_video')</p>
+                        </div>
+                        <div class="office_member--head-intro--video">
+                            <video controls>
+                                <source src="{{$office->headIntroduction}}">
+                            </video>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

@@ -37,14 +37,18 @@ class messageController extends Controller
 
     public function store(Office $office, User $user)
     {
-        $message = $this->request->input('message');
+        try {
+            $message = $this->request->input('message');
 
-        $office->messages()->create([
-            'user_id' => $user->id,
-            'sender'  => 'office',
-            'text'    => $message,
-        ]);
+            $office->messages()->create([
+                'user_id' => $user->id,
+                'sender'  => 'office',
+                'text'    => $message,
+            ]);
 
-        return redirect(route('mg.messages', ['office' => $office->id, 'user' => $user->id]));
+            return redirect(route('mg.messages', ['office' => $office->id, 'user' => $user->id]));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 }

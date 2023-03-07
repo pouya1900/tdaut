@@ -189,4 +189,23 @@ class Office extends Model
         return trans('trs.office');
     }
 
+    public function getHeadIntroductionAttribute()
+    {
+        $video = $this->media()->where('model_type', 'introduction')
+            ->first();
+
+        if (!empty($video)) {
+            $path = Storage::disk("assetsStorage")->url('') . 'introduction/';
+            return $path . $video->title;
+        }
+
+        return "";
+    }
+
+    public function getHeadIntroductionModelAttribute()
+    {
+        return $this->media()->where('model_type', 'introduction')
+            ->first();
+    }
+
 }

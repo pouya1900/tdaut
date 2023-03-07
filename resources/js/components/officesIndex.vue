@@ -10,7 +10,7 @@
 
                 <div class="offices_filter">
                     <select class="form-select" v-model="department_select" name="department">
-                        <option value="0">دانشکده</option>
+                        <option value="0">همه دانشکده ها</option>
                         <option v-for="option in departments" :value="option.id">{{ option.title }}</option>
 
                     </select>
@@ -33,7 +33,7 @@
                                 <img :src="office.logo">
                                 <div class="sparkle">
                                     <ul>
-                                        <li v-for="capability in office.capabilities">{{ capability.text }}</li>
+                                        <li v-for="capability in office.capabilities">{{ capability.text.substring(0,25)+".." }}</li>
                                     </ul>
                                 </div>
                             </div>
@@ -43,7 +43,7 @@
                                 </div>
 
                                 <div class="office_description">
-                                    <p>{{ office.about }}
+                                    <p>{{ office.about.substring(0,100)+".." }}
                                     </p>
                                 </div>
 
@@ -89,7 +89,7 @@ export default {
                 return (item.name.toLowerCase().includes(this.searchQuery) ||
                         item.products_name.toLowerCase().includes(this.searchQuery) ||
                         item.head_name.toLowerCase().includes(this.searchQuery)) &&
-                    (!this.department_select || item.department.id === this.department_select);
+                    (!this.department_select || item.department.id === this.department_select || this.department_select==0);
             })
         }
     }

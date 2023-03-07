@@ -78,7 +78,7 @@ class OfficeController extends Controller
             return $query->wherein('role_id', $roles_id);
         })->distinct()->whereNotNull('email_verified_at')->get();
 
-        return view('front.offices.members', compact('office', 'members'));
+        return view('front.offices.members', compact('office', 'members','type'));
     }
 
     /**

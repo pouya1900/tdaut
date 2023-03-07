@@ -71,30 +71,34 @@ class ProposalController extends Controller
 
     public function store(StoreProposalRequest $request, Rfp $rfp)
     {
-        $user = $this->request->current_user;
+        try {
+            $user = $this->request->current_user;
 
-        if ($rfp->user->id != $user->id) {
-            abort(403);
-        }
+            if ($rfp->user->id != $user->id) {
+                abort(403);
+            }
 
-        $document = $rfp->documents()->create([
-            "text" => $request->input('description'),
-            'type' => 'rfp',
-        ]);
-
-        if ($request->hasFile('proposal')) {
-            $file = $request->file('proposal');
-            Storage::disk("privateStorage")->put('rfp', $file);
-
-            $document->media()->create([
-                "title"      => $file->hashName(),
-                "model_type" => "rfp",
-                "ext"        => $file->extension(),
-                "size"       => $file->getSize() / 1024,
+            $document = $rfp->documents()->create([
+                "text" => $request->input('description'),
+                'type' => 'rfp',
             ]);
-        }
 
-        return redirect(route('user_rfp_show', ['rfp' => $rfp->id]));
+            if ($request->hasFile('proposal')) {
+                $file = $request->file('proposal');
+                Storage::disk("privateStorage")->put('rfp', $file);
+
+                $document->media()->create([
+                    "title"      => $file->hashName(),
+                    "model_type" => "rfp",
+                    "ext"        => $file->extension(),
+                    "size"       => $file->getSize() / 1024,
+                ]);
+            }
+
+            return redirect(route('user_rfp_show', ['rfp' => $rfp->id]));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 
     public function create_rfp()
@@ -106,29 +110,33 @@ class ProposalController extends Controller
 
     public function store_rfp(StoreRfpByIdRequest $request)
     {
-        $rfp = Rfp::create([
-            "title"        => $request->input('title'),
-            "description"  => $request->input('description'),
-            "short_title"  => $request->input('short_title'),
-            "goals"        => $request->input('goals'),
-            "achievements" => $request->input('achievements'),
-            'office_id'    => $request->input('office_id'),
-            'user_id'      => $this->request->current_user->id,
-        ]);
-
-        if ($request->hasFile('rfp')) {
-            $file = $request->file('rfp');
-            Storage::disk("privateStorage")->put('rfp', $file);
-
-            $rfp->media()->create([
-                "title"      => $file->hashName(),
-                "model_type" => "rfp",
-                "ext"        => $file->extension(),
-                "size"       => $file->getSize() / 1024,
+        try {
+            $rfp = Rfp::create([
+                "title"        => $request->input('title'),
+                "description"  => $request->input('description'),
+                "short_title"  => $request->input('short_title'),
+                "goals"        => $request->input('goals'),
+                "achievements" => $request->input('achievements'),
+                'office_id'    => $request->input('office_id'),
+                'user_id'      => $this->request->current_user->id,
             ]);
-        }
 
-        return redirect(route('user_rfps'));
+            if ($request->hasFile('rfp')) {
+                $file = $request->file('rfp');
+                Storage::disk("privateStorage")->put('rfp', $file);
+
+                $rfp->media()->create([
+                    "title"      => $file->hashName(),
+                    "model_type" => "rfp",
+                    "ext"        => $file->extension(),
+                    "size"       => $file->getSize() / 1024,
+                ]);
+            }
+
+            return redirect(route('user_rfps'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 
 }

@@ -80,7 +80,7 @@
 <div class="col-12">
     <div class="mg-office--item">
         <label>@lang('trs.product_images')</label>
-
+        <span class="mg-office--item--product_image_hint">@lang('trs.product_image_default_size')</span>
 
         <div id="app">
             <update-media
