@@ -3,6 +3,7 @@
 return
     [
         "technology_service_center"                                => "مرکز خدمات فناوری دانشگاه صنعتی امیر کبیر",
+        "technology_service_center_short"                          => "مرکز خدمات فناوری",
         "permanent_exhibition"                                     => "نمایشگاه دائمی",
         "user_panel"                                               => "پنل کارفرمایان",
         "member_panel"                                             => "پنل اساتید،دانشجویان",
