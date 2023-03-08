@@ -107,5 +107,4 @@ class Profile extends Model
 
         return "";
     }
-
 }

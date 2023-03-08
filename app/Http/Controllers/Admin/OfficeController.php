@@ -26,7 +26,11 @@ class OfficeController extends Controller
     {
         $admin = $this->request->admin;
 
-        $offices = Office::all();
+        $filter = $this->request->filter;
+
+        $offices = Office::when($filter, function ($q) use ($filter) {
+            return $q->where('status', $filter);
+        })->get();;
 
         $data = [];
 
@@ -43,7 +47,7 @@ class OfficeController extends Controller
             ];
         }
 
-        return view('admin.offices.index', compact('offices', 'data', 'admin'));
+        return view('admin.offices.index', compact('offices', 'data', 'admin', 'filter'));
     }
 
     public function edit(Office $office)
@@ -84,6 +88,18 @@ class OfficeController extends Controller
             if ($request->hasFile('image')) {
                 $logo = $request->file('image');
                 $this->imageUpload($logo, 'officeLogo', 'assetsStorage', $office);
+            }
+
+            if ($request->input('deleted_video')) {
+                $video = $office->headIntroductionModel;
+                if ($video) {
+                    $this->mediaRemove($video, 'assetsStorage');
+                }
+            }
+
+            if ($request->hasFile('video')) {
+                $video = $request->file('video');
+                $this->videoUpload($video, $office, 'introduction', 'assetsStorage');
             }
 
             return redirect(route('admin.offices'))->with('message', trans('trs.changed_successfully'));

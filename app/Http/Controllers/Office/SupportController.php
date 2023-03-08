@@ -42,19 +42,23 @@ class SupportController extends Controller
 
     public function store_message(supportMessageRequest $request, Office $office, Support $support)
     {
-        if ($support->supportable != $office) {
-            abort(403);
+        try {
+            if ($support->supportable != $office) {
+                abort(403);
+            }
+            $support->messages()->create([
+                'sender' => 'user',
+                'text'   => $request->input('message'),
+            ]);
+
+            $support->update([
+                'status' => 'pending',
+            ]);
+
+            return redirect(route('mg.support_show', ['office' => $office->id, 'support' => $support->id]));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-        $support->messages()->create([
-            'sender' => 'user',
-            'text'   => $request->input('message'),
-        ]);
-
-        $support->update([
-            'status' => 'pending',
-        ]);
-
-        return redirect(route('mg.support_show', ['office' => $office->id, 'support' => $support->id]));
     }
 
     public function create(Office $office)
@@ -64,17 +68,20 @@ class SupportController extends Controller
 
     public function store(supportStoreRequest $request, Office $office)
     {
-        $support = $office->supports()->create([
-            'title' => $request->input('title'),
-        ]);
+        try {
+            $support = $office->supports()->create([
+                'title' => $request->input('title'),
+            ]);
 
-        $support->messages()->create([
-            'sender' => 'user',
-            'text'   => $request->input('message'),
-        ]);
+            $support->messages()->create([
+                'sender' => 'user',
+                'text'   => $request->input('message'),
+            ]);
 
-        return redirect(route('mg.support_show', ['office' => $office->id, 'support' => $support->id]));
-
+            return redirect(route('mg.support_show', ['office' => $office->id, 'support' => $support->id]));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 
 

@@ -67,7 +67,6 @@ class OfficeController extends Controller
 
     public function store(StoreOfficeRequest $request)
     {
-
         $member = $this->request->current_member;
 
         if ($member->type != "professor") {
@@ -78,89 +77,108 @@ class OfficeController extends Controller
             return redirect()->back()->withErrors(['error' => trans('trs.only_one_office_can_create')]);
         }
 
-        $office = Office::create([
-            "name"           => $request->input('name'),
-            "about"          => $request->input('about') ?? "",
-            "phone"          => $request->input('phone'),
-            "email"          => $request->input('email'),
-            "department_id"  => $request->input('department'),
-            "projects_count" => $request->input('projects_count'),
-            "status"         => "created",
-            "status_date"    => date('Y-m-d H:i', strtotime('now')),
-        ]);
+        try {
+            $office = Office::create([
+                "name"           => $request->input('name'),
+                "about"          => $request->input('about') ?? "",
+                "phone"          => $request->input('phone'),
+                "email"          => $request->input('email'),
+                "department_id"  => $request->input('department'),
+                "projects_count" => $request->input('projects_count'),
+                "status"         => "created",
+                "status_date"    => date('Y-m-d H:i', strtotime('now')),
+            ]);
 
-        if (!$office) {
-            return redirect()->back()->withErrors(['error' => trans('trs.office_not_created')]);
+            if (!$office) {
+                return redirect()->back()->withErrors(['error' => trans('trs.office_not_created')]);
+            }
+
+            $role_head = Office_role::where('name', 'head')->first();
+            $head_permission = Office_permission::where('name', '*')->first();
+
+            $now = date('Y-m-d H:i:s', strtotime('now'));
+
+            $office->members()->attach($member->id, ['role_id' => $role_head->id, 'created_at' => $now, 'updated_at' => $now]);
+
+            $role_head->permissions()->attach($head_permission->id, ['office_id' => $office->id, 'created_at' => $now, 'updated_at' => $now]);
+
+            return redirect(route('mg.office', $office->id))->with('message', trans('trs.office_created_wait_for_verify'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-
-        $role_head = Office_role::where('name', 'head')->first();
-        $head_permission = Office_permission::where('name', '*')->first();
-
-        $now = date('Y-m-d H:i:s', strtotime('now'));
-
-        $office->members()->attach($member->id, ['role_id' => $role_head->id, 'created_at' => $now, 'updated_at' => $now]);
-
-        $role_head->permissions()->attach($head_permission->id, ['office_id' => $office->id, 'created_at' => $now, 'updated_at' => $now]);
-
-        return redirect(route('mg.office', $office->id))->with('message', trans('trs.office_created_wait_for_verify'));
-
     }
 
     public function update(StoreOfficeRequest $request, Office $office)
     {
-        $member = $this->request->current_member;
+        try {
+            $member = $this->request->current_member;
 
-        $added_media = $request->input('added_media');
-        $deleted_media = $request->input('deleted_media');
+            $added_media = $request->input('added_media');
+            $deleted_media = $request->input('deleted_media');
 
-        $office->update([
-            "name"           => $request->input('name'),
-            "about"          => $request->input('about') ?? "",
-            "address"        => $request->input('address') ?? "",
-            "phone"          => $request->input('phone'),
-            "email"          => $request->input('email'),
-            "admin_contact"  => $request->input('admin_contact'),
-            "department_id"  => $request->input('department'),
-            "projects_count" => $request->input('projects_count'),
-        ]);
+            $office->update([
+                "name"           => $request->input('name'),
+                "about"          => $request->input('about') ?? "",
+                "address"        => $request->input('address') ?? "",
+                "phone"          => $request->input('phone'),
+                "email"          => $request->input('email'),
+                "admin_contact"  => $request->input('admin_contact'),
+                "department_id"  => $request->input('department'),
+                "projects_count" => $request->input('projects_count'),
+            ]);
 
 
-        if ($added_media) {
-            foreach ($added_media as $media_name) {
-                $file = Storage::disk('privateStorage')->readStream('tmp/' . $media_name);
-                Storage::disk('assetsStorage')->writeStream('officeSlideshow/' . $media_name, $file);
-                Storage::disk('privateStorage')->delete('tmp/' . $media_name);
+            if ($added_media) {
+                foreach ($added_media as $media_name) {
+                    $file = Storage::disk('privateStorage')->readStream('tmp/' . $media_name);
+                    Storage::disk('assetsStorage')->writeStream('officeSlideshow/' . $media_name, $file);
+                    Storage::disk('privateStorage')->delete('tmp/' . $media_name);
 
-                $media = Media::where('title', $media_name)->first();
+                    $media = Media::where('title', $media_name)->first();
 
-                $office->media()->save($media);
-                $media->update(['model_type' => 'officeSlideshow']);
+                    $office->media()->save($media);
+                    $media->update(['model_type' => 'officeSlideshow']);
+                }
             }
-        }
 
-        if ($deleted_media) {
-            foreach ($deleted_media as $deleted_name) {
-                Storage::disk('assetsStorage')->delete('officeSlideshow/' . $deleted_name);
+            if ($deleted_media) {
+                foreach ($deleted_media as $deleted_name) {
+                    Storage::disk('assetsStorage')->delete('officeSlideshow/' . $deleted_name);
 
-                $media = Media::where('title', $deleted_name)->first();
+                    $media = Media::where('title', $deleted_name)->first();
 
-                $media->delete();
+                    $media->delete();
+                }
             }
-        }
 
 
-        if ($request->input('deleted_image_image')) {
-            $logo = $office->logoModel;
-            if ($logo) {
-                $this->mediaRemove($logo, 'assetsStorage');
+            if ($request->input('deleted_image_image')) {
+                $logo = $office->logoModel;
+                if ($logo) {
+                    $this->mediaRemove($logo, 'assetsStorage');
+                }
             }
-        }
-        if ($request->hasFile('image')) {
-            $logo = $request->file('image');
-            $this->imageUpload($logo, 'officeLogo', 'assetsStorage', $office);
-        }
+            if ($request->hasFile('image')) {
+                $logo = $request->file('image');
+                $this->imageUpload($logo, 'officeLogo', 'assetsStorage', $office);
+            }
 
-        return redirect(route('mg.office', $office->id))->with('message', trans('trs.changed_successfully'));
+            if ($request->input('deleted_video')) {
+                $video = $office->headIntroductionModel;
+                if ($video) {
+                    $this->mediaRemove($video, 'assetsStorage');
+                }
+            }
+
+            if ($request->hasFile('video')) {
+                $video = $request->file('video');
+                $this->videoUpload($video, $office, 'introduction', 'assetsStorage');
+            }
+
+            return redirect(route('mg.office', $office->id))->with('message', trans('trs.changed_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 
     public function capabilities(Office $office)
@@ -170,19 +188,22 @@ class OfficeController extends Controller
 
     public function capabilities_update(Office $office)
     {
-        $office->capabilities()->delete();
-        if ($this->request->capabilities) {
-            foreach ($this->request->capabilities as $capability) {
-                if ($capability) {
-                    $office->capabilities()->create([
-                        'text' => $capability,
-                    ]);
+        try {
+            $office->capabilities()->delete();
+            if ($this->request->capabilities) {
+                foreach ($this->request->capabilities as $capability) {
+                    if ($capability) {
+                        $office->capabilities()->create([
+                            'text' => $capability,
+                        ]);
+                    }
                 }
             }
+
+            return redirect(route('mg.office_capabilities', $office->id))->with('message', trans('trs.changed_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-
-        return redirect(route('mg.office_capabilities', $office->id))->with('message', trans('trs.changed_successfully'));
-
     }
 
     public function content_edit(Office $office)
@@ -192,13 +213,17 @@ class OfficeController extends Controller
 
     public function content_update(Office $office)
     {
-        $content = $this->request->input('content');
+        try {
+            $content = $this->request->input('content');
 
-        $office->update([
-            'content' => $content,
-        ]);
+            $office->update([
+                'content' => $content,
+            ]);
 
-        return redirect(route('mg.content_edit', $office->id))->with('message', trans('trs.changed_successfully'));
+            return redirect(route('mg.content_edit', $office->id))->with('message', trans('trs.changed_successfully'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 
     public function not_active(Office $office)

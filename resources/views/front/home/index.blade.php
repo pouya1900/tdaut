@@ -45,7 +45,7 @@
                                     <div class="section_icon"><i class="fa-solid fa-building"></i></div>
                                 </div>
                                 <div class="col-8">
-                                    <div class="section_content"><span>@lang('trs.technology_service_center')</span>
+                                    <div class="section_content"><span>@lang('trs.technology_service_center_short')</span>
                                     </div>
                                 </div>
                                 <div class="col-2">

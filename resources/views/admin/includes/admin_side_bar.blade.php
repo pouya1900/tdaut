@@ -12,14 +12,14 @@
                             class="fa-solid fa-user"></i>@lang('trs.dashboard')</a>
                 </li>
                 <li class="{{url()->current()==route('admin.offices') || (isset($office) && (url()->current()==route('admin.office.edit',$office->id) || url()->current()==route('admin.office.members',$office->id))) ? "active" : ""}}">
-                    <a href="{{route('admin.offices')}}"> <i
+                    <a href="{{route('admin.offices',['filter'=>'pending'])}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.offices')</a>
                     @if (\App\Models\Office::where('status','pending')->first())
                         <span class="admin_notification">*</span>
                     @endif
                 </li>
                 <li class="{{url()->current()==route('admin.products') || (isset($product) && url()->current()==route('admin.product.edit',$product->id)) ? "active" : ""}}">
-                    <a href="{{route('admin.products')}}"> <i
+                    <a href="{{route('admin.products',['filter'=>'pending'])}}"> <i
                             class="fa-solid fa-user"></i>@lang('trs.products')</a>
                     @if (\App\Models\Product::where('status','pending')->first())
                         <span class="admin_notification">*</span>

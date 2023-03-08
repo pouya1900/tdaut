@@ -12,8 +12,7 @@
                     </div>
                     <div class="poster_description">
                         <p>
-                            لورم ایپسوم یک متن ساختگی با تولید ساختگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک
-                            است.
+                            @lang('trs.technology_service_center_description_text')
                         </p>
                     </div>
                     <div class="poster_button">
@@ -44,9 +43,7 @@
                         </div>
                         <div class="poster_description">
                             <p>
-                                لورم ایپسوم یک متن ساختگی با تولید ساختگی نامفهوم از صنعت چاپ و با استفاده از طراحان
-                                گرافیک
-                                است.
+                                @lang('trs.technology_service_center_description_text')
                             </p>
                         </div>
                         <div class="poster_button">

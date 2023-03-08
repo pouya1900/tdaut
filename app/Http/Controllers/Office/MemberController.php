@@ -60,35 +60,41 @@ class MemberController extends Controller
 
     public function update(UpdateMemberRoleRequest $request, Office $office, Member $member)
     {
-        if (!$member->isOfficeMember($office->id)) {
-            abort(403);
-        }
-
-        $roles = $request->input('role');
-
-        $role_head = Office_role::where('name', 'head')->first();
-        $office->members()->wherePivot('role_id', '!=', $role_head->id)->detach($member->id);
-        foreach ($roles as $role) {
-            if ($role == $role_head->id) {
-                continue;
+        try {
+            if (!$member->isOfficeMember($office->id)) {
+                abort(403);
             }
-            $office->members()->attach($member->id, ['role_id' => $role]);
+
+            $roles = $request->input('role');
+
+            $role_head = Office_role::where('name', 'head')->first();
+            $office->members()->wherePivot('role_id', '!=', $role_head->id)->detach($member->id);
+            foreach ($roles as $role) {
+                if ($role == $role_head->id) {
+                    continue;
+                }
+                $office->members()->attach($member->id, ['role_id' => $role]);
+            }
+
+            return redirect(route('mg.office_members', $office->id));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-
-        return redirect(route('mg.office_members', $office->id));
-
     }
 
     public function remove(Office $office, Member $member)
     {
-        if ($member->isSuperAdmin($office->id)) {
-            return redirect()->back()->withErrors(['error' => trans('trs.head_cant_remove')]);
+        try {
+            if ($member->isSuperAdmin($office->id)) {
+                return redirect()->back()->withErrors(['error' => trans('trs.head_cant_remove')]);
+            }
+
+            $office->members()->detach($member->id);
+
+            return redirect(route('mg.office_members', $office->id))->with('message', trans('trs.remove_member_success'));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-
-        $office->members()->detach($member->id);
-
-        return redirect(route('mg.office_members', $office->id))->with('message', trans('trs.remove_member_success'));
-
     }
 
     public function create(Office $office)
@@ -101,23 +107,27 @@ class MemberController extends Controller
 
     public function store(StoreOfficeMemberRequest $request, Office $office)
     {
-        $member_id = $request->input('member_id');
+        try {
+            $member_id = $request->input('member_id');
 
-        $roles = $request->input('role');
-        $role_head = Office_role::where('name', 'head')->first();
+            $roles = $request->input('role');
+            $role_head = Office_role::where('name', 'head')->first();
 
-        if ($office->members()->find($member_id)) {
-            return redirect()->back()->withErrors(['error' => trans('trs.member_exist_office')]);
-        }
-
-        foreach ($roles as $role) {
-            if ($role == $role_head->id) {
-                continue;
+            if ($office->members()->find($member_id)) {
+                return redirect()->back()->withErrors(['error' => trans('trs.member_exist_office')]);
             }
-            $office->members()->attach($member_id, ['role_id' => $role]);
-        }
 
-        return redirect(route('mg.office_members', $office->id));
+            foreach ($roles as $role) {
+                if ($role == $role_head->id) {
+                    continue;
+                }
+                $office->members()->attach($member_id, ['role_id' => $role]);
+            }
+
+            return redirect(route('mg.office_members', $office->id));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 
 }

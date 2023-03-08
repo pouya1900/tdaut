@@ -119,6 +119,18 @@
                     </div>
                 </div>
 
+                <div class="col-12">
+                    <div class="mg-office--item">
+                        <label>@lang('trs.head_introduction_video')</label>
+
+                        <div id="app-video-preview">
+                            <video-input-preview src="{{$office->headIntroduction}}">
+                            </video-input-preview>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="col-12 col-lg-6">
                     <div class="mg-office--item">
                         <label>@lang('trs.status')</label>

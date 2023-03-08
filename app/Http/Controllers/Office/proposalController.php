@@ -47,63 +47,73 @@ class proposalController extends Controller
 
     public function store(StoreProposalRequest $request, Office $office, Rfp $rfp)
     {
-        if ($rfp->office->id != $office->id) {
-            abort(403);
-        }
+        try {
+            if ($rfp->office->id != $office->id) {
+                abort(403);
+            }
 
-        $current_member = $this->request->current_member;
+            $current_member = $this->request->current_member;
 
-        $proposal = $rfp->documents()->create([
-            "text"   => $request->input('description'),
-            'type'   => 'proposal',
-            'status' => $current_member->id == $office->head->id ? 'sent' : 'pending',
-        ]);
-
-        if ($request->hasFile('proposal')) {
-            $file = $request->file('proposal');
-            Storage::disk("privateStorage")->put('rfp', $file);
-
-            $proposal->media()->create([
-                "title"      => $file->hashName(),
-                "model_type" => "rfp",
-                "ext"        => $file->extension(),
-                "size"       => $file->getSize() / 1024,
+            $proposal = $rfp->documents()->create([
+                "text"   => $request->input('description'),
+                'type'   => 'proposal',
+                'status' => $current_member->id == $office->head->id ? 'sent' : 'pending',
             ]);
-        }
 
-        return redirect(route('mg.rfp.show', ['office' => $office->id, 'rfp' => $rfp->id]));
+            if ($request->hasFile('proposal')) {
+                $file = $request->file('proposal');
+                Storage::disk("privateStorage")->put('rfp', $file);
+
+                $proposal->media()->create([
+                    "title"      => $file->hashName(),
+                    "model_type" => "rfp",
+                    "ext"        => $file->extension(),
+                    "size"       => $file->getSize() / 1024,
+                ]);
+            }
+
+            return redirect(route('mg.rfp.show', ['office' => $office->id, 'rfp' => $rfp->id]));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
+        }
     }
 
     public function send(Office $office, Document $document)
     {
-        if ($document->rfp->office->id != $office->id) {
-            abort(403);
+        try {
+            if ($document->rfp->office->id != $office->id) {
+                abort(403);
+            }
+            if ($this->request->current_member->id != $office->head->id) {
+                abort(403);
+            }
+
+            $document->update([
+                'status' => 'sent',
+            ]);
+
+            return redirect(route('mg.rfp.show', ['office' => $office->id, 'rfp' => $document->rfp->id]));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-        if ($this->request->current_member->id != $office->head->id) {
-            abort(403);
-        }
-
-        $document->update([
-            'status' => 'sent',
-        ]);
-
-        return redirect(route('mg.rfp.show', ['office' => $office->id, 'rfp' => $document->rfp->id]));
-
     }
 
     public function delete(Office $office, Document $document)
     {
-        if ($document->rfp->office->id != $office->id) {
-            abort(403);
+        try {
+            if ($document->rfp->office->id != $office->id) {
+                abort(403);
+            }
+            if ($this->request->current_member->id != $office->head->id) {
+                abort(403);
+            }
+
+            $document->delete();
+
+            return redirect(route('mg.rfp.show', ['office' => $office->id, 'rfp' => $document->rfp->id]));
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => trans('trs.changed_unsuccessfully')]);
         }
-        if ($this->request->current_member->id != $office->head->id) {
-            abort(403);
-        }
-
-        $document->delete();
-
-        return redirect(route('mg.rfp.show', ['office' => $office->id, 'rfp' => $document->rfp->id]));
-
     }
 
 

@@ -1,5 +1,6 @@
 @extends('layouts.office')
 @section('content')
+    @include('front.offices.menu')
 
 
     <div class="mobile_filter_container d-lg-none">
